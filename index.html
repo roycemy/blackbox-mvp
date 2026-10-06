@@ -266,7 +266,7 @@ const _seed0=seed;
 function seed(){receipts=[];approvals=[];handoffs=[];agents.forEach(a=>{a.status="idle";a.killed=false;a.now="Standing by";a.from=null});globalKill=false;
  const order=[["ledger",2],["nutri",2],["instinct",3],["hermes",0],["proof",1],["flyopia",1],["lifehq",1],["grokmkt",0],["dato",3],["standby",0]];
  order.forEach(([id,i])=>{const a=byId(id);const act=a.script[i];if(act[0]==="send"||act[0]==="post"||act[0]==="spend"){a.status="waiting";a.now="Paused: "+act[1];a.where=act[2]+(act[3]?" \u00b7 "+money(act[3]):"");approvals.push({id:++uid,agent:a.id,act,note:"Policy: ASK",t:ts()})}else{a.status="working";a.now=act[1];a.where=act[2];receipt(a,act,"AUTO",act[3])}});
- approvals=approvals.slice(0,3);
+ approvals.slice(3).forEach(p=>{const a=byId(p.agent);a.status="working";a.now=p.act[1].replace(/^/,"Preparing: ");a.where="Draft only, not sent"});approvals=approvals.slice(0,3);
  const g=byId("grokceo");g.status="blocked";g.now="Blocked: spend money (policy NEVER)";g.where="Needs a permission change";receipt(g,g.script[3],"NEVER",0,"Policy: NEVER");
  const dd=byId("dato");if(dd.status==="waiting"){dd.status="working";dd.now=dd.script[0][1];dd.where="Browser"}}
 const ORIG={};agents.forEach(a=>ORIG[a.id]=[a.spent,a.actions,a.outcomes,a.level]);
