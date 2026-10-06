@@ -229,6 +229,7 @@ function step(a){
  if(kind==="spend"&&mode==="AUTO"&&a.spent+act[3]>a.cap){mode="ASK";note="Over budget cap"}
  if(mode==="AUTO"){a.status="working";a.now=act[1];a.where=act[2];receipt(a,act,"AUTO",act[3])}
  else if(mode==="NEVER"){a.status="blocked";a.now="Blocked: "+ACTIONS[kind].toLowerCase()+" (policy NEVER)";a.where="Needs a permission change";receipt(a,act,"NEVER",0,"Policy: NEVER")}
+ else if(approvals.length>=4){a.status="working";a.now="Preparing: "+act[1];a.where="Draft only, not sent"}
  else{a.status="waiting";a.now="Paused: "+act[1];a.where=act[2]+(act[3]?" \u00b7 "+money(act[3]):"");approvals.push({id:++uid,agent:a.id,act,note:note||"Policy: ASK",t:ts()})}
 }
 function decide(id,ok){const i=approvals.findIndex(x=>x.id===id);if(i<0)return;const p=approvals[i];approvals.splice(i,1);const a=byId(p.agent);
