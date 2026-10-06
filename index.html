@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Blackbox - the manager for your AI crew</title>
+<title>Blackbox HQ - the office for your AI crew</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230b0d14'/><rect x='7' y='7' width='18' height='18' rx='3' fill='none' stroke='%2339ff9c' stroke-width='2.5'/><circle cx='16' cy='16' r='3' fill='%2339ff9c'/></svg>">
 <style>
 :root{--bg:#07090f;--p:#0e121c;--p2:#141a28;--b:#232c40;--t:#e7ecf6;--m:#8793ad;--g:#39ff9c;--y:#ffc857;--r:#ff5d73;--bl:#5ab0ff;--v:#a78bfa}
@@ -66,6 +66,34 @@ select,input{background:var(--p2);color:var(--t);border:1px solid var(--b);borde
 .crew{display:inline-block;background:#10261c;border:1px solid #1f5a40;color:var(--g);font-size:11px;padding:2px 9px;border-radius:99px;font-weight:700}
 .demo{position:fixed;right:14px;bottom:14px;z-index:30;display:flex;gap:8px}.demo button{background:var(--p2);border:1px solid var(--b);padding:8px 12px;border-radius:99px;font-size:12px;color:var(--m)}.demo button:hover{color:var(--t);border-color:var(--g)}
 @keyframes pulse{50%{box-shadow:0 0 0 6px #ff5d7333}}@keyframes blink{50%{opacity:.4}}@keyframes fl{0%{opacity:1}100%{opacity:0}}@keyframes slide{from{opacity:0;transform:translateY(-8px)}}
+
+.dept{margin-top:18px}.dept:first-of-type{margin-top:6px}
+.dh{display:flex;align-items:center;gap:10px;margin:0 0 10px;padding-bottom:8px;border-bottom:1px solid #232c40}
+.dh b{font-size:13px;letter-spacing:1.4px;text-transform:uppercase}.dh i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.dh .cnt{color:var(--m);font-size:12px}.dh .pills{margin-left:auto;display:flex;gap:6px}
+.pill{font-size:11px;padding:2px 8px;border-radius:99px;background:#141a28;border:1px solid #232c40;color:var(--m)}
+.pill.w{color:var(--g)}.pill.y{color:var(--y);border-color:#5a4a1a}.pill.r{color:var(--r);border-color:#5a2230}
+.seat{border:1.5px dashed #2c3752;border-radius:14px;display:grid;place-items:center;color:#52607f;font-size:13px;min-height:150px;text-align:center;padding:10px}
+.desk.wait{border-color:var(--y);background:linear-gradient(#1c1a12,#12151f);animation:glow 1.8s infinite}
+.desk.blk{border-color:#7a2a38;background:linear-gradient(#1e1217,#12151f)}
+.need{position:absolute;top:-10px;right:12px;background:var(--y);color:#141000;font-size:10px;font-weight:800;padding:3px 9px;border-radius:99px;letter-spacing:.6px;animation:blink 1.2s infinite}
+.blkt{position:absolute;top:-10px;right:12px;background:var(--r);color:#fff;font-size:10px;font-weight:800;padding:3px 9px;border-radius:99px;letter-spacing:.6px}
+.desk.work .av{animation:bob 1.6s ease-in-out infinite}
+.act{display:inline-flex;gap:2px;align-items:flex-end;height:11px;margin-left:6px;vertical-align:middle}.act u{width:3px;background:var(--g);border-radius:1px;animation:eq 0.9s infinite;height:4px}.act u:nth-child(2){animation-delay:.2s}.act u:nth-child(3){animation-delay:.4s}
+.dot.blocked{background:var(--r);box-shadow:0 0 8px var(--r);animation:none}
+.stl{font-size:10.5px;font-weight:800;letter-spacing:.8px;margin-left:auto}.stl.work{color:var(--g)}.stl.wait{color:var(--y)}.stl.blk{color:var(--r)}.stl.idle{color:var(--bl)}.stl.dead{color:#777}
+.hin{font-size:11px;color:var(--v);margin-top:4px}
+.strip{background:linear-gradient(90deg,#2a2210,#14161f);border:1px solid #6a5418;border-radius:14px;padding:12px 16px;margin-bottom:16px;box-shadow:0 0 28px #ffc85722}
+.strip h4{margin:0 0 8px;color:var(--y);font-size:13px;letter-spacing:1px;text-transform:uppercase}
+.strip .row{border-color:#3a3015}
+.tok{position:fixed;z-index:60;pointer-events:none;background:#1b1536;border:1.5px solid var(--v);color:#e5dcff;padding:5px 11px;border-radius:99px;font-size:12px;font-weight:700;white-space:nowrap;box-shadow:0 0 22px #a78bfa88;left:0;top:0}
+.hrow{padding:8px 0;border-bottom:1px solid #1a2132;font-size:13px}.hrow:last-child{border:0}.hrow small{color:var(--m);display:block}.hrow span{color:var(--v);font-weight:800}
+.msec{margin-top:16px}.msec h5{margin:0 0 6px;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--m)}
+.tl{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #1a2132;font-size:13px}.tl span:last-child{color:var(--m)}
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:4px 18px}
+.pg div{display:flex;justify-content:space-between;font-size:12.5px;padding:3px 0}
+.done{padding:4px 0;font-size:13px}.done:before{content:"\2713 ";color:var(--g);font-weight:800}
+@keyframes glow{50%{box-shadow:0 0 0 1px var(--y),0 0 26px #ffc85755}}@keyframes bob{50%{transform:translateY(-3px)}}@keyframes eq{50%{height:11px}}
 </style></head><body>
 <header>
  <div class="logo"><i></i>BLACKBOX</div><div class="biz">Royce Myers &middot; Crew #1: Bot HQ</div><div class="sp"></div>
@@ -75,7 +103,7 @@ select,input{background:var(--p2);color:var(--t);border:1px solid var(--b);borde
 <nav id="nav"></nav>
 <main><div class="banner" id="banner"><b>Global kill engaged.</b> Every agent is cut off from Gmail, Shopify, Slack and your card. Nothing runs until you restore access.</div><div id="view"></div></main>
 <div class="modal" id="modal"><div class="mbox" id="mbox"></div></div>
-<div class="demo"><button id="burst">&#9889; Simulate busy hour</button><button id="reset">&#8635; Reset demo</button></div>
+<div class="demo"><button id="hand_btn" onclick="doHandoff()">&#128230; Trigger handoff</button><button id="burst">&#9889; Simulate busy hour</button><button id="reset">&#8635; Reset demo</button></div>
 <script>
 const ACTIONS={read:"Read data",draft:"Draft content",update:"Update CRM / records",send:"Send externally",post:"Post publicly",deploy:"Change production",spend:"Spend money",delete:"Delete data"};
 const LEVELS={Intern:{read:"AUTO",draft:"AUTO",update:"ASK",send:"ASK",post:"NEVER",deploy:"NEVER",spend:"NEVER",delete:"NEVER",cap:0,blurb:"Drafts, asks before sending"},
@@ -102,7 +130,9 @@ A("flyopia","Flyopia Poster","\u{1F4F8}","Social account operator","Staff",["Tik
 A("grokceo","Grok CEO","\u{1F916}","Strategy read & priorities","Intern",["Grok","Email digest"],{spent:2.0,actions:29,outcomes:6,out:"strategy memos"},[
  ["read","Read all project status files","Memory",0],["draft","Drafted Q4 priorities memo","Docs",0],["send","Email priorities memo to team","Gmail",0],["spend","Upgrade Grok tier","Card ending 4242",30]]),
 A("grokmkt","Grok Marketing","\u{1F4E3}","Ad copy & campaigns","Intern",["Grok","Meta Ads"],{spent:5.8,actions:52,outcomes:3,out:"campaigns drafted"},[
- ["draft","Drafted 5 ad variants","Docs",0],["read","Read competitor ad library","Meta",0],["post","Launch ad set to production","Meta Ads",0],["spend","Daily ad spend, Flyopia","Meta Ads",25]])
+ ["draft","Drafted 5 ad variants","Docs",0],["read","Read competitor ad library","Meta",0],["post","Launch ad set to production","Meta Ads",0],["spend","Daily ad spend, Flyopia","Meta Ads",25]]),
+A("ledger","Ledger","\u{1F4B0}","Finance agent (demo hire)","Staff",["QuickBooks","Bank feed","Card ending 4242"],{spent:0,actions:18,outcomes:4,out:"invoices paid"},[
+ ["read","Reconciled 41 transactions","QuickBooks",0],["draft","Drafted October budget","Sheets",0],["spend","Pay Meta Ads invoice","Card ending 4242",600]])
 ];
 let receipts=[],approvals=[],tab=(location.hash.slice(1)||"floor"),globalKill=false,detail=null,uid=0,filter="ALL";
 const $=s=>document.querySelector(s),money=n=>"$"+(n>=100?n.toFixed(0):n.toFixed(2)),ts=()=>new Date().toLocaleTimeString([], {hour:"numeric",minute:"2-digit",second:"2-digit"});
@@ -169,7 +199,78 @@ $("#reset").onclick=()=>{agents.forEach(a=>{const o=ORIG[a.id];a.spent=o[0];a.ac
 $("#burst").onclick=()=>{for(let i=0;i<14;i++)setTimeout(()=>{agents.forEach(a=>{if(Math.random()<.5)step(a)});partial()},i*250)};
 function render(){tabs();kpis();const v=$("#view");v.innerHTML={floor:vFloor,approvals:vAppr,receipts:vRec,stubs:vStubs,policies:vPol}[tab]();bind()}
 function partial(){kpis();tabs();if(tab==="floor"){$("#desks").innerHTML=agents.map(deskHTML).join("");$("#feed").innerHTML=feedHTML(receipts,14);$("#mini").innerHTML=miniAppr();bind()}else if(tab==="receipts"||tab==="approvals"||tab==="stubs"){if(document.activeElement&&document.activeElement.tagName==="SELECT")return;render()}}
+
+const DEPTS=[["Sales","#5ab0ff"],["Marketing","#a78bfa"],["Operations","#39ff9c"],["Finance","#ffc857"],["Support","#ff8fb1"]];
+const DEPT={nutri:"Sales",flyopia:"Marketing",grokmkt:"Marketing",instinct:"Operations",hermes:"Operations",standby:"Operations",ledger:"Finance",grokceo:"Finance",proof:"Support",dato:"Support",lifehq:"Support"};
+const HANDOFFS=[["hermes","instinct","Morning briefing"],["grokceo","grokmkt","Q4 priorities, campaign brief"],["grokmkt","flyopia","Ad creative for weekend reels"],["nutri","ledger","Lead list invoice"],["instinct","standby","Trip request, Boston"],["lifehq","proof","Missed gym log"],["dato","instinct","Flagged leak for review"],["flyopia","ledger","Ad boost receipt"]];
+let handoffs=[];
+const stOf=a=>(a.killed||globalKill)?"dead":a.status==="waiting"?"wait":a.status==="blocked"?"blk":a.status==="idle"?"idle":"work";
+const STL={dead:"KILLED",wait:"NEEDS YOU",blk:"BLOCKED",idle:"IDLE",work:"WORKING"};
+function deskHTML(a){const st=stOf(a);const dead=st==="dead";const pct=a.cap?Math.min(100,a.spent/a.cap*100):0;
+ return `<div class="desk ${st}" data-d="${a.id}"><div class="flash"></div>${st==="wait"?'<span class="need">NEEDS YOU</span>':st==="blk"?'<span class="blkt">BLOCKED</span>':''}
+ <div class="top"><div class="av">${a.emoji}</div><div><b>${a.name}</b><div class="role">${a.role}</div></div><span class="lvl ${a.level}" style="border-color:currentColor;margin-left:auto">${a.level}</span></div>
+ <div class="st"><span class="dot ${st==="wait"?"wait":st==="dead"?"dead":st==="idle"?"idle":st==="blk"?"blocked":""}"></span><div class="now">${dead?"KILLED. Access revoked":a.now}<small>${dead?"":(a.where||a.tools.join(" \u00b7 "))}</small>${a.from&&st==="work"?`<div class="hin">\u21AA handed off by ${a.from}</div>`:""}</div></div>
+ <div class="bar"><i style="width:${a.cap?pct:6}%"></i></div><div class="meta"><span>${a.cap?money(a.spent)+" of "+money(a.cap)+" cap":"No spend allowed"}</span><span class="stl ${st}" style="margin:0">${STL[st]}${st==="work"?'<span class="act"><u></u><u></u><u></u></span>':""}</span></div></div>`}
+function deptHTML(){return DEPTS.map(([n,c])=>{let m=agents.filter(a=>DEPT[a.id]===n);const w=m.filter(a=>stOf(a)==="work").length,y=m.filter(a=>stOf(a)==="wait").length,r=m.filter(a=>stOf(a)==="blk").length;
+ m=m.slice().sort((x,z)=>(stOf(z)==="wait")-(stOf(x)==="wait"));
+ return `<div class="dept"><div class="dh"><i style="background:${c}"></i><b style="color:${c}">${n}</b><span class="cnt">${m.length} ${m.length===1?"agent":"agents"}</span><div class="pills">${w?`<span class="pill w">${w} working</span>`:""}${y?`<span class="pill y">${y} needs you</span>`:""}${r?`<span class="pill r">${r} blocked</span>`:""}</div></div><div class="grid">${m.map(deskHTML).join("")}${m.length<2?`<div class="seat">Open seat<br><small>Add a bot and it joins ${n}</small></div>`:""}</div></div>`}).join("")}
+function stripHTML(){const L=approvals;if(!L.length)return `<div class="strip" style="border-color:#1f5a40;background:#0e1a16;box-shadow:none"><h4 style="color:var(--g)">Needs You: all clear</h4><small style="color:var(--m)">Nobody is waiting on you.</small></div>`;
+ return `<div class="strip"><h4>\u26A0 Needs You (${L.length})</h4>${miniAppr(99)}</div>`}
+function miniAppr(n){return approvals.slice(0,n||3).map(p=>{const a=byId(p.agent);return `<div class="row"><span class="tag ASK">ASK</span><div class="rt">${a.emoji} <b>${a.name}</b> <span style="color:var(--m)">(${DEPT[a.id]})</span> ${p.act[1]}<small>${p.act[2]}${p.act[3]?" \u00b7 "+money(p.act[3]):""}</small></div><div style="display:flex;gap:6px"><button class="btn ok" data-a="${p.id}">Approve</button><button class="btn no" data-n="${p.id}">Deny</button></div></div>`}).join("")||'<div class="empty">All clear. Nothing waiting.</div>'}
+function handHTML(){return handoffs.slice(0,7).map(h=>`<div class="hrow">${h.fe} <b>${h.f}</b> <span>\u2192</span> ${h.te} <b>${h.t}</b><small>${h.task} \u00b7 ${h.time}</small></div>`).join("")||'<div class="empty">No handoffs yet</div>'}
+function vFloor(){return `<div id="strip">${stripHTML()}</div><div class="floor"><h3>Crew #1: Bot HQ <span class="crew">CREW #1</span></h3><div class="sub">Your AI company. Departments, live status, handoffs between desks. Everything runs through Blackbox, so every action is checked against permissions first. Click any worker for its profile.</div><div id="org">${deptHTML()}</div></div>
+ <div class="two"><div class="card"><b>Live receipts</b><div class="feed" id="feed">${feedHTML(receipts,14)}</div></div><div class="card"><b>Handoffs</b><div id="hand">${handHTML()}</div></div></div>`}
+function partial(){kpis();tabs();if(tab==="floor"){const org=$("#org");if(!org)return;org.innerHTML=deptHTML();$("#strip").innerHTML=stripHTML();$("#feed").innerHTML=feedHTML(receipts,14);$("#hand").innerHTML=handHTML();bind()}else if(tab==="receipts"||tab==="approvals"||tab==="stubs"){if(document.activeElement&&document.activeElement.tagName==="SELECT")return;render()}}
+function step(a){
+ if(a.killed||globalKill)return;
+ if(a.status==="waiting"){return}
+ const act=a.script[Math.floor(Math.random()*a.script.length)];
+ const kind=act[0];let mode=a.policy[kind];let note="";a.from=null;
+ if(kind==="spend"&&mode==="AUTO"&&a.spent+act[3]>a.cap){mode="ASK";note="Over budget cap"}
+ if(mode==="AUTO"){a.status="working";a.now=act[1];a.where=act[2];receipt(a,act,"AUTO",act[3])}
+ else if(mode==="NEVER"){a.status="blocked";a.now="Blocked: "+ACTIONS[kind].toLowerCase()+" (policy NEVER)";a.where="Needs a permission change";receipt(a,act,"NEVER",0,"Policy: NEVER")}
+ else{a.status="waiting";a.now="Paused: "+act[1];a.where=act[2]+(act[3]?" \u00b7 "+money(act[3]):"");approvals.push({id:++uid,agent:a.id,act,note:note||"Policy: ASK",t:ts()})}
+}
+function decide(id,ok){const i=approvals.findIndex(x=>x.id===id);if(i<0)return;const p=approvals[i];approvals.splice(i,1);const a=byId(p.agent);
+ if(ok)receipt(a,p.act,"APPROVED",p.act[3],"Approved (demo)");else receipt(a,p.act,"DENIED",0,"Denied (demo)");
+ a.status="working";a.now=ok?"Approved. "+p.act[1]:"Denied. Finding another way";render()}
+function doHandoff(manual){if(globalKill)return;const ok=HANDOFFS.filter(([f,t])=>{const A1=byId(f),B=byId(t);return !A1.killed&&!B.killed&&A1.status!=="waiting"&&B.status!=="waiting"&&A1.status!=="blocked"});if(!ok.length)return;
+ const [f,t,task]=ok[Math.floor(Math.random()*ok.length)];const A1=byId(f),B=byId(t);
+ A1.now="Handed off: "+task;A1.where="\u2192 "+B.name;A1.status="working";
+ const fin=()=>{B.status="working";B.from=A1.name;B.now="Picked up: "+task;B.where="from "+A1.name;
+  receipts.unshift({id:++uid,t:ts(),agent:B.name,emoji:B.emoji,what:"Picked up '"+task+"' from "+A1.name,touched:"Handoff",cost:0,verdict:"AUTO",note:"Handoff"});B.actions++;
+  handoffs.unshift({f:A1.name,fe:A1.emoji,t:B.name,te:B.emoji,task,time:ts()});if(handoffs.length>20)handoffs.pop();
+  if(!detail&&tab==="floor")partial();flash(B.id)};
+ if(tab!=="floor"||detail){fin();return}
+ partial();const e1=document.querySelector(`[data-d="${f}"]`),e2=document.querySelector(`[data-d="${t}"]`);if(!e1||!e2){fin();return}
+ const r1=e1.getBoundingClientRect(),r2=e2.getBoundingClientRect();const tok=document.createElement("div");tok.className="tok";tok.textContent="\u{1F4E6} "+task;document.body.appendChild(tok);
+ const x1=r1.left+r1.width/2-60,y1=r1.top+r1.height/2,x2=r2.left+r2.width/2-60,y2=r2.top+r2.height/2;
+ const an=tok.animate([{transform:`translate(${x1}px,${y1}px) scale(.6)`,opacity:0},{transform:`translate(${x1}px,${y1}px) scale(1)`,opacity:1,offset:.15},{transform:`translate(${x2}px,${y2}px) scale(1)`,opacity:1,offset:.85},{transform:`translate(${x2}px,${y2}px) scale(.6)`,opacity:0}],{duration:2200,easing:"ease-in-out"});
+ an.onfinish=()=>{tok.remove();fin()};}
+function openModal(id){detail=id;const a=byId(id);const mine=receipts.filter(r=>r.agent===a.name);const st=stOf(a);
+ const done=a.script.filter(x=>a.policy[x[0]]==="AUTO"&&x[0]!=="spend").map(x=>x[1]).slice(0,4);
+ const toolRows=a.tools.map((t,i)=>`<div class="tl"><span>${t}</span><span>${Math.max(3,Math.round(a.actions*(0.5-i*0.12)))} calls today</span></div>`).join("");
+ const hist=mine.concat(done.map((d,i)=>({verdict:"AUTO",emoji:a.emoji,agent:a.name,what:d,touched:a.tools[0],t:"earlier today",cost:0,note:""}))).slice(0,10);
+ const pct=a.cap?Math.min(100,a.spent/a.cap*100):0;
+ $("#mbox").innerHTML=`<div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><div class="av" style="width:56px;height:56px;font-size:28px">${a.emoji}</div><div><h2 style="margin:0">${a.name}</h2><div class="role">${DEPT[a.id]} \u00b7 ${a.role}</div></div><span class="lvl ${a.level}" style="border-color:currentColor">${a.level}</span><span class="stl ${st}">${STL[st]}</span><div class="sp"></div><button class="btn" id="mc">Close</button></div>
+ <div class="msec"><h5>Current task</h5><div>${st==="dead"?"KILLED. Access revoked":a.now}<small style="display:block;color:var(--m)">${a.where||""}</small></div></div>
+ <div class="msec"><h5>Completed today</h5>${done.map(d=>`<div class="done">${d}</div>`).join("")||'<div class="empty" style="padding:8px">Nothing yet</div>'}<div class="done">${a.outcomes} ${a.outLabel}</div></div>
+ <div class="msec"><h5>Tools accessed (through Blackbox)</h5>${toolRows}</div>
+ <div class="msec"><h5>Spend</h5><div class="tl"><span>${money(a.spent)} today</span><span>${a.cap?"cap "+money(a.cap):"no spend allowed"}</span></div><div class="bar"><i style="width:${a.cap?pct:2}%"></i></div></div>
+ <div class="msec"><h5>Permissions</h5><div class="pg">${Object.keys(ACTIONS).map(k=>`<div><span>${ACTIONS[k]}</span><span class="tag ${a.policy[k]}">${a.policy[k]}</span></div>`).join("")}</div></div>
+ <div class="msec"><h5>Action history</h5>${feedHTML(hist,10)}</div>
+ <div style="display:flex;gap:8px;margin-top:16px"><button class="btn no" id="mk">${a.killed?"Re-hire":"Kill this bot"}</button></div>`;
+ $("#modal").classList.add("on");$("#mc").onclick=()=>{$("#modal").classList.remove("on");detail=null};$("#mk").onclick=()=>{setKill(a,!a.killed);$("#modal").classList.remove("on");detail=null;render()}}
+const _seed0=seed;
+function seed(){receipts=[];approvals=[];handoffs=[];agents.forEach(a=>{a.status="idle";a.killed=false;a.now="Standing by";a.from=null});globalKill=false;
+ const order=[["ledger",2],["nutri",2],["instinct",3],["hermes",0],["proof",1],["flyopia",1],["lifehq",1],["grokmkt",0],["dato",3],["standby",0]];
+ order.forEach(([id,i])=>{const a=byId(id);const act=a.script[i];if(act[0]==="send"||act[0]==="post"||act[0]==="spend"){a.status="waiting";a.now="Paused: "+act[1];a.where=act[2]+(act[3]?" \u00b7 "+money(act[3]):"");approvals.push({id:++uid,agent:a.id,act,note:"Policy: ASK",t:ts()})}else{a.status="working";a.now=act[1];a.where=act[2];receipt(a,act,"AUTO",act[3])}});
+ approvals=approvals.slice(0,3);
+ const g=byId("grokceo");g.status="blocked";g.now="Blocked: spend money (policy NEVER)";g.where="Needs a permission change";receipt(g,g.script[3],"NEVER",0,"Policy: NEVER");
+ const dd=byId("dato");if(dd.status==="waiting"){dd.status="working";dd.now=dd.script[0][1];dd.where="Browser"}}
 const ORIG={};agents.forEach(a=>ORIG[a.id]=[a.spent,a.actions,a.outcomes,a.level]);
 seed();render();
 setInterval(()=>{const live=agents.filter(a=>!a.killed&&a.status!=="waiting");if(!live.length||globalKill)return;const n=1+(Math.random()<.4);for(let i=0;i<n;i++)step(live[Math.floor(Math.random()*live.length)]);if(!detail&&tab!=="policies")partial()},2600);
+setInterval(()=>{if(Math.random()<.7)doHandoff()},6000);setTimeout(doHandoff,1800);
 </script></body></html>
+
