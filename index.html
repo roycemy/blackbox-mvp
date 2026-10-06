@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Foreman HQ - Your AI company, live</title>
+<title>Foreman HQ - Every AI employee. One workplace.</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a1424'/%3E%3Crect x='10' y='10' width='12' height='12' rx='3' fill='%235ee7ff'/%3E%3C/svg%3E">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
@@ -326,10 +326,32 @@ body.tpl-bullpen .room.appr{border-color:#8a6a1a;border-top-color:#eab308;backgr
 body.tpl-bullpen .room.appr .lb{color:var(--amber)}
 body.tpl-bullpen .lamp{background:linear-gradient(90deg,transparent,rgba(196,181,253,.55),transparent)}
 @media(max-width:700px){.tplgrid{grid-template-columns:1fr}.tpv{height:70px}}
+/* v6 */
+.elink{background:none;border:0;color:var(--dim);font-size:12px;text-decoration:underline;text-underline-offset:3px;padding:4px 2px}
+.elink:hover{color:var(--red)}
+.nlink{text-decoration:none}
+.nlink:hover .n{text-decoration:underline;text-underline-offset:3px}
+.pgrid{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:6px}
+.pcard{background:rgba(148,163,184,.05);border:1px solid var(--line);border-radius:14px;padding:13px 14px;transition:border-color .15s;text-align:left}
+.pcard:hover{border-color:var(--line2)}
+.pcard .ph{display:flex;align-items:center;gap:11px}
+.pcard .av{width:38px;height:38px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:19px;background:radial-gradient(circle at 35% 30%,#2b3c68,#16213f 75%);border:2px solid var(--col,#4cc9f0)}
+.pcard .pn{font-weight:700;font-size:13.5px}
+.pcard .pd{color:var(--mut);font-size:11.5px}
+.pcard .pbody{margin-top:10px}
+.pok{color:var(--grn);font-weight:600;font-size:12.5px}
+.cf{font-size:12.5px;color:var(--mut)}
+.cspin{display:inline-block;width:12px;height:12px;border:2px solid var(--line2);border-top-color:var(--cy);border-radius:50%;animation:cspin .8s linear infinite;vertical-align:-2px;margin-right:6px}
+@keyframes cspin{to{transform:rotate(360deg)}}
+.cok{color:var(--grn);font-weight:700;margin-bottom:4px}
+.cq{font-weight:600;color:var(--tx);margin:12px 0 6px;font-size:12.5px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.ch.revoked{filter:grayscale(.9) brightness(.75)}
+.ch.revoked .hd{border-color:#4a5570}
 </style></head><body>
 <div class="top"><div class="mark"></div><div class="brand">FOREMAN <b>HQ</b></div><div class="sum" id="sum"></div><div class="sp"></div>
-<button class="btn" id="recap">While you were away</button><button class="btn pri" id="addb">+ Add bot</button><button class="btn red" id="killall">Pause all</button></div>
-<nav id="nav"><a href="#office" data-v="office">HQ</a><a href="#approvals" data-v="approvals">Approvals<span class="bd" id="apb" style="display:none"></span></a><a href="#receipts" data-v="receipts">Activity</a><a href="#stubs" data-v="stubs">Team</a><a href="#policies" data-v="policies">Permissions</a></nav>
+<button class="btn" id="recap">While you were away</button><button class="btn pri" id="addb">+ Connect a bot</button><button class="elink" id="emer">Emergency controls</button></div>
+<nav id="nav"><a href="#office" data-v="office">HQ</a><a href="#stubs" data-v="stubs">Team</a><a href="#receipts" data-v="receipts">Activity</a><a href="#policies" data-v="policies">Permissions</a></nav>
 <main>
 <section class="view" id="v-office"><div class="floor" id="floor"></div><div class="tray" id="tray"></div></section>
 <section class="view" id="v-approvals"></section>
@@ -337,29 +359,29 @@ body.tpl-bullpen .lamp{background:linear-gradient(90deg,transparent,rgba(196,181
 <section class="view" id="v-stubs"></section>
 <section class="view" id="v-policies"></section>
 </main>
-<div class="goalbar" id="goalbar"><div class="goalst" id="goalst"></div><form id="gf"><input id="gi" placeholder="What should your team do?" autocomplete="off"><button class="btn pri" type="submit">Go</button></form></div>
+<div class="goalbar" id="goalbar"><div class="goalst" id="goalst"></div><form id="gf"><input id="gi" placeholder="What should your team work on?" autocomplete="off"><button class="btn pri" type="submit">Go</button></form></div>
 <div class="dr" id="dr"></div>
 <div class="toast" id="toast"></div>
 <div class="away" id="away"><div class="box"><h2>While you were away</h2><div class="sub">Your team kept working. Here is what got done.</div>
-<div class="grid"><div class="st"><div class="v">28</div><div class="l">leads researched</div></div><div class="st"><div class="v">2</div><div class="l">campaigns created</div></div><div class="st"><div class="v">4</div><div class="l">meetings scheduled</div></div><div class="st warn"><div class="v">2</div><div class="l">approvals waiting for you</div></div></div>
+<div class="grid"><div class="st"><div class="v">28</div><div class="l">leads researched</div></div><div class="st"><div class="v">2</div><div class="l">campaigns created</div></div><div class="st"><div class="v">4</div><div class="l">meetings scheduled</div></div><div class="st warn"><div class="v">2</div><div class="l">decisions need you</div></div></div>
 <ul><li>Dato scored the new lead list and handed the top 10 to NutriBridge Rep</li><li>Grok Marketing drafted two Q4 campaigns, ready for review</li><li>Ledger is holding a Meta Ads spend until you approve it</li></ul>
 <button class="btn pri go" id="awaygo">Go to the office</button></div></div>
 <div class="ob" id="ob"><div class="box">
-<div class="dots" id="obdots"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+<div class="dots" id="obdots"><i class="on"></i><i></i><i></i><i></i></div>
 <div class="step on" data-s="0">
 <div class="logo"><div class="mark"></div><div class="brand">FOREMAN <b>HQ</b></div></div>
 <h2>Your AI company, in one office</h2>
-<div class="sub">Connect your bots, set their permissions, and watch them work. Gusto for AI employees.</div>
+<div class="sub">Every AI employee. One workplace. Connect your bots, set their permissions, and watch them work.</div>
 <label>Phone number</label>
 <input type="tel" id="obphone" placeholder="+1 (555) 010-2030" autocomplete="off">
 <div class="hint">Demo only - nothing is sent or stored.</div>
 <div class="row"><button class="skip" id="obskip0">Skip to the live office</button><button class="btn pri big" id="obnext0">Continue</button></div>
 </div>
 <div class="step" data-s="1">
-<h2>Connect your bots</h2>
-<div class="sub">Choose who joins your team. You can add more later.</div>
-<div class="bgrid" id="obbots"></div>
-<div class="row"><button class="skip" id="obback1">Back</button><button class="btn pri big" id="obnext1">Connect <span id="obcount"></span> bots</button></div>
+<h2>Connect your AI employees</h2>
+<div class="sub">Bring the bots you already use into one workplace. Connect bot → choose role → set permissions → Add to HQ.</div>
+<div class="pgrid" id="obprov"></div>
+<div class="row"><button class="skip" id="obback1">Back</button><button class="btn pri big" id="obnext1">Continue</button></div>
 </div>
 <div class="step" data-s="2">
 <h2>Pick your office</h2>
@@ -368,23 +390,20 @@ body.tpl-bullpen .lamp{background:linear-gradient(90deg,transparent,rgba(196,181
 <div class="row"><button class="skip" id="obback2">Back</button><button class="btn pri big" id="obnext2">Continue</button></div>
 </div>
 <div class="step" data-s="3">
-<h2>Set your permissions</h2>
-<div class="sub">Every action a bot takes is AUTO, ASK, or NEVER. Pick a starting posture - tune it per bot anytime.</div>
-<button class="preset on" data-p="safe"><div class="pt">Start safe <span class="rc">RECOMMENDED</span></div><div class="pd2">Bots work on their own, but sending, posting, spending and deploying wait for your OK.</div></button>
-<button class="preset" data-p="loose"><div class="pt">Hands off</div><div class="pd2">Almost everything runs AUTO. Only deletions and big spends ask first.</div></button>
-<button class="preset" data-p="strict"><div class="pt">Locked down</div><div class="pd2">Everything above reading data needs your approval first.</div></button>
-<div class="row"><button class="skip" id="obback3">Back</button><button class="btn pri big" id="obnext3">Continue</button></div>
-</div>
-<div class="step" data-s="4">
 <div class="fin"><div class="big-emoji">&#x1F3E2;</div>
 <h2>Your team is in the office</h2>
 <div class="sub">Bots are at their desks. Approvals land at the Needs You station, and every action leaves a receipt.</div>
 <div class="row"><button class="btn pri big" id="obdone" style="width:100%">Enter HQ</button></div></div>
 </div>
 </div></div>
-<div class="modal" id="modal"><div class="box"><h3 style="margin:0 0 8px">Add a bot to your team</h3>
-<label>Name</label><input id="mn" placeholder="e.g. Scout"><label>Role</label><input id="mr" placeholder="e.g. Competitor research">
-<label>Department</label><select id="md"></select><div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn" id="mc">Cancel</button><button class="btn pri" id="mok">Hire</button></div></div></div>
+<div class="modal" id="modal"><div class="box" style="width:520px"><h3 style="margin:0 0 4px">Connect your AI employees</h3>
+<div style="color:var(--mut);margin-bottom:14px;font-size:12.5px">Connect bot → choose role → set permissions → Add to HQ.</div>
+<div class="pgrid" id="mprov"></div><div style="display:flex;justify-content:flex-end;margin-top:12px"><button class="btn" id="mc">Close</button></div></div></div>
+<div class="modal" id="emodal"><div class="box"><h3 style="margin:0 0 4px">Emergency Controls</h3>
+<div style="color:var(--mut);margin-bottom:16px;font-size:12.5px">Stops everything immediately. Asks for confirmation.</div>
+<button class="btn red" id="epause" style="width:100%;margin-bottom:9px;padding:11px">Pause all agents</button>
+<button class="btn red" id="erevoke" style="width:100%;padding:11px">Revoke execution access</button>
+<div style="display:flex;justify-content:flex-end;margin-top:14px"><button class="skip" id="eclose" style="background:none;border:0;color:var(--dim);text-decoration:underline">Close</button></div></div></div>
 <script>
 const ACTIONS={read:"Read data",draft:"Draft content",update:"Update records",send:"Send externally",post:"Post publicly",deploy:"Change production",spend:"Spend money",delete:"Delete data"};
 const LV={Intern:{read:"AUTO",draft:"AUTO",update:"ASK",send:"ASK",post:"NEVER",deploy:"NEVER",spend:"NEVER",delete:"NEVER",cap:0},
@@ -401,7 +420,7 @@ let LAYOUT="classic";
 let ROOMS=LAYOUTS.classic.rooms,LOUNGE=LAYOUTS.classic.lounge,MEET=LAYOUTS.classic.meet,APPR=LAYOUTS.classic.appr,MSLOT=LAYOUTS.classic.mslot,ASLOT=LAYOUTS.classic.aslot,DOOR=LAYOUTS.classic.door;
 function applyLayout(k){const L=LAYOUTS[k];if(!L||k===LAYOUT&&document.body.className)return;LAYOUT=k;ROOMS=L.rooms;LOUNGE=L.lounge;MEET=L.meet;APPR=L.appr;MSLOT=L.mslot;ASLOT=L.aslot;DOOR=L.door;document.body.className="tpl-"+k;buildFloor();agents.forEach(a=>{paint(a);const p=a.joining?DOOR:homeOf(a);setPos(a,p[0],p[1],600)});refresh()}
 const T=(a,t,tool,d,x)=>Object.assign({a,t,tool,d},x||{});
-const A=(id,name,emo,col,room,role,level,base,script,over)=>({id,name,emo,col,room,role,level,policy:Object.assign({},LV[level],over||{}),spent:base[0],actions:base[1],outcomes:base[2],outLabel:base[3],script,i:0,st:"idle",now:"Standing by",done:[],hist:[],tools:{},killed:false,lock:false,carry:null,bub:null,x:0,y:0,slot:0});
+const A=(id,name,emo,col,room,role,level,base,script,over)=>({id,name,emo,col,room,role,level,policy:Object.assign({},LV[level],over||{}),spent:base[0],actions:base[1],outcomes:base[2],outLabel:base[3],script,i:0,st:"idle",now:"Standing by",done:[],hist:[],tools:{},killed:false,revoked:false,lock:false,carry:null,bub:null,x:0,y:0,slot:0});
 const agents=[
 A("instinct","Instinct","\u{1F9E0}","#7c9cff","ops","Main assistant and executor","Manager",[31,212,9,"booked calls"],[
  T("read","Researching Q4 priorities","Gmail",5,{ho:["grokmkt","Q4 priorities brief"]}),T("draft","Drafting reply to Babson advisor","Gmail",5),T("update","Adding tasks to Life HQ","Life HQ DB",4),T("send","Sending follow-up to a prospect","Gmail",4,{item:"1 follow-up email"}),T("read","Reviewing inbox and calendar","Gmail",5)],{send:"ASK"}),
@@ -427,7 +446,7 @@ A("proofcoach","Proof Coach","\u{1F3AF}","#a3e635","support","Coaching check-ins
  T("read","Reviewing check-in notes","Proof DB",5),T("draft","Writing coaching nudge","Proof",5),T("post","Posting a public testimonial","Social",3)])];
 {const cnt={};agents.forEach(a=>{a.slot=cnt[a.room]=(cnt[a.room]||0);cnt[a.room]++})}
 const byId=Object.fromEntries(agents.map(a=>[a.id,a]));
-const G={paused:false,approvals:[],receipts:[],goal:null,nreq:0,handoffs:0,approved:0};
+const G={paused:false,approvals:[],receipts:[],goal:null,nreq:0,handoffs:0,approved:0,completedToday:11};
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const $=s=>document.querySelector(s);const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const money=n=>"$"+n.toFixed(2);const now=()=>new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit",second:"2-digit"});
@@ -453,12 +472,12 @@ const goHome=a=>{const [x,y]=homeOf(a);return walk(a,x,y)};
 const ICON={working:"\u2699\uFE0F",needs:"\u{1F7E1}",blocked:"\u{1F534}",handoff:"\u27A1\uFE0F",meeting:"\u{1F4AC}",done:"\u2705",idle:"\u{1F4A4}",paused:"\u23F8"};
 function vs(){return this.st==="done"?"working":this.st==="handoff"||this.st==="meeting"?"working":this.st}
 agents.forEach(a=>a.vs=vs);[['lifehq',16000],['dato',12000],['standby',14000],['proofcoach',22000],['flyopia',10000]].forEach(([i,r])=>byId[i]&&(byId[i].rest=r));
-function paint(a){const e=a.el;if(!e)return;e.className="ch "+a.st+(e.classList.contains("walk")?" walk":"");
+function paint(a){const e=a.el;if(!e)return;e.className="ch "+a.st+(a.revoked?" revoked":"")+(e.classList.contains("walk")?" walk":"");
  const txt=a.bub||(a.st==="needs"?"Needs approval":a.st==="blocked"?"Blocked":a.now);e.querySelector(".bub").textContent=ICON[a.st]+" "+txt;
  const t=e.querySelector(".tok");if(a.carry){t.style.display="block";t.textContent="\u{1F4C4} "+a.carry}else t.style.display="none"}
 function setSt(a,st,nw){a.st=st;if(nw)a.now=nw;paint(a);refresh()}
 function hist(a,m){a.hist.unshift(now()+"  "+m);if(a.hist.length>30)a.hist.pop()}
-function receipt(a,action,text,dec,amt){G.receipts.unshift({t:now(),agent:a.name,action,text,dec,amt:amt||0});if(G.receipts.length>200)G.receipts.pop();hist(a,dec+": "+text)}
+function receipt(a,action,text,dec,amt,tool){G.receipts.unshift({t:now(),agent:a.name,action,text,dec,amt:amt||0,tool:tool||""});if(G.receipts.length>200)G.receipts.pop();hist(a,dec+": "+text)}
 function use(a,tool){a.tools[tool]=(a.tools[tool]||0)+1}
 function flash(a,m,ms){a.bub=m;paint(a);setTimeout(()=>{if(a.bub===m){a.bub=null;paint(a)}},ms||2500)}
 /* tick: returns false if preempted */
@@ -474,7 +493,7 @@ async function askApproval(a,t,plain){
 async function resolveReq(id,d){const r=G.approvals.find(x=>x.id===id);if(r)r.res(d)}
 async function runTask(a,t){
  const lvl=a.policy[t.a];const needsAsk=lvl==="ASK"||(t.a==="spend"&&lvl==="AUTO"&&t.amt>a.policy.cap);
- if(lvl==="NEVER"){setSt(a,"blocked","Blocked: "+ACTIONS[t.a]+" is NEVER");receipt(a,t.a,t.t,"Blocked by policy");if(!await tick(a,7000))return;return}
+ if(lvl==="NEVER"){setSt(a,"blocked","Blocked: "+ACTIONS[t.a]+" is NEVER for "+a.name);receipt(a,t.a,t.t,"Blocked by policy",0,t.tool);if(!await tick(a,7000))return;return}
  if(needsAsk){if(pend()>=3||(t.first&&0))return;
   const d=await askApproval(a,t);if(a.killed||a.lock){return}
   if(d==="deny"||d==="kill"){await goHome(a);if(d==="deny"){receipt(a,t.a,t.t,"Denied by Royce (demo)");setSt(a,"idle","Denied, standing by");await tick(a,3000)}return}
@@ -487,7 +506,7 @@ async function runTask(a,t){
  if(t.ho)await handoff(a,t.ho[0],t.ho[1]);
  if(t.meet&&!a.killed&&!a.lock)await meeting(a,t.meet[0],t.meet[1]);
  if(!a.killed&&!a.lock){setSt(a,"idle","Idle");await tick(a,1200)}}
-function finish(a,t,dec){a.actions++;if(t.a==="spend"&&t.amt)a.spent+=t.amt;else if(t.a==="spend")a.spent+=1;if(a.actions%5===0)a.outcomes++;use(a,t.tool);a.done.unshift(t.t);if(a.done.length>8)a.done.pop();receipt(a,t.a,t.t,dec,t.amt)}
+function finish(a,t,dec){a.actions++;if(t.a==="spend"&&t.amt)a.spent+=t.amt;else if(t.a==="spend")a.spent+=1;if(a.actions%5===0)a.outcomes++;use(a,t.tool);a.done.unshift(t.t);if(a.done.length>8)a.done.pop();G.completedToday++;receipt(a,t.a,t.t,dec,t.amt,t.tool)}
 async function handoff(a,toId,item){const b=byId[toId];if(!b||b.killed||b.lock||b===a||!["working","idle","done"].includes(b.st))return;
  a.carry=item;setSt(a,"handoff","Handing "+item+" to "+b.name);const [bx,by]=homeOf(b);await walk(a,bx+(a.x<bx?-6:6)*(window.innerWidth<700?.6:1),by+1);
  if(a.killed||a.lock||!["working","idle","done"].includes(b.st)){a.carry=null;paint(a);await goHome(a);return}
@@ -499,16 +518,30 @@ async function meeting(a,bid,topic){const b=byId[bid];if(G.meetBusy||!b||b.kille
  await sleep(5500);await Promise.all([goHome(a),goHome(b)]);b.lock=false;G.meetBusy=false;setSt(a,"idle","Back at desk");if(!b.killed)setSt(b,"working","Back to work")}
 async function loop(a){await sleep(800+Math.random()*2500);
  while(true){if(a.lock||a.killed||G.paused||a.joining){await sleep(400);continue}
+  if(a.revoked){setSt(a,"blocked","Tried to act - Foreman blocked it");receipt(a,"read","Tried to work while revoked","Blocked - access revoked",0,"Foreman");flash(a,"Blocked: no access",3500);await tick(a,5000);if(a.revoked){setSt(a,"paused","Access revoked");await tick(a,9000)}continue}
   if(a.rest&&a.i>0&&a.i%a.script.length===0&&!a.rested){a.rested=true;await goHome(a);setSt(a,"idle","Idle, no tasks queued");await tick(a,a.rest);continue}a.rested=false;
   let t=a.script[a.i%a.script.length];a.i++;
   try{await runTask(a,t)}catch(e){console.error(e)}
   await sleep(100)}}
 /* kill */
-function killAgent(a){a.killed=true;const r=G.approvals.find(x=>x.a===a);if(r)r.res("kill");a.carry=null;setSt(a,"paused","Paused by Royce");hist(a,"Paused (kill switch)");receipt(a,"kill","Kill switch pressed","Paused");goHome(a)}
-function reviveAgent(a){a.killed=false;setSt(a,"idle","Resumed");hist(a,"Resumed")}
-$("#killall").onclick=()=>{G.paused=!G.paused;$("#killall").textContent=G.paused?"Resume all":"Pause all";$("#killall").className="btn "+(G.paused?"grn":"red");
- agents.forEach(a=>{if(G.paused){const r=G.approvals.find(x=>x.a===a);if(r)r.res("kill");a.carry=null;setSt(a,"paused","Paused (global)");goHome(a)}else if(!a.killed)setSt(a,"idle","Resumed")});
- receipt(agents[0],"kill",G.paused?"Global kill switch":"Global resume","Global");refresh()};
+function killAgent(a){a.killed=true;const r=G.approvals.find(x=>x.a===a);if(r)r.res("kill");a.carry=null;setSt(a,"paused","Paused by you");hist(a,"Paused by owner");receipt(a,"kill","Bot paused by you","Paused");goHome(a)}
+function reviveAgent(a){a.killed=false;setSt(a,"idle","Resumed");hist(a,"Resumed");receipt(a,"update","Bot resumed by you","Resumed")}
+function pauseAll(on){G.paused=on===undefined?!G.paused:on;
+ agents.forEach(a=>{if(G.paused){const r=G.approvals.find(x=>x.a===a);if(r)r.res("kill");a.carry=null;setSt(a,"paused","Paused (emergency)");goHome(a)}else if(!a.killed&&!a.revoked)setSt(a,"idle","Resumed")});
+ receipt(agents[0],"kill",G.paused?"Emergency: all agents paused":"All agents resumed","Emergency");refresh()}
+function allRevoked(){return agents.every(a=>a.revoked)}
+function revokeAll(on){agents.forEach(a=>{a.revoked=on;if(on){const r=G.approvals.find(x=>x.a===a);if(r)r.res("kill");a.carry=null;setSt(a,"paused","Access revoked");goHome(a)}else if(!a.killed)setSt(a,"idle","Access restored")});
+ receipt(agents[0],"kill",on?"Emergency: execution access revoked":"Execution access restored","Emergency");refresh()}
+let eArm=null;function eArmBtn(btn,label,fn){if(eArm===btn){eArm=null;btn.textContent=label;fn()}else{eArm=btn;btn.textContent="Tap again to confirm";setTimeout(()=>{if(eArm===btn){eArm=null;renderEmer()}},3000)}}
+function renderEmer(){$("#epause").textContent=eArm===$("#epause")?"Tap again to confirm":(G.paused?"Resume all agents":"Pause all agents");
+ $("#epause").className="btn "+(G.paused?"grn":"red");$("#epause").style.cssText="width:100%;margin-bottom:9px;padding:11px";
+ $("#erevoke").textContent=eArm===$("#erevoke")?"Tap again to confirm":(allRevoked()?"Restore execution access":"Revoke execution access");
+ $("#erevoke").className="btn "+(allRevoked()?"grn":"red");$("#erevoke").style.cssText="width:100%;padding:11px"}
+$("#emer").onclick=()=>{renderEmer();$("#emodal").classList.add("on")};
+$("#eclose").onclick=()=>{$("#emodal").classList.remove("on");eArm=null};
+$("#emodal").onclick=e=>{if(e.target.id==="emodal"){$("#emodal").classList.remove("on");eArm=null}};
+$("#epause").onclick=e=>{if(G.paused){pauseAll(false);renderEmer();return}eArmBtn(e.target,"Pause all agents",()=>{pauseAll(true);renderEmer()})};
+$("#erevoke").onclick=e=>{if(allRevoked()){revokeAll(false);renderEmer();return}eArmBtn(e.target,"Revoke execution access",()=>{revokeAll(true);renderEmer()})};
 /* goals */
 async function runGoal(text){
  if(G.goal){toast("A goal is already running");return}
@@ -535,17 +568,44 @@ async function runGoal(text){
  }finally{used.forEach(a=>{a.lock=false;if(!a.killed&&a.st!=="needs")setSt(a,"idle","Goal done")});G.goal=null;setTimeout(()=>{if(!G.goal)$("#goalst").textContent=""},6000)}
  function a1done(){A1.actions++;A1.done.unshift("Research: "+short)}}
 $("#gf").onsubmit=e=>{e.preventDefault();const v=$("#gi").value.trim();if(!v)return;$("#gi").value="";location.hash="#office";runGoal(v)};
-/* onboarding */
-function fillDepts(){$("#md").innerHTML=Object.keys(ROOMS).map(k=>`<option value="${k}">${ROOMS[k].n[0]+ROOMS[k].n.slice(1).toLowerCase()}</option>`).join("")}
-$("#addb").onclick=()=>{fillDepts();$("#modal").classList.add("on")};$("#mc").onclick=()=>$("#modal").classList.remove("on");
-$("#mok").onclick=async()=>{const name=$("#mn").value.trim()||"Scout",role=$("#mr").value.trim()||"New hire",room=$("#md").value;
- const used=agents.filter(a=>a.room===room).map(a=>a.slot);const slot=[0,1,2,3].find(i=>!used.includes(i));
- if(slot===undefined){toast(ROOMS[room].n+" is full");return}
- $("#modal").classList.remove("on");location.hash="#office";
- const cols=["#67e8f9","#f0abfc","#bef264","#fcd34d"];
- const a=A("new"+Date.now(),name,"\u{1F916}",cols[agents.length%4],room,role,"Intern",[0,0,0,"tasks"],[T("read","Getting oriented","Docs",5),T("draft","Drafting first report","Docs",5),T("update","Updating notes","Docs",4)]);
- a.vs=vs;a.joining=true;a.slot=slot;byId[a.id]=a;agents.push(a);mkEl(a);paint(a);drawDesks();toast(name+" joined your team");
- await sleep(400);setSt(a,"idle","Joined the team");await goHome(a);a.joining=false;drawDesks();hist(a,"Joined the team");receipt(a,"update",name+" joined the team","Onboarded");loop(a)};
+/* connect flow: Connect bot -> role -> permissions -> Add to HQ -> bot walks in */
+const PROVIDERS=[
+{id:"instinct",n:"Instinct",co:"Instinct",d:"Connect your Instinct agent",emo:"\u{1F9E0}",col:"#7c9cff",pre:1,bot:{name:"Instinct",room:"ops",roles:["Main assistant and executor","Chief of staff","Operations lead"]},script:[T("read","Reviewing inbox and calendar","Gmail",5),T("draft","Drafting replies","Gmail",5),T("send","Sending follow-up to a prospect","Gmail",4,{item:"1 follow-up email"})]},
+{id:"muse",n:"Meta Muse",co:"Meta",d:"Connect your Muse agent",emo:"\u{1F3B5}",col:"#f0abfc",bot:{name:"Muse",room:"marketing",roles:["Marketing Manager","Content creator","Ad buyer"]},script:[T("read","Researching audience segments","Meta",5),T("draft","Drafting ad creatives","Docs",5),T("spend","Boosting the top post","Meta Ads",4,{amt:240,item:"Meta Ads boost"})]},
+{id:"dots",n:"OpenAI Dots",co:"OpenAI",d:"Connect your OpenAI agents",emo:"\u{1F7E2}",col:"#5eead4",bot:{name:"Dots",room:"ops",roles:["Research analyst","Data analyst","Writer"]},script:[T("read","Researching competitors","Web",6),T("draft","Writing research brief","Docs",5),T("send","Sending weekly digest","Gmail",4,{item:"1 digest email"})]},
+{id:"grok",n:"Grok Bot",co:"xAI",d:"Connect your Grok-powered bots",emo:"\u{1F451}",col:"#fbbf24",pre:1,bot:{name:"Grok Bot",room:"marketing",roles:["Campaign builder","Strategist","Social manager"]},script:[T("draft","Building campaign brief","Docs",5),T("post","Posting to social","Social",3,{item:"3 posts"}),T("read","Checking campaign metrics","Analytics",4)]},
+{id:"custom",n:"Other / Custom Agent",co:"your API",d:"Connect through API or MCP",emo:"\u{1F527}",col:"#9fb2d8",bot:{name:"Custom Agent",room:"support",roles:["Specialist","Support responder","Analyst"]},script:[T("read","Reading support tickets","Helpdesk",5),T("draft","Drafting replies","Helpdesk",4),T("update","Updating records","CRM",4)]}
+];
+const ACC_OPTS=["Gmail","Calendar","Meta Ads","Stripe","Social accounts","Web research"];
+const CF={};
+function provCards(el){el.innerHTML=PROVIDERS.map(p=>`<div class="pcard" style="--col:${p.col}"><div class="ph"><span class="av">${p.emo}</span><div><div class="pn">${p.n}</div><div class="pd">${p.d}</div></div></div><div class="pbody" id="pb-${el.id}-${p.id}">${p.pre?`<div class="pok">\u2713 In your team</div>`:`<button class="btn pri" onclick="cfStart('${el.id}','${p.id}')">Connect</button>`}</div></div>`).join("")}
+window.cfStart=async(el,pid)=>{const p=PROVIDERS.find(x=>x.id===pid);const b=$("#pb-"+el+"-"+pid);
+ b.innerHTML=`<div class="cf"><span class="cspin"></span>Connecting to ${p.co}\u2026</div>`;await sleep(1000);
+ if(CF[pid]&&CF[pid].done){b.innerHTML=`<div class="pok">\u2713 ${p.bot.name} joined your team</div>`;return}
+ CF[pid]={role:p.bot.roles[0],access:new Set(ACC_OPTS.slice(0,2)),lvl:"Staff"};
+ b.innerHTML=`<div class="cf"><div class="cok">\u2713 Connected to ${p.co}</div>
+ <div class="cq">1. What is this bot's role?</div><div class="chips">${p.bot.roles.map((r,i)=>`<button class="chip${i===0?" on":""}" onclick="cfRole('${pid}',${i},this)">${r}</button>`).join("")}</div>
+ <div class="cq">2. What can it access?</div><div class="chips">${ACC_OPTS.map((x,i)=>`<button class="chip${i<2?" on":""}" onclick="cfAcc(this,'${pid}','${x}')">${x}</button>`).join("")}</div>
+ <div class="cq">3. What should be AUTO / ASK / NEVER?</div><div class="chips">
+ <button class="chip" onclick="cfLvl('${pid}','Intern',this)">Locked down - asks first</button>
+ <button class="chip on" onclick="cfLvl('${pid}','Staff',this)">Start safe - recommended</button>
+ <button class="chip" onclick="cfLvl('${pid}','Manager',this)">Hands off - mostly AUTO</button></div>
+ <button class="btn pri big" style="width:100%;margin-top:14px;padding:11px" onclick="cfAdd('${pid}')">Add to HQ</button></div>`};
+window.cfRole=(pid,i,btn)=>{CF[pid].role=PROVIDERS.find(x=>x.id===pid).bot.roles[i];btn.parentElement.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",c===btn))};
+window.cfAcc=(btn,pid,x)=>{const st=CF[pid].access;st.has(x)?st.delete(x):st.add(x);btn.classList.toggle("on")};
+window.cfLvl=(pid,l,btn)=>{CF[pid].lvl=l;btn.parentElement.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",c===btn))};
+window.cfAdd=async(pid)=>{const p=PROVIDERS.find(x=>x.id===pid),c=CF[pid];if(!c||c.done)return;c.done=true;
+ const room=p.bot.room;const used=agents.filter(a=>a.room===room).map(a=>a.slot);const slot=[0,1,2,3].find(i=>!used.includes(i));
+ if(slot===undefined){toast(ROOMS[room].n+" is full");c.done=false;return}
+ const a=A("cf"+pid,p.bot.name,p.emo,p.col,room,c.role,c.lvl,[0,0,0,"tasks"],p.script.map(t=>Object.assign({},t)));
+ a.vs=vs;a.joining=true;a.slot=slot;a.access=[...c.access];byId[a.id]=a;agents.push(a);mkEl(a);paint(a);drawDesks();
+ document.querySelectorAll(`#pb-obprov-${pid},#pb-mprov-${pid}`).forEach(x=>x.innerHTML=`<div class="pok">\u2713 ${p.bot.name} joined your team</div>`);
+ toast(p.bot.name+" joined your team.");hist(a,"Joined via "+p.n);receipt(a,"update",p.bot.name+" joined the team ("+p.n+")","Onboarded",0,p.n);
+ if(!$("#ob").classList.contains("on")){$("#modal").classList.remove("on");location.hash="#office";await sleep(350);await goHome(a);a.joining=false;drawDesks();setSt(a,"idle","Ready for work")}
+ loop(a)};
+$("#addb").onclick=()=>{provCards($("#mprov"));$("#modal").classList.add("on")};
+$("#mc").onclick=()=>$("#modal").classList.remove("on");
+$("#modal").onclick=e=>{if(e.target.id==="modal")$("#modal").classList.remove("on")};
 function toast(m){const t=$("#toast");t.textContent=m;t.style.display="block";clearTimeout(t._t);t._t=setTimeout(()=>t.style.display="none",3200)}
 /* panels */
 function counts(){const c={working:0,needs:0,blocked:0};agents.forEach(a=>{if(a.st==="needs")c.needs++;else if(a.st==="blocked")c.blocked++;else if(["working","handoff","meeting","done"].includes(a.st))c.working++});return c}
@@ -554,14 +614,13 @@ function renderTray(){const t=$("#tray");t.className="tray"+(G.approvals.length?
  t.innerHTML=G.approvals.map(r=>`<div class="req"><div class="q">\u{1F7E1} ${r.text}</div><div class="bt"><button class="btn grn" data-r="${r.id}" data-d="approve">Approve once</button>${r.t.amt?`<button class="btn amb" data-r="${r.id}" data-d="raise">Raise limit</button>`:""}<button class="btn red" data-r="${r.id}" data-d="deny">Deny</button></div></div>`).join("");
  $("#appr").classList.toggle("hot",G.approvals.length>0)}
 document.addEventListener("click",e=>{const b=e.target.closest("[data-r]");if(b)resolveReq(+b.dataset.r,b.dataset.d)});
-function refresh(){const c=counts();$("#sum").innerHTML=`${c.working} working \u00B7 <span class="n">${c.needs} need you</span>${c.blocked?` \u00B7 <span style="color:var(--red)">${c.blocked} blocked</span>`:""}`;
- const b=$("#apb");b.style.display=G.approvals.length?"inline":"none";b.textContent=G.approvals.length;
+function refresh(){const c=counts();$("#sum").innerHTML=`${c.working} working \u00B7 <a href="#approvals" class="nlink"><span class="n">${c.needs} need you</span></a> \u00B7 ${G.completedToday} completed today${c.blocked?` \u00B7 <span style="color:var(--red)">${c.blocked} blocked</span>`:""}`;
  for(const k in ROOMS){const m=agents.filter(a=>a.room===k);$("#ct-"+k).textContent=m.length+" bot"+(m.length===1?"":"s")}
  agents.forEach(a=>{const d=document.querySelector(`[data-d="${a.room}${a.slot}"]`);if(d)d.className="desk "+(a.joining?"empty":a.vs())});
  if(DR)renderDr()}
 function render(){renderTray();refresh();const v=location.hash.slice(1)||"office";if(v==="approvals")vApprovals();if(v==="receipts")vReceipts();if(v==="stubs")vStubs();if(v==="policies")vPolicies()}
-function vApprovals(){$("#v-approvals").innerHTML=`<h3>Approvals queue</h3>`+(G.approvals.length?G.approvals.map(r=>`<div class="req" style="margin-bottom:10px"><div class="q">\u{1F7E1} ${r.text}</div><div class="bt"><button class="btn grn" data-r="${r.id}" data-d="approve">Approve once</button>${r.t.amt?`<button class="btn amb" data-r="${r.id}" data-d="raise">Raise limit</button>`:""}<button class="btn red" data-r="${r.id}" data-d="deny">Deny</button></div></div>`).join(""):`<div class="card">Nothing needs you right now. Your team is working.</div>`)}
-function vReceipts(){$("#v-receipts").innerHTML=`<h3>Activity and receipts</h3><div class="sum" style="margin-bottom:12px">Every action leaves a receipt - who did what, the decision behind it, and what it cost.</div><div class="feed">${G.receipts.slice(0,60).map(r=>{const ic={read:"\u{1F4D6}",draft:"\u270D\uFE0F",update:"\u{1F504}",send:"\u{1F4E8}",post:"\u{1F4E3}",deploy:"\u{1F680}",spend:"\u{1F4B3}",delete:"\u{1F5D1}\uFE0F",kill:"\u{1F6D1}"}[r.action]||"\u{1F9FE}";return `<div class="rcpt"><div class="ic">${ic}</div><div class="tx"><div class="t">${esc(r.text)}</div><div class="s">${esc(r.agent)} \u00B7 ${esc(r.dec)}</div></div>${r.amt?`<div class="amt">${money(r.amt)}</div>`:""}<div class="tm">${r.t}</div></div>`}).join("")||`<div class="card">Nothing yet - receipts appear here as your team works.</div>`}</div>`}
+function vApprovals(){$("#v-approvals").innerHTML=`<h3>Needs You</h3><div class="sum" style="margin-bottom:12px">One queue for every decision your team is holding. Approve and the bot goes straight back to work - a receipt is created either way.</div>`+(G.approvals.length?G.approvals.map(r=>`<div class="req" style="margin-bottom:10px"><div class="q">\u{1F7E1} ${r.text}</div><div class="bt"><button class="btn grn" data-r="${r.id}" data-d="approve">Approve once</button>${r.t.amt?`<button class="btn amb" data-r="${r.id}" data-d="raise">Raise limit</button>`:""}<button class="btn red" data-r="${r.id}" data-d="deny">Deny</button></div></div>`).join(""):`<div class="card">Nothing needs you right now. Your team is working.</div>`)}
+function vReceipts(){$("#v-receipts").innerHTML=`<h3>Activity and receipts</h3><div class="sum" style="margin-bottom:12px">Every meaningful action leaves a receipt - which bot acted, what it did, the app it touched, AUTO or ASK, who approved, and what it cost.</div><div class="feed">${G.receipts.slice(0,60).map(r=>{const ic={read:"\u{1F4D6}",draft:"\u270D\uFE0F",update:"\u{1F504}",send:"\u{1F4E8}",post:"\u{1F4E3}",deploy:"\u{1F680}",spend:"\u{1F4B3}",delete:"\u{1F5D1}\uFE0F",kill:"\u{1F6D1}"}[r.action]||"\u{1F9FE}";return `<div class="rcpt"><div class="ic">${ic}</div><div class="tx"><div class="t">${esc(r.text)}</div><div class="s">${esc(r.agent)}${r.tool?" \u00B7 "+esc(r.tool):""} \u00B7 ${esc(r.dec)}</div></div>${r.amt?`<div class="amt">${money(r.amt)}</div>`:""}<div class="tm">${r.t}</div></div>`}).join("")||`<div class="card">Nothing yet - receipts appear here as your team works.</div>`}</div>`}
 function vStubs(){const c=counts();const sp=agents.reduce((s,a)=>s+a.spent,0),ac=agents.reduce((s,a)=>s+a.actions,0);
  $("#v-stubs").innerHTML=`<h3>Team</h3><div class="cards"><div class="card"><div class="v">${c.working}</div><div class="l">working</div></div><div class="card"><div class="v" style="color:var(--amber)">${c.needs}</div><div class="l">need you</div></div><div class="card"><div class="v" style="color:var(--red)">${c.blocked}</div><div class="l">blocked</div></div><div class="card"><div class="v">${ac}</div><div class="l">actions</div></div><div class="card"><div class="v">${money(sp)}</div><div class="l">spend</div></div><div class="card"><div class="v">${G.handoffs}</div><div class="l">handoffs this session</div></div></div>
  <div class="card tw"><table><tr><th>Pay stub</th><th>Role</th><th>Actions</th><th>Outcomes</th><th>Spend</th><th>Cost / outcome</th><th>Level</th></tr>${agents.map(a=>`<tr><td><b>${esc(a.name)}</b></td><td>${esc(a.role)}</td><td>${a.actions}</td><td>${a.outcomes} ${esc(a.outLabel)}</td><td>${money(a.spent)}</td><td>${a.outcomes?money(a.spent/a.outcomes):"-"}</td><td>${a.level}</td></tr>`).join("")}</table></div><div class="sum">All figures are mock demo data.</div>`}
@@ -580,7 +639,7 @@ let DR=null;
 function openDr(id){DR=id;$("#dr").classList.add("on");renderDr()}
 function closeDr(){DR=null;$("#dr").classList.remove("on")}
 function renderDr(){const a=byId[DR];if(!a)return;const pct=a.policy.cap?Math.min(100,a.spent/Math.max(a.policy.cap*10,1)*100):0;const tl=Object.entries(a.tools);
- const stl={working:"Working",needs:"Needs you",blocked:"Blocked",handoff:"Handing off",meeting:"In a meeting",done:"Just finished",idle:"Idle",paused:"Paused"}[a.st];
+ const stl=(a.revoked&&a.st==="paused")?"Access revoked":{working:"Working",needs:"Needs you",blocked:"Blocked",handoff:"Handing off",meeting:"In a meeting",done:"Just finished",idle:"Idle",paused:"Paused"}[a.st];
  const focus=document.activeElement&&document.activeElement.closest&&document.activeElement.closest("#dr");
  $("#dr").innerHTML=`<button class="x" onclick="closeDr()">\u00D7</button><h2>${a.emo} ${esc(a.name)}</h2><div class="rl">${esc(a.role)} \u00B7 ${ROOMS[a.room].n.toLowerCase()} \u00B7 ${a.level}</div><span class="stp" style="border-color:${a.st==="needs"?"var(--amber)":a.st==="blocked"?"var(--red)":"var(--line)"}">${ICON[a.st]} ${stl}</span>
  <h4>Current task</h4><div>${esc(a.now)}</div>
@@ -589,10 +648,18 @@ function renderDr(){const a=byId[DR];if(!a)return;const pct=a.policy.cap?Math.mi
  <h4>Completed today</h4><ul>${a.done.slice(0,5).map(x=>`<li>${esc(x)}</li>`).join("")||"<li>Nothing yet</li>"}</ul>
  <h4>Tools accessed</h4><ul>${a.tools&&tl.length?tl.map(([k,v])=>`<li>${esc(k)} \u00B7 ${v} calls</li>`).join(""):""}</ul>
  <h4>History</h4><ul>${a.hist.slice(0,8).map(x=>`<li>${esc(x)}</li>`).join("")||"<li>No activity yet</li>"}</ul>
- <div style="display:flex;gap:8px;margin-top:16px"><button class="btn ${a.killed?"grn":"red"}" onclick="togKill('${a.id}')">${a.killed?"Resume bot":"Pause / kill bot"}</button></div>`}
+ <h4>Controls</h4><div style="display:flex;gap:8px;flex-wrap:wrap">
+ <button class="btn" onclick="closeDr();location.hash='#receipts'">View activity</button>
+ <button class="btn" onclick="closeDr();pickBot('${a.id}');location.hash='#policies'">Edit permissions</button>
+ <button class="btn ${a.killed?"grn":""}" onclick="togKill('${a.id}')">${a.killed?"Resume bot":"Pause bot"}</button>
+ <button class="btn ${a.revoked?"grn":"red"}" onclick="revokeBot('${a.id}',this)">${a.revoked?"Restore access":"Revoke access"}</button></div>`}
 function setPol(id,k,l){byId[id].policy[k]=l;renderDr()}
 function togKill(id){const a=byId[id];a.killed?reviveAgent(a):killAgent(a);renderDr()}
 window.setPol=setPol;window.togKill=togKill;window.closeDr=closeDr;
+window.revokeBot=(id,btn)=>{const a=byId[id];
+ if(a.revoked){a.revoked=false;setSt(a,"idle","Access restored");hist(a,"Access restored by you");receipt(a,"update","Access restored for "+a.name,"Owner action",0,"Foreman");refresh();renderDr();return}
+ if(!btn.dataset.arm){btn.dataset.arm="1";btn.textContent="Tap again to confirm revoke";setTimeout(()=>{if(btn.dataset.arm){btn.dataset.arm="";renderDr()}},3000);return}
+ a.revoked=true;const r=G.approvals.find(x=>x.a===a);if(r)r.res("kill");a.carry=null;setSt(a,"paused","Access revoked");hist(a,"Access revoked by you");receipt(a,"kill","Access revoked for "+a.name,"Owner action",0,"Foreman");goHome(a);renderDr()};
 /* away */
 function showAway(){const e=$("#away");e.classList.add("on");requestAnimationFrame(()=>requestAnimationFrame(()=>e.classList.add("show")))}
 function hideAway(){const e=$("#away");e.classList.remove("show");setTimeout(()=>e.classList.remove("on"),260);location.hash="#office"}
@@ -605,26 +672,23 @@ window.addEventListener("hashchange",route);
 /* seed tool counts so profiles look lived in */
 agents.forEach(a=>a.script.forEach(t=>{a.tools[t.tool]=(a.tools[t.tool]||0)+(a.id==="instinct"?3:1+Math.floor(Math.random()*4))}));
 /* onboarding */
-let obSel=new Set(agents.map(a=>a.id));
-function obRenderBots(){$("#obbots").innerHTML=agents.map(a=>`<button class="bcard${obSel.has(a.id)?" on":""}" data-b="${a.id}" style="--col:${a.col}"><span class="av">${a.emo}</span><span class="bi"><span class="bn">${esc(a.name)}</span><span class="br">${esc(a.role)}</span></span><span class="ck">\u2713</span></button>`).join("")+`<button class="bcard" disabled style="opacity:.45;cursor:default"><span class="av">\u{1F3B5}</span><span class="bi"><span class="bn">Muse</span><span class="br">Not available yet</span></span><span class="ck"></span></button>`;$("#obcount").textContent=obSel.size}
+
 function tpvHtml(k){const L=LAYOUTS[k];const bx=(r,c)=>`<i class="tp ${c||""}" style="left:${r.x}%;top:${r.y}%;width:${r.w}%;height:${r.h}%"></i>`;let h="";for(const key in L.rooms)h+=bx(L.rooms[key]);return h+bx(L.meet,"m")+bx(L.appr,"a")+bx(L.lounge,"l")}
 function obRenderTpls(){$("#obtpls").innerHTML=Object.keys(LAYOUTS).map(k=>`<button class="tplcard${LAYOUT===k?" on":""}" data-t="${k}"><div class="tpv">${tpvHtml(k)}</div><div class="tt">${TNAMES[k][0]}</div><div class="td">${TNAMES[k][1]}</div></button>`).join("")}
-document.addEventListener("click",e=>{const b=e.target.closest(".bcard[data-b]");if(b){const id=b.dataset.b;obSel.has(id)?obSel.delete(id):obSel.add(id);obRenderBots()}
- const t=e.target.closest(".tplcard[data-t]");if(t){applyLayout(t.dataset.t);obRenderTpls()}});
+document.addEventListener("click",e=>{const t=e.target.closest(".tplcard[data-t]");if(t){applyLayout(t.dataset.t);obRenderTpls()}});
 function obGo(n){document.querySelectorAll("#ob .step").forEach(s=>s.classList.toggle("on",+s.dataset.s===n));document.querySelectorAll("#obdots i").forEach((d,i)=>d.classList.toggle("on",i===n))}
 function obShow(){const e=$("#ob");e.classList.add("on");requestAnimationFrame(()=>requestAnimationFrame(()=>e.classList.add("show")))}
 function obHide(){const e=$("#ob");e.classList.remove("show");setTimeout(()=>e.classList.remove("on"),280)}
-$("#obnext0").onclick=()=>obGo(1);
-$("#obskip0").onclick=()=>{obHide();showAway()};
+$("#obnext0").onclick=()=>{obGo(1);provCards($("#obprov"))};
+$("#obskip0").onclick=()=>{obHide();finishJoin(true);showAway()};
 $("#obback1").onclick=()=>obGo(0);
-$("#obnext1").onclick=()=>{if(!obSel.size){toast("Pick at least one bot");return}obGo(2)};
+$("#obnext1").onclick=()=>obGo(2);
 $("#obback2").onclick=()=>obGo(1);
 $("#obnext2").onclick=()=>obGo(3);
-$("#obback3").onclick=()=>obGo(2);
-$("#obnext3").onclick=()=>obGo(4);
-document.querySelectorAll(".preset").forEach(p=>p.onclick=()=>document.querySelectorAll(".preset").forEach(x=>x.classList.toggle("on",x===p)));
-$("#obdone").onclick=()=>{obHide();showAway()};
-$("#ob").onclick=e=>{if(e.target.id==="ob"){obHide();showAway()}};
-buildFloor();route();agents.forEach(a=>{paint(a);hist(a,"Online at desk");loop(a)});document.body.className="tpl-classic";obRenderBots();obRenderTpls();obShow();
+async function finishJoin(instant){const js=agents.filter(a=>a.joining);if(instant){js.forEach(a=>{const p=homeOf(a);setPos(a,p[0],p[1],0);a.joining=false});drawDesks();return}
+ for(const a of js){await goHome(a);a.joining=false;drawDesks();setSt(a,"idle","Ready for work");await sleep(120)}}
+$("#obdone").onclick=async()=>{obHide();location.hash="#office";const had=agents.some(a=>a.joining);await finishJoin(false);setTimeout(showAway,had?900:0)};
+$("#ob").onclick=e=>{if(e.target.id==="ob"){obHide();finishJoin(true);showAway()}};
+buildFloor();route();agents.forEach(a=>{paint(a);hist(a,"Online at desk");loop(a)});document.body.className="tpl-classic";provCards($("#obprov"));provCards($("#mprov"));obRenderTpls();obShow();
 setInterval(()=>{refresh();const v=location.hash.slice(1);if(v==="receipts")vReceipts();if(v==="stubs")vStubs()},2500);
 </script></body></html>
