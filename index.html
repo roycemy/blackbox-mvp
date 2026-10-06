@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Blackbox - the manager for your AI crew</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230b0d14'/><rect x='7' y='7' width='18' height='18' rx='3' fill='none' stroke='%2339ff9c' stroke-width='2.5'/><circle cx='16' cy='16' r='3' fill='%2339ff9c'/></svg>">
+<style>
+:root{--bg:#07090f;--p:#0e121c;--p2:#141a28;--b:#232c40;--t:#e7ecf6;--m:#8793ad;--g:#39ff9c;--y:#ffc857;--r:#ff5d73;--bl:#5ab0ff;--v:#a78bfa}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(1200px 600px at 80% -10%,#1a1f3a55,transparent),var(--bg);color:var(--t);font:14px/1.45 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+button{font:inherit;cursor:pointer;color:var(--t)}
+header{display:flex;align-items:center;gap:16px;padding:14px 22px;border-bottom:1px solid var(--b);position:sticky;top:0;background:#07090fe6;backdrop-filter:blur(8px);z-index:20;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.5px;font-size:17px}
+.logo i{width:22px;height:22px;border:2.5px solid var(--g);border-radius:5px;display:grid;place-items:center}.logo i:after{content:"";width:6px;height:6px;border-radius:50%;background:var(--g);box-shadow:0 0 10px var(--g)}
+.biz{color:var(--m);font-size:13px}.sp{flex:1}
+.kpi{display:flex;gap:18px}.kpi div{text-align:right}.kpi b{display:block;font-size:17px;font-variant-numeric:tabular-nums}.kpi span{color:var(--m);font-size:11px;text-transform:uppercase;letter-spacing:.8px}
+.kill{background:#2a0f16;border:1px solid var(--r);color:var(--r);padding:9px 14px;border-radius:9px;font-weight:700}.kill:hover{background:var(--r);color:#fff}
+.kill.on{background:var(--r);color:#fff;animation:pulse 1.4s infinite}
+nav{display:flex;gap:4px;padding:10px 22px 0;border-bottom:1px solid var(--b);overflow-x:auto}
+nav button{background:none;border:0;padding:10px 14px;color:var(--m);border-bottom:2px solid transparent;white-space:nowrap}
+nav button.on{color:var(--t);border-color:var(--g)}nav .badge{background:var(--y);color:#111;border-radius:99px;padding:0 7px;font-size:11px;font-weight:800;margin-left:6px}
+main{padding:22px;max-width:1280px;margin:0 auto}
+.banner{background:#2a0f16;border:1px solid var(--r);color:#ffb3bd;padding:10px 14px;border-radius:10px;margin-bottom:16px;display:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+.floor{background:linear-gradient(#0e121c,#0a0d15);border:1px solid var(--b);border-radius:16px;padding:18px;background-image:linear-gradient(#ffffff06 1px,transparent 1px),linear-gradient(90deg,#ffffff06 1px,transparent 1px);background-size:36px 36px}
+.floor h3{margin:0 0 4px}.sub{color:var(--m);font-size:12.5px;margin-bottom:14px}
+.desk{background:var(--p);border:1px solid var(--b);border-radius:14px;padding:14px;position:relative;cursor:pointer;transition:.2s}
+.desk:hover{border-color:#3b4a6b;transform:translateY(-2px)}
+.desk .top{display:flex;gap:10px;align-items:center}
+.av{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:21px;background:var(--p2);border:1px solid var(--b);flex:none}
+.desk b{font-size:15px}.role{color:var(--m);font-size:12px}
+.lvl{font-size:10.5px;padding:2px 8px;border-radius:99px;border:1px solid;font-weight:700;letter-spacing:.5px;margin-left:auto;text-transform:uppercase}
+.Intern{color:var(--bl)}.Staff{color:var(--v)}.Manager{color:var(--g)}
+.st{margin-top:12px;display:flex;gap:8px;align-items:flex-start;min-height:40px}
+.dot{width:9px;height:9px;border-radius:50%;margin-top:5px;flex:none;background:var(--g);box-shadow:0 0 8px var(--g);animation:blink 1.6s infinite}
+.dot.wait{background:var(--y);box-shadow:0 0 8px var(--y)}.dot.dead{background:#555;box-shadow:none;animation:none}.dot.idle{background:var(--bl);box-shadow:0 0 8px var(--bl)}
+.now{font-size:13px}.now small{color:var(--m);display:block}
+.bar{height:5px;background:#1b2234;border-radius:9px;overflow:hidden;margin-top:12px}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--g),var(--bl));transition:.5s}
+.meta{display:flex;justify-content:space-between;color:var(--m);font-size:11.5px;margin-top:6px}
+.desk.dead{opacity:.55;filter:grayscale(.8)}
+.desk .flash{position:absolute;inset:0;border-radius:14px;pointer-events:none;box-shadow:inset 0 0 0 2px var(--g);opacity:0}.desk.f .flash{animation:fl .9s}
+.card{background:var(--p);border:1px solid var(--b);border-radius:14px;padding:16px}
+.two{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;margin-top:16px}@media(max-width:900px){.two{grid-template-columns:1fr}}
+.feed{max-height:340px;overflow:auto}
+.row{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid #1a2132;align-items:flex-start}.row:last-child{border:0}
+.tag{font-size:10.5px;font-weight:800;padding:2px 7px;border-radius:6px;flex:none;margin-top:1px;min-width:48px;text-align:center}
+.AUTO{background:#0f2b20;color:var(--g)}.ASK{background:#2d2410;color:var(--y)}.NEVER{background:#2d1219;color:var(--r)}.DENIED{background:#2d1219;color:var(--r)}.APPROVED{background:#0f2b20;color:var(--g)}
+.rt{flex:1;min-width:0}.rt small{color:var(--m);display:block}.cost{font-variant-numeric:tabular-nums;color:var(--m);flex:none}
+.appr{background:var(--p);border:1px solid #4a3d18;border-radius:14px;padding:16px;margin-bottom:12px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;animation:slide .3s}
+.appr .info{flex:1;min-width:240px}.appr h4{margin:0 0 2px;font-size:15px}
+.btn{padding:8px 16px;border-radius:9px;border:1px solid var(--b);background:var(--p2);font-weight:700}
+.btn.ok{background:#0f2b20;border-color:var(--g);color:var(--g)}.btn.ok:hover{background:var(--g);color:#06150d}
+.btn.no{background:#2d1219;border-color:var(--r);color:var(--r)}.btn.no:hover{background:var(--r);color:#fff}
+.empty{color:var(--m);text-align:center;padding:40px}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:9px 10px;border-bottom:1px solid #1a2132;font-size:13px}th{color:var(--m);font-size:11px;text-transform:uppercase;letter-spacing:.7px}td.n{font-variant-numeric:tabular-nums}
+.stub{background:#f4f1e8;color:#1b1b1b;border-radius:6px;padding:18px;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;position:relative;box-shadow:0 8px 24px #0008}
+.stub:before{content:"";position:absolute;left:0;right:0;top:-6px;height:6px;background:radial-gradient(circle at 6px 6px,transparent 5px,#f4f1e8 5.5px) 0 0/12px 6px}
+.stub h4{margin:0 0 2px;font-size:14px}.stub hr{border:0;border-top:1px dashed #888;margin:10px 0}.stub .l{display:flex;justify-content:space-between;padding:2px 0}.stub .big{font-weight:800;font-size:15px}
+.stub .acts{display:flex;gap:8px;margin-top:12px}.stub .acts button{color:#111;flex:1;padding:8px;border:1.5px solid #222;background:#fff;border-radius:5px;font-weight:700;font-family:inherit}.stub .acts button.fire{background:#c62839;color:#fff;border-color:#c62839}
+.modal{position:fixed;inset:0;background:#000a;display:none;place-items:center;z-index:50;padding:16px}.modal.on{display:grid}
+.mbox{background:var(--p);border:1px solid var(--b);border-radius:16px;max-width:620px;width:100%;max-height:90vh;overflow:auto;padding:22px}
+.pol{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid #1a2132}
+.seg{display:flex;border:1px solid var(--b);border-radius:8px;overflow:hidden}.seg button{background:var(--p2);border:0;padding:5px 11px;font-size:12px;font-weight:700;color:var(--m)}
+.seg button.AUTO.on{background:var(--g);color:#06150d}.seg button.ASK.on{background:var(--y);color:#201700}.seg button.NEVER.on{background:var(--r);color:#fff}
+select,input{background:var(--p2);color:var(--t);border:1px solid var(--b);border-radius:8px;padding:7px 10px;font:inherit}
+.lead{color:var(--m);max-width:760px;margin:0 0 18px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.chip{padding:5px 12px;border-radius:99px;border:1px solid var(--b);background:var(--p2);font-size:12px;color:var(--m)}.chip.on{color:var(--t);border-color:var(--g)}
+.crew{display:inline-block;background:#10261c;border:1px solid #1f5a40;color:var(--g);font-size:11px;padding:2px 9px;border-radius:99px;font-weight:700}
+.demo{position:fixed;right:14px;bottom:14px;z-index:30;display:flex;gap:8px}.demo button{background:var(--p2);border:1px solid var(--b);padding:8px 12px;border-radius:99px;font-size:12px;color:var(--m)}.demo button:hover{color:var(--t);border-color:var(--g)}
+@keyframes pulse{50%{box-shadow:0 0 0 6px #ff5d7333}}@keyframes blink{50%{opacity:.4}}@keyframes fl{0%{opacity:1}100%{opacity:0}}@keyframes slide{from{opacity:0;transform:translateY(-8px)}}
+</style></head><body>
+<header>
+ <div class="logo"><i></i>BLACKBOX</div><div class="biz">Royce Myers &middot; Crew #1: Bot HQ</div><div class="sp"></div>
+ <div class="kpi"><div><b id="kAgents">0</b><span>Agents live</span></div><div><b id="kAct">0</b><span>Actions today</span></div><div><b id="kSpend">$0</b><span>Spent today</span></div><div><b id="kAsk">0</b><span>Waiting on you</span></div></div>
+ <button class="kill" id="gkill">&#9724; KILL ALL</button>
+</header>
+<nav id="nav"></nav>
+<main><div class="banner" id="banner"><b>Global kill engaged.</b> Every agent is cut off from Gmail, Shopify, Slack and your card. Nothing runs until you restore access.</div><div id="view"></div></main>
+<div class="modal" id="modal"><div class="mbox" id="mbox"></div></div>
+<div class="demo"><button id="burst">&#9889; Simulate busy hour</button><button id="reset">&#8635; Reset demo</button></div>
+<script>
+const ACTIONS={read:"Read data",draft:"Draft content",update:"Update CRM / records",send:"Send externally",post:"Post publicly",deploy:"Change production",spend:"Spend money",delete:"Delete data"};
+const LEVELS={Intern:{read:"AUTO",draft:"AUTO",update:"ASK",send:"ASK",post:"NEVER",deploy:"NEVER",spend:"NEVER",delete:"NEVER",cap:0,blurb:"Drafts, asks before sending"},
+Staff:{read:"AUTO",draft:"AUTO",update:"AUTO",send:"ASK",post:"ASK",deploy:"NEVER",spend:"ASK",delete:"NEVER",cap:75,blurb:"Works in its lane with a spend cap"},
+Manager:{read:"AUTO",draft:"AUTO",update:"AUTO",send:"AUTO",post:"ASK",deploy:"ASK",spend:"AUTO",delete:"NEVER",cap:200,blurb:"Runs on its own with a budget"}};
+const A=(id,name,emoji,role,level,tools,base,script)=>({id,name,emoji,role,level,tools,policy:{...LEVELS[level]},cap:LEVELS[level].cap,spent:base.spent,actions:base.actions,outcomes:base.outcomes,outLabel:base.out,status:"idle",now:"Standing by",killed:false,script});
+const agents=[
+A("instinct","Instinct","\u{1F9E0}","Main assistant & executor","Manager",["Gmail","Calendar","GitHub","Vercel"],{spent:31.0,actions:212,outcomes:9,out:"booked calls"},[
+ ["read","Triaged inbox: 14 new emails","Gmail",0],["draft","Drafted reply to Babson advisor","Gmail",0],["update","Added 3 tasks to Life HQ","Life HQ DB",0],["send","Send follow-up to prospective customer","Gmail",0.0],["deploy","Pushed update to life-hq main","GitHub \u2192 Vercel",0],["spend","Renew domain blackbox.app","Card ending 4242",14.99]]),
+A("hermes","Hermes","\u{1FAB6}","Background brain, nightly runs","Manager",["VPS","Discord","Memory files"],{spent:6.4,actions:96,outcomes:30,out:"nightly briefs"},[
+ ["read","Read 4 memory files, found stale goal","Memory",0],["draft","Wrote tomorrow's morning briefing","Discord draft",0],["update","Updated weekend mission list","Memory files",0],["post","Posted morning message to #royce","Discord",0],["spend","Model tokens for nightly run","OpenAI API",1.8]]),
+A("proof","Proof Coach","\u{1F3AF}","Voice accountability coach","Staff",["Proof app","Twilio","Calendar"],{spent:12.7,actions:58,outcomes:41,out:"check-ins done"},[
+ ["read","Checked today's non-negotiables","Life HQ DB",0],["draft","Wrote 9 PM check-in script","Proof",0],["send","Text Royce: gym log missing","iMessage",0],["spend","Voice call minutes for check-in","Twilio",0.62]]),
+A("standby","StandBy","\u2708\uFE0F","Standby travel planner","Staff",["Google Flights","Gmail"],{spent:3.1,actions:33,outcomes:7,out:"trips planned"},[
+ ["read","Compared 6 standby flights to Boston","Google Flights",0],["draft","Drafted weekend trip plan","Docs",0],["send","Emailed itinerary to Royce","Gmail",0],["spend","Book refundable hotel hold","Card ending 4242",89]]),
+A("dato","Dato","\u{1F6E1}\uFE0F","Sensitive-data guard","Intern",["Browser extension"],{spent:0,actions:44,outcomes:44,out:"leaks flagged"},[
+ ["read","Scanned page for SSN pattern","Browser",0],["draft","Drafted redaction for pasted prompt","Extension",0],["update","Masked card number in chat box","Browser",0],["send","Share flagged page with vendor","Email",0]]),
+A("lifehq","Life HQ","\u{1F3C6}","Coaching dashboard & XP","Staff",["Next.js","Postgres"],{spent:1.1,actions:120,outcomes:86,out:"XP events"},[
+ ["read","Pulled today's lifts and macros","Postgres",0],["update","Logged 25 XP for health entry","Postgres",0],["draft","Drafted weekly review","Life HQ",0],["delete","Pruned 40 old log rows","Postgres",0]]),
+A("nutri","NutriBridge Rep","\u{1F48A}","Clinic supplement outreach","Staff",["Gmail","CRM","Sheets"],{spent:8.9,actions:81,outcomes:5,out:"clinic replies"},[
+ ["read","Researched 12 clinics in Dallas","Web",0],["draft","Drafted DSHEA-compliant intro email","Gmail draft",0],["send","Email intro to Plano Wellness Clinic","Gmail",0],["update","Updated clinic CRM stage","Sheets",0],["spend","Buy lead list (200 contacts)","Card ending 4242",39]]),
+A("flyopia","Flyopia Poster","\u{1F4F8}","Social account operator","Staff",["TikTok","Instagram","X"],{spent:4.5,actions:67,outcomes:12,out:"posts live"},[
+ ["draft","Drafted 3 reels for the week","Notion",0],["post","Publish reel to @flyopia","Instagram",0],["read","Pulled last week's engagement","TikTok",0],["spend","Boost post with $20 ad","Meta Ads",20]]),
+A("grokceo","Grok CEO","\u{1F916}","Strategy read & priorities","Intern",["Grok","Email digest"],{spent:2.0,actions:29,outcomes:6,out:"strategy memos"},[
+ ["read","Read all project status files","Memory",0],["draft","Drafted Q4 priorities memo","Docs",0],["send","Email priorities memo to team","Gmail",0],["spend","Upgrade Grok tier","Card ending 4242",30]]),
+A("grokmkt","Grok Marketing","\u{1F4E3}","Ad copy & campaigns","Intern",["Grok","Meta Ads"],{spent:5.8,actions:52,outcomes:3,out:"campaigns drafted"},[
+ ["draft","Drafted 5 ad variants","Docs",0],["read","Read competitor ad library","Meta",0],["post","Launch ad set to production","Meta Ads",0],["spend","Daily ad spend, Flyopia","Meta Ads",25]])
+];
+let receipts=[],approvals=[],tab=(location.hash.slice(1)||"floor"),globalKill=false,detail=null,uid=0,filter="ALL";
+const $=s=>document.querySelector(s),money=n=>"$"+(n>=100?n.toFixed(0):n.toFixed(2)),ts=()=>new Date().toLocaleTimeString([], {hour:"numeric",minute:"2-digit",second:"2-digit"});
+const byId=id=>agents.find(a=>a.id===id);
+function receipt(a,act,verdict,cost,note){receipts.unshift({id:++uid,t:ts(),agent:a.name,emoji:a.emoji,what:act[1],touched:act[2],cost,verdict,note:note||""});if(receipts.length>200)receipts.pop();if(verdict==="AUTO"||verdict==="APPROVED"){a.actions++;a.spent+=cost;if(act[0]!=="spend"&&Math.random()<.18)a.outcomes++;}flash(a.id)}
+function flash(id){const e=document.querySelector(`[data-d="${id}"]`);if(e){e.classList.remove("f");void e.offsetWidth;e.classList.add("f")}}
+function step(a){
+ if(a.killed||globalKill)return;
+ if(a.status==="waiting"){return}
+ const act=a.script[Math.floor(Math.random()*a.script.length)];
+ const kind=act[0];let mode=a.policy[kind];let note="";
+ if(kind==="spend"&&mode==="AUTO"&&a.spent+act[3]>a.cap){mode="ASK";note="Over budget cap"}
+ if(mode==="AUTO"){a.status="working";a.now=act[1];a.where=act[2];receipt(a,act,"AUTO",act[3])}
+ else if(mode==="NEVER"){a.status="working";a.now="Blocked: "+ACTIONS[kind].toLowerCase();receipt(a,act,"NEVER",0,"Policy: NEVER")}
+ else{a.status="waiting";a.now="Waiting on you: "+act[1];a.where=act[2];approvals.push({id:++uid,agent:a.id,act,note:note||"Policy: ASK",t:ts()});if(tab!=="approvals")toastAsk()}
+}
+function toastAsk(){}
+function decide(id,ok){const i=approvals.findIndex(x=>x.id===id);if(i<0)return;const p=approvals[i];approvals.splice(i,1);const a=byId(p.agent);
+ if(ok)receipt(a,p.act,"APPROVED",p.act[3],"Approved by Royce");else receipt(a,p.act,"DENIED",0,"Denied by Royce");
+ a.status="working";a.now=ok?"Approved. "+p.act[1]:"Denied. Finding another way";render()}
+function setKill(a,v){a.killed=v;if(v){a.status="dead";a.now="KILLED. Access revoked";approvals=approvals.filter(x=>x.agent!==a.id);receipts.unshift({id:++uid,t:ts(),agent:a.name,emoji:a.emoji,what:"Kill switch: all tool access revoked",touched:a.tools.join(", "),cost:0,verdict:"NEVER",note:"By Royce"})}else{a.status="idle";a.now="Re-hired. Standing by"}}
+function seed(){receipts=[];approvals=[];agents.forEach(a=>{a.status="idle";a.killed=false;a.now="Standing by"});globalKill=false;
+ const order=[["nutri",2],["instinct",3],["hermes",0],["proof",1],["flyopia",1],["lifehq",1],["grokmkt",2],["dato",3]];
+ order.forEach(([id,i])=>{const a=byId(id);const act=a.script[i];if(act[0]==="send"||act[0]==="post"||act[0]==="spend"){a.status="waiting";a.now="Waiting on you: "+act[1];approvals.push({id:++uid,agent:a.id,act,note:"Policy: ASK",t:ts()})}else{a.status="working";a.now=act[1];receipt(a,act,"AUTO",act[3])}});
+ approvals=approvals.slice(0,3)}
+const MON=["ASK","AUTO","NEVER"];
+function tabs(){const t=[["floor","Office floor"],["approvals","Approvals"],["receipts","Receipts"],["stubs","Pay stubs"],["policies","Permissions"]];
+ $("#nav").innerHTML=t.map(([k,l])=>`<button class="${tab===k?"on":""}" data-t="${k}">${l}${k==="approvals"&&approvals.length?`<span class="badge">${approvals.length}</span>`:""}</button>`).join("");
+ $("#nav").querySelectorAll("button").forEach(b=>b.onclick=()=>{tab=b.dataset.t;render()})}
+function kpis(){const live=agents.filter(a=>!a.killed&&!globalKill).length;$("#kAgents").textContent=live+"/"+agents.length;$("#kAct").textContent=agents.reduce((s,a)=>s+a.actions,0);$("#kSpend").textContent=money(agents.reduce((s,a)=>s+a.spent,0));$("#kAsk").textContent=approvals.length;
+ $("#banner").style.display=globalKill?"block":"none";const g=$("#gkill");g.classList.toggle("on",globalKill);g.innerHTML=globalKill?"&#9654; RESTORE ACCESS":"&#9724; KILL ALL"}
+function deskHTML(a){const dead=a.killed||globalKill;const st=dead?"dead":a.status==="waiting"?"wait":a.status==="idle"?"idle":"";const pct=a.cap?Math.min(100,a.spent/a.cap*100):0;
+ return `<div class="desk ${dead?"dead":""}" data-d="${a.id}"><div class="flash"></div><div class="top"><div class="av">${a.emoji}</div><div><b>${a.name}</b><div class="role">${a.role}</div></div><span class="lvl ${a.level}" style="border-color:currentColor">${a.level}</span></div>
+ <div class="st"><span class="dot ${st}"></span><div class="now">${dead?"KILLED. Access revoked":a.now}<small>${dead?"":(a.where||a.tools.join(" \u00b7 "))}</small></div></div>
+ <div class="bar"><i style="width:${a.cap?pct:6}%"></i></div><div class="meta"><span>${a.cap?money(a.spent)+" of "+money(a.cap)+" cap":"No spend allowed"}</span><span>${a.actions} actions</span></div></div>`}
+function feedHTML(list,n){return list.slice(0,n).map(r=>`<div class="row"><span class="tag ${r.verdict}">${r.verdict}</span><div class="rt">${r.emoji} <b>${r.agent}</b> ${r.what}<small>${r.t} \u00b7 touched ${r.touched}${r.note?" \u00b7 "+r.note:""}</small></div><span class="cost">${r.cost?money(r.cost):""}</span></div>`).join("")||'<div class="empty">No activity yet</div>'}
+function vFloor(){return `<div class="floor"><h3>Crew #1: Bot HQ <span class="crew">CREW #1</span></h3><div class="sub">Every bot is a desk. Everything below runs through Blackbox, so every action is checked against its permissions before it touches your tools. Click a desk for its profile.</div><div class="grid" id="desks">${agents.map(deskHTML).join("")}</div></div>
+ <div class="two"><div class="card"><b>Live receipts</b><div class="feed" id="feed">${feedHTML(receipts,14)}</div></div><div class="card"><b>Needs your call</b><div id="mini">${miniAppr()}</div></div></div>`}
+function miniAppr(){return approvals.slice(0,3).map(p=>{const a=byId(p.agent);return `<div class="row"><span class="tag ASK">ASK</span><div class="rt">${a.emoji} <b>${a.name}</b> ${p.act[1]}<small>${p.act[2]}${p.act[3]?" \u00b7 "+money(p.act[3]):""}</small><div style="margin-top:8px;display:flex;gap:6px"><button class="btn ok" data-a="${p.id}">Approve</button><button class="btn no" data-n="${p.id}">Deny</button></div></div></div>`}).join("")||'<div class="empty">All clear. Nothing waiting.</div>'}
+function vAppr(){return `<p class="lead">ASK actions stop here until you decide. Approve it and the bot continues, deny it and the bot has to find another way. Either way it leaves a receipt.</p>`+(approvals.map(p=>{const a=byId(p.agent);return `<div class="appr"><div class="av">${a.emoji}</div><div class="info"><h4>${a.name} wants to: ${p.act[1]}</h4><small style="color:var(--m)">Touches ${p.act[2]} \u00b7 ${ACTIONS[p.act[0]]} \u00b7 ${p.note} \u00b7 ${p.t}</small></div><div style="font-weight:800;font-size:18px">${p.act[3]?money(p.act[3]):""}</div><button class="btn ok" data-a="${p.id}">Approve</button><button class="btn no" data-n="${p.id}">Deny</button></div>`}).join("")||'<div class="card empty">Nothing waiting on you. Your crew is working inside its rules.</div>')}
+function vRec(){const L=receipts.filter(r=>filter==="ALL"||r.verdict===filter||(filter==="ASK"&&(r.verdict==="APPROVED"||r.verdict==="DENIED")));
+ return `<p class="lead">Every action leaves a receipt: what happened, what it touched, what it cost, who allowed it.</p><div class="chips">${["ALL","AUTO","ASK","NEVER"].map(f=>`<span class="chip ${filter===f?"on":""}" data-f="${f}">${f==="ASK"?"ASK (decided)":f}</span>`).join("")}</div><div class="card feed" style="max-height:none" id="feed">${feedHTML(L,80)}</div>`}
+function stubHTML(a){const cpo=a.outcomes?a.spent/a.outcomes:0;return `<div class="stub"><h4>${a.emoji} ${a.name.toUpperCase()}</h4><div>${a.level} \u00b7 ${a.role}</div><hr><div class="l"><span>Actions</span><span>${a.actions}</span></div><div class="l"><span>${a.outLabel}</span><span>${a.outcomes}</span></div><div class="l"><span>Spent today</span><span>${money(a.spent)}</span></div><hr><div class="l big"><span>Cost per result</span><span>${a.outcomes?money(cpo):"n/a"}</span></div>
+ <div style="margin-top:6px;color:#555">${a.killed?"TERMINATED":cpo>4?"Expensive. Consider cutting budget.":a.outcomes?"Earning its keep.":"No results yet."}</div><div class="acts"><button data-b="${a.id}">+ $25 budget</button><button class="fire" data-k="${a.id}">${a.killed?"Re-hire":"Fire"}</button></div></div>`}
+function vStubs(){const t=agents.reduce((s,a)=>({sp:s.sp+a.spent,ac:s.ac+a.actions}),{sp:0,ac:0});return `<p class="lead">Every bot gets a pay stub. Like what you see, more budget. Don't, fire it in one tap. Crew total today: ${t.ac} actions, ${money(t.sp)}.</p><div class="grid" id="stubs">${agents.map(a=>stubHTML(a)).join("")}</div>`}
+function vPol(){return `<p class="lead">Permissions are job levels, not settings pages. Pick a level, tweak any action if you want.</p><div class="grid">${agents.map(a=>`<div class="card"><div class="top" style="display:flex;gap:10px;align-items:center"><div class="av">${a.emoji}</div><div><b>${a.name}</b><div class="role">${a.tools.join(" \u00b7 ")}</div></div></div>
+ <div style="margin:12px 0"><select data-l="${a.id}">${Object.keys(LEVELS).map(l=>`<option ${l===a.level?"selected":""}>${l}</option>`).join("")}</select> <small style="color:var(--m)">${LEVELS[a.level].blurb}</small></div>
+ ${Object.keys(ACTIONS).map(k=>`<div class="pol"><span>${ACTIONS[k]}</span><div class="seg">${MON.map(m=>`<button class="${m}${a.policy[k]===m?" on":""}" data-p="${a.id}|${k}|${m}">${m}</button>`).join("")}</div></div>`).join("")}</div>`).join("")}</div>`}
+function bind(){document.querySelectorAll("[data-a]").forEach(b=>b.onclick=e=>{e.stopPropagation();decide(+b.dataset.a,true)});document.querySelectorAll("[data-n]").forEach(b=>b.onclick=e=>{e.stopPropagation();decide(+b.dataset.n,false)});
+ document.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{filter=b.dataset.f;render()});
+ document.querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>openModal(b.dataset.d));
+ document.querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{const a=byId(b.dataset.k);setKill(a,!a.killed);render()});
+ document.querySelectorAll("[data-b]").forEach(b=>b.onclick=()=>{const a=byId(b.dataset.b);a.cap+=25;render()});
+ document.querySelectorAll("[data-l]").forEach(s=>s.onchange=()=>{const a=byId(s.dataset.l);a.level=s.value;a.policy={...LEVELS[s.value]};a.cap=LEVELS[s.value].cap;render()});
+ document.querySelectorAll("[data-p]").forEach(b=>b.onclick=()=>{const [id,k,m]=b.dataset.p.split("|");byId(id).policy[k]=m;render()})}
+function openModal(id){detail=id;const a=byId(id);const mine=receipts.filter(r=>r.agent===a.name);
+ $("#mbox").innerHTML=`<div style="display:flex;gap:12px;align-items:center"><div class="av" style="width:56px;height:56px;font-size:28px">${a.emoji}</div><div><h2 style="margin:0">${a.name}</h2><div class="role">${a.role}</div></div><span class="lvl ${a.level}" style="border-color:currentColor">${a.level}</span><div class="sp"></div><button class="btn" id="mc">Close</button></div>
+ <p style="color:var(--m)">Connected through Blackbox to: ${a.tools.join(", ")}. Budget cap ${a.cap?money(a.cap):"none (no spend)"}.</p>
+ <div style="display:flex;gap:8px;margin:10px 0"><button class="btn no" id="mk">${a.killed?"Re-hire":"Kill this bot"}</button></div><b>Recent receipts</b><div>${feedHTML(mine,8)}</div>`;
+ $("#modal").classList.add("on");$("#mc").onclick=()=>{$("#modal").classList.remove("on");detail=null};$("#mk").onclick=()=>{setKill(a,!a.killed);$("#modal").classList.remove("on");detail=null;render()}}
+$("#modal").onclick=e=>{if(e.target.id==="modal"){$("#modal").classList.remove("on");detail=null}};
+$("#gkill").onclick=()=>{globalKill=!globalKill;if(globalKill){approvals=[];agents.forEach(a=>{a.status="dead"});receipts.unshift({id:++uid,t:ts(),agent:"Blackbox",emoji:"\u26D4",what:"GLOBAL KILL: all agent access revoked",touched:"Everything",cost:0,verdict:"NEVER",note:"By Royce"})}else{agents.forEach(a=>{a.status=a.killed?"dead":"idle";a.now="Back online"})}render()};
+$("#reset").onclick=()=>{agents.forEach(a=>{const o=ORIG[a.id];a.spent=o[0];a.actions=o[1];a.outcomes=o[2];a.level=o[3];a.policy={...LEVELS[a.level]};a.cap=LEVELS[a.level].cap});seed();render()};
+$("#burst").onclick=()=>{for(let i=0;i<14;i++)setTimeout(()=>{agents.forEach(a=>{if(Math.random()<.5)step(a)});partial()},i*250)};
+function render(){tabs();kpis();const v=$("#view");v.innerHTML={floor:vFloor,approvals:vAppr,receipts:vRec,stubs:vStubs,policies:vPol}[tab]();bind()}
+function partial(){kpis();tabs();if(tab==="floor"){$("#desks").innerHTML=agents.map(deskHTML).join("");$("#feed").innerHTML=feedHTML(receipts,14);$("#mini").innerHTML=miniAppr();bind()}else if(tab==="receipts"||tab==="approvals"||tab==="stubs"){if(document.activeElement&&document.activeElement.tagName==="SELECT")return;render()}}
+const ORIG={};agents.forEach(a=>ORIG[a.id]=[a.spent,a.actions,a.outcomes,a.level]);
+seed();render();
+setInterval(()=>{const live=agents.filter(a=>!a.killed&&a.status!=="waiting");if(!live.length||globalKill)return;const n=1+(Math.random()<.4);for(let i=0;i<n;i++)step(live[Math.floor(Math.random()*live.length)]);if(!detail&&tab!=="policies")partial()},2600);
+</script></body></html>
