@@ -81,10 +81,43 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:7px 8px;b
 .modal .box{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;width:360px;max-width:100%}
 .modal input,.modal select{width:100%;margin:4px 0 10px;background:var(--bg);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:8px}
 @media(max-width:700px){.lg{display:none}.floor{aspect-ratio:3/4.4;min-height:0;--c:24px}.ch .nm i{display:none}.ch .nm{font-size:8px}.bub{font-size:8px;max-width:84px;padding:1px 5px}.tok{font-size:8px}.room .lb{font-size:8px;left:6px}.room .ct{display:none}.req{min-width:250px}main{padding:8px 8px 150px}.top{padding:8px 10px}}
+
+/* v4 */
+.ch.idle .hd{opacity:.6;filter:saturate(.35);box-shadow:none;animation:none}
+.ch.idle .bd{opacity:.35}
+.ch.idle .hd::after{content:"z";position:absolute;right:-6px;top:-8px;font-size:11px;font-weight:700;color:#8fa0c8;animation:zz 2.6s infinite ease-in-out}
+@keyframes zz{0%{opacity:0;transform:translate(0,4px)}40%{opacity:.9}100%{opacity:0;transform:translate(5px,-9px)}}
+.desk.idle{--mon:#1a2340}.desk.idle::after{box-shadow:none;background:#080d1a}
+.ch.done .hd{animation:donepop .7s cubic-bezier(.3,1.6,.5,1);border-color:var(--grn)}
+.ch.done .hd::before{content:"\2713";position:absolute;right:-7px;top:-7px;width:16px;height:16px;border-radius:50%;background:var(--grn);color:#04251a;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;animation:ckin .5s .1s both cubic-bezier(.3,1.8,.5,1)}
+.ch.done::after{content:"";position:absolute;left:50%;top:calc(var(--c)*-.5);width:var(--c);height:var(--c);margin-left:calc(var(--c)*-.5);border-radius:50%;border:2px solid var(--grn);animation:ring 1s ease-out forwards;pointer-events:none;z-index:1}
+@keyframes donepop{0%{transform:scale(1)}40%{transform:scale(1.22)}100%{transform:scale(1)}}
+@keyframes ckin{0%{transform:scale(0)}100%{transform:scale(1)}}
+@keyframes ring{0%{transform:scale(.8);opacity:.9}100%{transform:scale(2.2);opacity:0}}
+.pbots{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 14px}
+.chip{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:5px 12px;font-size:13px;color:var(--mut)}
+.chip.on{color:var(--tx);border-color:var(--cy);background:#0e2a38}
+.prow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 4px;border-bottom:1px solid var(--line)}
+.prow:last-child{border-bottom:0}
+.prow .pn{font-weight:600}.prow .pd{color:var(--mut);font-size:12px;margin-top:1px}
+.prow .seg button{padding:6px 14px;font-size:12px}
+.pwho{display:flex;align-items:center;gap:10px;margin-bottom:6px}.pwho h3{margin:0}
+.away{position:fixed;inset:0;z-index:100;background:rgba(5,8,16,.72);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:16px;opacity:0;transition:opacity .25s}
+.away.on{display:flex}.away.show{opacity:1}
+.away .box{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:26px;width:520px;max-width:100%;box-shadow:0 30px 70px rgba(0,0,0,.55);transform:translateY(10px);transition:transform .3s}
+.away.show .box{transform:none}
+.away h2{margin:0 0 4px;font-size:24px}.away .sub{color:var(--mut);margin-bottom:18px}
+.away .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.away .st{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:14px}
+.away .st .v{font-size:30px;font-weight:700;line-height:1.1}.away .st .l{color:var(--mut);font-size:13px;margin-top:2px}
+.away .st.warn{border-color:#7a5a10;background:#241c08}.away .st.warn .v{color:var(--amber)}
+.away ul{margin:0 0 18px;padding-left:18px;color:#c3cdea;font-size:13px}.away li{margin:3px 0}
+.away .go{width:100%;padding:11px;font-size:14px;font-weight:600}
+@media(max-width:700px){.prow{flex-wrap:wrap}.away .box{padding:18px}.away .st .v{font-size:24px}}
 </style></head><body>
 <div class="top"><div class="brand">FOREMAN <b>HQ</b></div><div class="sum" id="sum"></div><div class="sp"></div>
-<button class="btn pri" id="addb">+ Add bot</button><button class="btn red" id="killall">Pause all</button></div>
-<nav id="nav"><a href="#office" data-v="office">Office</a><a href="#approvals" data-v="approvals">Approvals<span class="bd" id="apb" style="display:none"></span></a><a href="#receipts" data-v="receipts">Activity</a><a href="#stubs" data-v="stubs">Performance</a><a href="#policies" data-v="policies">Policies</a></nav>
+<button class="btn" id="recap">While you were away</button><button class="btn pri" id="addb">+ Add bot</button><button class="btn red" id="killall">Pause all</button></div>
+<nav id="nav"><a href="#office" data-v="office">HQ</a><a href="#approvals" data-v="approvals">Approvals<span class="bd" id="apb" style="display:none"></span></a><a href="#receipts" data-v="receipts">Activity</a><a href="#stubs" data-v="stubs">Team</a><a href="#policies" data-v="policies">Permissions</a></nav>
 <main>
 <section class="view" id="v-office"><div class="floor" id="floor"></div><div class="tray" id="tray"></div></section>
 <section class="view" id="v-approvals"></section>
@@ -92,9 +125,13 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:7px 8px;b
 <section class="view" id="v-stubs"></section>
 <section class="view" id="v-policies"></section>
 </main>
-<div class="goalbar" id="goalbar"><div class="goalst" id="goalst"></div><form id="gf"><input id="gi" placeholder="What should your team work on?" autocomplete="off"><button class="btn pri" type="submit">Go</button></form></div>
+<div class="goalbar" id="goalbar"><div class="goalst" id="goalst"></div><form id="gf"><input id="gi" placeholder="What should your team do?" autocomplete="off"><button class="btn pri" type="submit">Go</button></form></div>
 <div class="dr" id="dr"></div>
 <div class="toast" id="toast"></div>
+<div class="away" id="away"><div class="box"><h2>While you were away</h2><div class="sub">Your team kept working. Here is what got done.</div>
+<div class="grid"><div class="st"><div class="v">28</div><div class="l">leads researched</div></div><div class="st"><div class="v">2</div><div class="l">campaigns created</div></div><div class="st"><div class="v">4</div><div class="l">meetings scheduled</div></div><div class="st warn"><div class="v">2</div><div class="l">approvals waiting for you</div></div></div>
+<ul><li>Dato scored the new lead list and handed the top 10 to NutriBridge Rep</li><li>Grok Marketing drafted two Q4 campaigns, ready for review</li><li>Ledger is holding a Meta Ads spend until you approve it</li></ul>
+<button class="btn pri go" id="awaygo">Go to the office</button></div></div>
 <div class="modal" id="modal"><div class="box"><h3 style="margin:0 0 8px">Add a bot to your team</h3>
 <label>Name</label><input id="mn" placeholder="e.g. Scout"><label>Role</label><input id="mr" placeholder="e.g. Competitor research">
 <label>Department</label><select id="md"></select><div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn" id="mc">Cancel</button><button class="btn pri" id="mok">Hire</button></div></div></div>
@@ -162,7 +199,7 @@ async function walk(a,x,y){if(Math.abs(a.x-x)+Math.abs(a.y-y)<.5)return;const d=
 const goHome=a=>{const [x,y]=homeOf(a);return walk(a,x,y)};
 const ICON={working:"\u2699\uFE0F",needs:"\u{1F7E1}",blocked:"\u{1F534}",handoff:"\u27A1\uFE0F",meeting:"\u{1F4AC}",done:"\u2705",idle:"\u{1F4A4}",paused:"\u23F8"};
 function vs(){return this.st==="done"?"working":this.st==="handoff"||this.st==="meeting"?"working":this.st}
-agents.forEach(a=>a.vs=vs);
+agents.forEach(a=>a.vs=vs);[['lifehq',16000],['dato',12000],['standby',14000],['proofcoach',22000],['flyopia',10000]].forEach(([i,r])=>byId[i]&&(byId[i].rest=r));
 function paint(a){const e=a.el;if(!e)return;e.className="ch "+a.st+(e.classList.contains("walk")?" walk":"");
  const txt=a.bub||(a.st==="needs"?"Needs approval":a.st==="blocked"?"Blocked":a.now);e.querySelector(".bub").textContent=ICON[a.st]+" "+txt;
  const t=e.querySelector(".tok");if(a.carry){t.style.display="block";t.textContent="\u{1F4C4} "+a.carry}else t.style.display="none"}
@@ -196,7 +233,7 @@ async function runTask(a,t){
  if(a.killed||a.lock)return;
  if(t.ho)await handoff(a,t.ho[0],t.ho[1]);
  if(t.meet&&!a.killed&&!a.lock)await meeting(a,t.meet[0],t.meet[1]);
- if(!a.killed&&!a.lock){setSt(a,"idle","Between tasks");await tick(a,1200)}}
+ if(!a.killed&&!a.lock){setSt(a,"idle","Idle");await tick(a,1200)}}
 function finish(a,t,dec){a.actions++;if(t.a==="spend"&&t.amt)a.spent+=t.amt;else if(t.a==="spend")a.spent+=1;if(a.actions%5===0)a.outcomes++;use(a,t.tool);a.done.unshift(t.t);if(a.done.length>8)a.done.pop();receipt(a,t.a,t.t,dec,t.amt)}
 async function handoff(a,toId,item){const b=byId[toId];if(!b||b.killed||b.lock||b===a||!["working","idle","done"].includes(b.st))return;
  a.carry=item;setSt(a,"handoff","Handing "+item+" to "+b.name);const [bx,by]=homeOf(b);await walk(a,bx+(a.x<bx?-6:6)*(window.innerWidth<700?.6:1),by+1);
@@ -209,6 +246,7 @@ async function meeting(a,bid,topic){const b=byId[bid];if(G.meetBusy||!b||b.kille
  await sleep(5500);await Promise.all([goHome(a),goHome(b)]);b.lock=false;G.meetBusy=false;setSt(a,"idle","Back at desk");if(!b.killed)setSt(b,"working","Back to work")}
 async function loop(a){await sleep(800+Math.random()*2500);
  while(true){if(a.lock||a.killed||G.paused||a.joining){await sleep(400);continue}
+  if(a.rest&&a.i>0&&a.i%a.script.length===0&&!a.rested){a.rested=true;await goHome(a);setSt(a,"idle","Idle, no tasks queued");await tick(a,a.rest);continue}a.rested=false;
   let t=a.script[a.i%a.script.length];a.i++;
   try{await runTask(a,t)}catch(e){console.error(e)}
   await sleep(100)}}
@@ -272,9 +310,18 @@ function render(){renderTray();refresh();const v=location.hash.slice(1)||"office
 function vApprovals(){$("#v-approvals").innerHTML=`<h3>Approvals queue</h3>`+(G.approvals.length?G.approvals.map(r=>`<div class="req" style="margin-bottom:10px"><div class="q">\u{1F7E1} ${r.text}</div><div class="bt"><button class="btn grn" data-r="${r.id}" data-d="approve">Approve once</button>${r.t.amt?`<button class="btn amb" data-r="${r.id}" data-d="raise">Raise limit</button>`:""}<button class="btn red" data-r="${r.id}" data-d="deny">Deny</button></div></div>`).join(""):`<div class="card">Nothing needs you right now. Your team is working.</div>`)}
 function vReceipts(){$("#v-receipts").innerHTML=`<h3>Activity and receipts</h3><div class="card tw"><table><tr><th>Time</th><th>Bot</th><th>Action</th><th>Decision</th><th>Amount</th></tr>${G.receipts.slice(0,80).map(r=>`<tr><td>${r.t}</td><td>${esc(r.agent)}</td><td>${esc(r.text)}</td><td>${esc(r.dec)}</td><td>${r.amt?money(r.amt):""}</td></tr>`).join("")||"<tr><td colspan=5>Nothing yet</td></tr>"}</table></div>`}
 function vStubs(){const c=counts();const sp=agents.reduce((s,a)=>s+a.spent,0),ac=agents.reduce((s,a)=>s+a.actions,0);
- $("#v-stubs").innerHTML=`<h3>Performance</h3><div class="cards"><div class="card"><div class="v">${c.working}</div><div class="l">working</div></div><div class="card"><div class="v" style="color:var(--amber)">${c.needs}</div><div class="l">need you</div></div><div class="card"><div class="v" style="color:var(--red)">${c.blocked}</div><div class="l">blocked</div></div><div class="card"><div class="v">${ac}</div><div class="l">actions</div></div><div class="card"><div class="v">${money(sp)}</div><div class="l">spend</div></div><div class="card"><div class="v">${G.handoffs}</div><div class="l">handoffs this session</div></div></div>
+ $("#v-stubs").innerHTML=`<h3>Team</h3><div class="cards"><div class="card"><div class="v">${c.working}</div><div class="l">working</div></div><div class="card"><div class="v" style="color:var(--amber)">${c.needs}</div><div class="l">need you</div></div><div class="card"><div class="v" style="color:var(--red)">${c.blocked}</div><div class="l">blocked</div></div><div class="card"><div class="v">${ac}</div><div class="l">actions</div></div><div class="card"><div class="v">${money(sp)}</div><div class="l">spend</div></div><div class="card"><div class="v">${G.handoffs}</div><div class="l">handoffs this session</div></div></div>
  <div class="card tw"><table><tr><th>Pay stub</th><th>Role</th><th>Actions</th><th>Outcomes</th><th>Spend</th><th>Cost / outcome</th><th>Level</th></tr>${agents.map(a=>`<tr><td><b>${esc(a.name)}</b></td><td>${esc(a.role)}</td><td>${a.actions}</td><td>${a.outcomes} ${esc(a.outLabel)}</td><td>${money(a.spent)}</td><td>${a.outcomes?money(a.spent/a.outcomes):"-"}</td><td>${a.level}</td></tr>`).join("")}</table></div><div class="sum">All figures are mock demo data.</div>`}
-function vPolicies(){$("#v-policies").innerHTML=`<h3>Policies</h3><div class="card tw"><table><tr><th>Bot</th>${Object.keys(ACTIONS).map(k=>`<th>${k}</th>`).join("")}<th>Cap</th></tr>${agents.map(a=>`<tr><td><b>${esc(a.name)}</b></td>${Object.keys(ACTIONS).map(k=>`<td><span class="tag ${a.policy[k]}">${a.policy[k]}</span></td>`).join("")}<td>$${a.policy.cap}</td></tr>`).join("")}</table></div><div class="sum">AUTO runs on its own. ASK sends the bot to the approval station. NEVER blocks it. Click a character to change its levels.</div>`}
+const RES=[["Gmail","AUTO","read"],["Calendar and docs","AUTO","read"],["Drafting content","AUTO","draft"],["CRM records","ASK","update"],["Sending emails to customers","ASK","send"],["Posting on social media","ASK","post"],["Meta Ads spending","ASK","spend"],["Production deploys","NEVER","deploy"],["Stripe refunds","NEVER","delete"]];
+let PB=null;
+function pstate(a,k){const p=a.policy;if(k==="spend")return p.spend==="NEVER"?"NEVER":p.cap>=100000?"AUTO":"ASK";return p[k]}
+function pdesc(a,r){const l=pstate(a,r[2]);if(r[2]==="spend")return l==="ASK"?"ASK above $100":l==="AUTO"?"AUTO, no limit":"NEVER";return l==="AUTO"?"Runs on its own":l==="ASK"?"Waits for your OK":"Blocked"}
+function setPerm(id,k,l){const a=byId[id];if(k==="spend"){if(l==="NEVER")a.policy.spend="NEVER";else{a.policy.spend="AUTO";a.policy.cap=l==="AUTO"?100000:100}}else a.policy[k]=l;vPolicies()}
+window.setPerm=setPerm;window.pickBot=id=>{PB=id;vPolicies()};
+function vPolicies(){if(!PB||!byId[PB])PB=agents[0].id;const a=byId[PB];
+ $("#v-policies").innerHTML=`<h3>Permissions</h3><div class="sum" style="margin-bottom:12px">Choose what each bot can do on its own, what needs your OK, and what it can never do.</div><div class="pbots">${agents.map(b=>`<button class="chip${b.id===PB?" on":""}" onclick="pickBot('${b.id}')">${b.emo} ${esc(b.name)}</button>`).join("")}</div>
+ <div class="card"><div class="pwho"><h3>${a.emo} ${esc(a.name)}</h3><span class="sum">${esc(a.role)}</span></div>${RES.map(r=>{const l=pstate(a,r[2]);return `<div class="prow"><div><div class="pn">${r[0]}</div><div class="pd">${pdesc(a,r)}</div></div><div class="seg">${["AUTO","ASK","NEVER"].map(x=>`<button class="${x}${l===x?" on":""}" onclick="setPerm('${a.id}','${r[2]}','${x}')">${x}</button>`).join("")}</div></div>`}).join("")}</div>
+ <div class="sum">Changes apply to the live demo team right away. All state is mock.</div>`}
 /* drawer */
 let DR=null;
 function openDr(id){DR=id;$("#dr").classList.add("on");renderDr()}
@@ -293,6 +340,10 @@ function renderDr(){const a=byId[DR];if(!a)return;const pct=a.policy.cap?Math.mi
 function setPol(id,k,l){byId[id].policy[k]=l;renderDr()}
 function togKill(id){const a=byId[id];a.killed?reviveAgent(a):killAgent(a);renderDr()}
 window.setPol=setPol;window.togKill=togKill;window.closeDr=closeDr;
+/* away */
+function showAway(){const e=$("#away");e.classList.add("on");requestAnimationFrame(()=>requestAnimationFrame(()=>e.classList.add("show")))}
+function hideAway(){const e=$("#away");e.classList.remove("show");setTimeout(()=>e.classList.remove("on"),260);location.hash="#office"}
+$("#awaygo").onclick=hideAway;$("#away").onclick=e=>{if(e.target.id==="away")hideAway()};$("#recap").onclick=showAway;document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("#away").classList.contains("on"))hideAway()});
 /* nav */
 function route(){const v=(location.hash.slice(1)||"office");const k=["office","approvals","receipts","stubs","policies"].includes(v)?v:"office";
  document.querySelectorAll(".view").forEach(e=>e.classList.toggle("on",e.id==="v-"+k));document.querySelectorAll("nav a").forEach(a=>a.classList.toggle("on",a.dataset.v===k));
@@ -300,6 +351,6 @@ function route(){const v=(location.hash.slice(1)||"office");const k=["office","a
 window.addEventListener("hashchange",route);
 /* seed tool counts so profiles look lived in */
 agents.forEach(a=>a.script.forEach(t=>{a.tools[t.tool]=(a.tools[t.tool]||0)+(a.id==="instinct"?3:1+Math.floor(Math.random()*4))}));
-buildFloor();route();agents.forEach(a=>{paint(a);hist(a,"Online at desk");loop(a)});
+buildFloor();route();agents.forEach(a=>{paint(a);hist(a,"Online at desk");loop(a)});showAway();
 setInterval(()=>{refresh();const v=location.hash.slice(1);if(v==="receipts")vReceipts();if(v==="stubs")vStubs()},2500);
 </script></body></html>
