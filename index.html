@@ -1,277 +1,305 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Blackbox HQ - the office for your AI crew</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230b0d14'/><rect x='7' y='7' width='18' height='18' rx='3' fill='none' stroke='%2339ff9c' stroke-width='2.5'/><circle cx='16' cy='16' r='3' fill='%2339ff9c'/></svg>">
+<title>Foreman HQ - Blackbox</title>
 <style>
-:root{--bg:#07090f;--p:#0e121c;--p2:#141a28;--b:#232c40;--t:#e7ecf6;--m:#8793ad;--g:#39ff9c;--y:#ffc857;--r:#ff5d73;--bl:#5ab0ff;--v:#a78bfa}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(1200px 600px at 80% -10%,#1a1f3a55,transparent),var(--bg);color:var(--t);font:14px/1.45 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-button{font:inherit;cursor:pointer;color:var(--t)}
-header{display:flex;align-items:center;gap:16px;padding:14px 22px;border-bottom:1px solid var(--b);position:sticky;top:0;background:#07090fe6;backdrop-filter:blur(8px);z-index:20;flex-wrap:wrap}
-.logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.5px;font-size:17px}
-.logo i{width:22px;height:22px;border:2.5px solid var(--g);border-radius:5px;display:grid;place-items:center}.logo i:after{content:"";width:6px;height:6px;border-radius:50%;background:var(--g);box-shadow:0 0 10px var(--g)}
-.biz{color:var(--m);font-size:13px}.sp{flex:1}
-.kpi{display:flex;gap:18px}.kpi div{text-align:right}.kpi b{display:block;font-size:17px;font-variant-numeric:tabular-nums}.kpi span{color:var(--m);font-size:11px;text-transform:uppercase;letter-spacing:.8px}
-.kill{background:#2a0f16;border:1px solid var(--r);color:var(--r);padding:9px 14px;border-radius:9px;font-weight:700}.kill:hover{background:var(--r);color:#fff}
-.kill.on{background:var(--r);color:#fff;animation:pulse 1.4s infinite}
-nav{display:flex;gap:4px;padding:10px 22px 0;border-bottom:1px solid var(--b);overflow-x:auto}
-nav button{background:none;border:0;padding:10px 14px;color:var(--m);border-bottom:2px solid transparent;white-space:nowrap}
-nav button.on{color:var(--t);border-color:var(--g)}nav .badge{background:var(--y);color:#111;border-radius:99px;padding:0 7px;font-size:11px;font-weight:800;margin-left:6px}
-main{padding:22px;max-width:1280px;margin:0 auto}
-.banner{background:#2a0f16;border:1px solid var(--r);color:#ffb3bd;padding:10px 14px;border-radius:10px;margin-bottom:16px;display:none}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
-.floor{background:linear-gradient(#0e121c,#0a0d15);border:1px solid var(--b);border-radius:16px;padding:18px;background-image:linear-gradient(#ffffff06 1px,transparent 1px),linear-gradient(90deg,#ffffff06 1px,transparent 1px);background-size:36px 36px}
-.floor h3{margin:0 0 4px}.sub{color:var(--m);font-size:12.5px;margin-bottom:14px}
-.desk{background:var(--p);border:1px solid var(--b);border-radius:14px;padding:14px;position:relative;cursor:pointer;transition:.2s}
-.desk:hover{border-color:#3b4a6b;transform:translateY(-2px)}
-.desk .top{display:flex;gap:10px;align-items:center}
-.av{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:21px;background:var(--p2);border:1px solid var(--b);flex:none}
-.desk b{font-size:15px}.role{color:var(--m);font-size:12px}
-.lvl{font-size:10.5px;padding:2px 8px;border-radius:99px;border:1px solid;font-weight:700;letter-spacing:.5px;margin-left:auto;text-transform:uppercase}
-.Intern{color:var(--bl)}.Staff{color:var(--v)}.Manager{color:var(--g)}
-.st{margin-top:12px;display:flex;gap:8px;align-items:flex-start;min-height:40px}
-.dot{width:9px;height:9px;border-radius:50%;margin-top:5px;flex:none;background:var(--g);box-shadow:0 0 8px var(--g);animation:blink 1.6s infinite}
-.dot.wait{background:var(--y);box-shadow:0 0 8px var(--y)}.dot.dead{background:#555;box-shadow:none;animation:none}.dot.idle{background:var(--bl);box-shadow:0 0 8px var(--bl)}
-.now{font-size:13px}.now small{color:var(--m);display:block}
-.bar{height:5px;background:#1b2234;border-radius:9px;overflow:hidden;margin-top:12px}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--g),var(--bl));transition:.5s}
-.meta{display:flex;justify-content:space-between;color:var(--m);font-size:11.5px;margin-top:6px}
-.desk.dead{opacity:.55;filter:grayscale(.8)}
-.desk .flash{position:absolute;inset:0;border-radius:14px;pointer-events:none;box-shadow:inset 0 0 0 2px var(--g);opacity:0}.desk.f .flash{animation:fl .9s}
-.card{background:var(--p);border:1px solid var(--b);border-radius:14px;padding:16px}
-.two{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;margin-top:16px}@media(max-width:900px){.two{grid-template-columns:1fr}}
-.feed{max-height:340px;overflow:auto}
-.row{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid #1a2132;align-items:flex-start}.row:last-child{border:0}
-.tag{font-size:10.5px;font-weight:800;padding:2px 7px;border-radius:6px;flex:none;margin-top:1px;min-width:48px;text-align:center}
-.AUTO{background:#0f2b20;color:var(--g)}.ASK{background:#2d2410;color:var(--y)}.NEVER{background:#2d1219;color:var(--r)}.DENIED{background:#2d1219;color:var(--r)}.APPROVED{background:#0f2b20;color:var(--g)}
-.rt{flex:1;min-width:0}.rt small{color:var(--m);display:block}.cost{font-variant-numeric:tabular-nums;color:var(--m);flex:none}
-.appr{background:var(--p);border:1px solid #4a3d18;border-radius:14px;padding:16px;margin-bottom:12px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;animation:slide .3s}
-.appr .info{flex:1;min-width:240px}.appr h4{margin:0 0 2px;font-size:15px}
-.btn{padding:8px 16px;border-radius:9px;border:1px solid var(--b);background:var(--p2);font-weight:700}
-.btn.ok{background:#0f2b20;border-color:var(--g);color:var(--g)}.btn.ok:hover{background:var(--g);color:#06150d}
-.btn.no{background:#2d1219;border-color:var(--r);color:var(--r)}.btn.no:hover{background:var(--r);color:#fff}
-.empty{color:var(--m);text-align:center;padding:40px}
-table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:9px 10px;border-bottom:1px solid #1a2132;font-size:13px}th{color:var(--m);font-size:11px;text-transform:uppercase;letter-spacing:.7px}td.n{font-variant-numeric:tabular-nums}
-.stub{background:#f4f1e8;color:#1b1b1b;border-radius:6px;padding:18px;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;position:relative;box-shadow:0 8px 24px #0008}
-.stub:before{content:"";position:absolute;left:0;right:0;top:-6px;height:6px;background:radial-gradient(circle at 6px 6px,transparent 5px,#f4f1e8 5.5px) 0 0/12px 6px}
-.stub h4{margin:0 0 2px;font-size:14px}.stub hr{border:0;border-top:1px dashed #888;margin:10px 0}.stub .l{display:flex;justify-content:space-between;padding:2px 0}.stub .big{font-weight:800;font-size:15px}
-.stub .acts{display:flex;gap:8px;margin-top:12px}.stub .acts button{color:#111;flex:1;padding:8px;border:1.5px solid #222;background:#fff;border-radius:5px;font-weight:700;font-family:inherit}.stub .acts button.fire{background:#c62839;color:#fff;border-color:#c62839}
-.modal{position:fixed;inset:0;background:#000a;display:none;place-items:center;z-index:50;padding:16px}.modal.on{display:grid}
-.mbox{background:var(--p);border:1px solid var(--b);border-radius:16px;max-width:620px;width:100%;max-height:90vh;overflow:auto;padding:22px}
-.pol{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid #1a2132}
-.seg{display:flex;border:1px solid var(--b);border-radius:8px;overflow:hidden}.seg button{background:var(--p2);border:0;padding:5px 11px;font-size:12px;font-weight:700;color:var(--m)}
-.seg button.AUTO.on{background:var(--g);color:#06150d}.seg button.ASK.on{background:var(--y);color:#201700}.seg button.NEVER.on{background:var(--r);color:#fff}
-select,input{background:var(--p2);color:var(--t);border:1px solid var(--b);border-radius:8px;padding:7px 10px;font:inherit}
-.lead{color:var(--m);max-width:760px;margin:0 0 18px}
-.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.chip{padding:5px 12px;border-radius:99px;border:1px solid var(--b);background:var(--p2);font-size:12px;color:var(--m)}.chip.on{color:var(--t);border-color:var(--g)}
-.crew{display:inline-block;background:#10261c;border:1px solid #1f5a40;color:var(--g);font-size:11px;padding:2px 9px;border-radius:99px;font-weight:700}
-.demo{position:fixed;right:14px;bottom:14px;z-index:30;display:flex;gap:8px}.demo button{background:var(--p2);border:1px solid var(--b);padding:8px 12px;border-radius:99px;font-size:12px;color:var(--m)}.demo button:hover{color:var(--t);border-color:var(--g)}
-@keyframes pulse{50%{box-shadow:0 0 0 6px #ff5d7333}}@keyframes blink{50%{opacity:.4}}@keyframes fl{0%{opacity:1}100%{opacity:0}}@keyframes slide{from{opacity:0;transform:translateY(-8px)}}
-
-.dept{margin-top:18px}.dept:first-of-type{margin-top:6px}
-.dh{display:flex;align-items:center;gap:10px;margin:0 0 10px;padding-bottom:8px;border-bottom:1px solid #232c40}
-.dh b{font-size:13px;letter-spacing:1.4px;text-transform:uppercase}.dh i{width:10px;height:10px;border-radius:3px;display:inline-block}
-.dh .cnt{color:var(--m);font-size:12px}.dh .pills{margin-left:auto;display:flex;gap:6px}
-.pill{font-size:11px;padding:2px 8px;border-radius:99px;background:#141a28;border:1px solid #232c40;color:var(--m)}
-.pill.w{color:var(--g)}.pill.y{color:var(--y);border-color:#5a4a1a}.pill.r{color:var(--r);border-color:#5a2230}
-.seat{border:1.5px dashed #2c3752;border-radius:14px;display:grid;place-items:center;color:#52607f;font-size:13px;min-height:150px;text-align:center;padding:10px}
-.desk.wait{border-color:var(--y);background:linear-gradient(#1c1a12,#12151f);animation:glow 1.8s infinite}
-.desk.blk{border-color:#7a2a38;background:linear-gradient(#1e1217,#12151f)}
-.need{position:absolute;top:-10px;right:12px;background:var(--y);color:#141000;font-size:10px;font-weight:800;padding:3px 9px;border-radius:99px;letter-spacing:.6px;animation:blink 1.2s infinite}
-.blkt{position:absolute;top:-10px;right:12px;background:var(--r);color:#fff;font-size:10px;font-weight:800;padding:3px 9px;border-radius:99px;letter-spacing:.6px}
-.desk.work .av{animation:bob 1.6s ease-in-out infinite}
-.act{display:inline-flex;gap:2px;align-items:flex-end;height:11px;margin-left:6px;vertical-align:middle}.act u{width:3px;background:var(--g);border-radius:1px;animation:eq 0.9s infinite;height:4px}.act u:nth-child(2){animation-delay:.2s}.act u:nth-child(3){animation-delay:.4s}
-.dot.blocked{background:var(--r);box-shadow:0 0 8px var(--r);animation:none}
-.stl{font-size:10.5px;font-weight:800;letter-spacing:.8px;margin-left:auto}.stl.work{color:var(--g)}.stl.wait{color:var(--y)}.stl.blk{color:var(--r)}.stl.idle{color:var(--bl)}.stl.dead{color:#777}
-.hin{font-size:11px;color:var(--v);margin-top:4px}
-.strip{background:linear-gradient(90deg,#2a2210,#14161f);border:1px solid #6a5418;border-radius:14px;padding:12px 16px;margin-bottom:16px;box-shadow:0 0 28px #ffc85722}
-.strip h4{margin:0 0 8px;color:var(--y);font-size:13px;letter-spacing:1px;text-transform:uppercase}
-.strip .row{border-color:#3a3015}
-.tok{position:fixed;z-index:60;pointer-events:none;background:#1b1536;border:1.5px solid var(--v);color:#e5dcff;padding:5px 11px;border-radius:99px;font-size:12px;font-weight:700;white-space:nowrap;box-shadow:0 0 22px #a78bfa88;left:0;top:0}
-.hrow{padding:8px 0;border-bottom:1px solid #1a2132;font-size:13px}.hrow:last-child{border:0}.hrow small{color:var(--m);display:block}.hrow span{color:var(--v);font-weight:800}
-.msec{margin-top:16px}.msec h5{margin:0 0 6px;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--m)}
-.tl{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #1a2132;font-size:13px}.tl span:last-child{color:var(--m)}
-.pg{display:grid;grid-template-columns:1fr 1fr;gap:4px 18px}
-.pg div{display:flex;justify-content:space-between;font-size:12.5px;padding:3px 0}
-.done{padding:4px 0;font-size:13px}.done:before{content:"\2713 ";color:var(--g);font-weight:800}
-@keyframes glow{50%{box-shadow:0 0 0 1px var(--y),0 0 26px #ffc85755}}@keyframes bob{50%{transform:translateY(-3px)}}@keyframes eq{50%{height:11px}}
+:root{--bg:#070b14;--panel:#0e1527;--panel2:#131c33;--line:#1f2a47;--tx:#e6ecff;--mut:#8593b5;--amber:#ffbe2e;--red:#ff5266;--grn:#34d399;--cy:#4cc9f0;--pur:#a78bfa;--blu:#60a5fa}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.4 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+button{font:inherit;color:inherit;cursor:pointer}
+.top{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap;position:sticky;top:0;background:rgba(7,11,20,.94);z-index:50;backdrop-filter:blur(6px)}
+.brand{font-weight:800;letter-spacing:.14em;font-size:13px}.brand b{color:var(--cy)}
+.sum{color:var(--mut);font-size:13px}.sum .n{color:var(--amber);font-weight:700}
+.sp{flex:1}
+.btn{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:6px 11px;font-size:12px}
+.btn:hover{border-color:var(--cy)}.btn.pri{background:#0e3b4a;border-color:var(--cy)}.btn.red{border-color:#6b2433;color:#ff8c9b}.btn.grn{border-color:#145a45;color:var(--grn)}.btn.amb{border-color:#7a5a10;color:var(--amber)}
+nav{display:flex;gap:2px;padding:0 12px;border-bottom:1px solid var(--line);overflow-x:auto}
+nav a{padding:9px 12px;color:var(--mut);text-decoration:none;font-size:13px;border-bottom:2px solid transparent;white-space:nowrap}
+nav a.on{color:var(--tx);border-color:var(--cy)}nav a .bd{background:var(--amber);color:#111;border-radius:9px;padding:0 6px;font-size:11px;font-weight:700;margin-left:4px}
+main{padding:12px 14px 90px;max-width:1280px;margin:0 auto}
+.view{display:none}.view.on{display:block}
+/* office */
+.floor{position:relative;width:100%;aspect-ratio:16/11;min-height:430px;border-radius:14px;background:radial-gradient(ellipse at 50% 30%,#12203d,#0a1224 70%);border:1px solid var(--line);overflow:hidden;--c:34px;box-shadow:0 20px 40px rgba(0,0,0,.4)}
+.floor::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(96,165,250,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(96,165,250,.05) 1px,transparent 1px);background-size:32px 32px;transform:none;pointer-events:none}
+.room{position:absolute;border-radius:12px;background:linear-gradient(180deg,#17233f,#101a31);border:1px solid #26365c;border-bottom:6px solid #0a1122;box-shadow:inset 0 2px 0 rgba(255,255,255,.05),0 8px 14px rgba(0,0,0,.35)}
+.room .lb{position:absolute;left:10px;top:6px;font-size:10px;letter-spacing:.16em;font-weight:700;color:#7f93c4}
+.room .ct{position:absolute;right:10px;top:6px;font-size:10px;color:#6c7ea8}
+.room.meet{background:linear-gradient(180deg,#15294a,#101d38);border-color:#2c4a80}
+.room.appr{background:linear-gradient(180deg,#2a2210,#1a160c);border:1px dashed #7a5a10;border-bottom:6px solid #0f0c05}
+.room.appr.hot{animation:glow 1.6s infinite}
+.room.appr .lb{color:var(--amber)}
+.room.lounge{background:linear-gradient(180deg,#14203a,#0f1830);opacity:.9}
+@keyframes glow{0%,100%{box-shadow:0 0 0 rgba(255,190,46,0),inset 0 0 20px rgba(255,190,46,.05)}50%{box-shadow:0 0 28px rgba(255,190,46,.35),inset 0 0 26px rgba(255,190,46,.12)}}
+.desk{position:absolute;width:calc(var(--c)*1.9);height:calc(var(--c)*.9);transform:translate(-50%,-6%);background:linear-gradient(180deg,#31456f,#27385c);border-radius:6px;box-shadow:0 5px 0 #0b1226,0 10px 12px rgba(0,0,0,.4);z-index:1}
+.desk::after{content:"";position:absolute;left:50%;top:14%;width:34%;height:34%;transform:translateX(-50%);background:#0b1226;border-radius:3px;box-shadow:0 0 8px var(--mon,#2c3d63);border:1px solid var(--mon,#2c3d63)}
+.desk.working{--mon:var(--cy)}.desk.needs{--mon:var(--amber)}.desk.blocked{--mon:var(--red)}.desk.paused{--mon:#555}.desk.empty{opacity:.45}
+.table{position:absolute;left:25%;top:55%;width:18%;height:34%;transform:translate(-50%,-50%);border-radius:50%;background:linear-gradient(180deg,#3a527f,#2a3d63);box-shadow:0 6px 0 #0b1226,0 10px 14px rgba(0,0,0,.4)}
+.slot{position:absolute;width:calc(var(--c)*1.1);height:calc(var(--c)*.5);transform:translate(-50%,0);border:1px dashed #6e5314;border-radius:6px;opacity:.7}
+.door{position:absolute;right:1.5%;bottom:1%;font-size:10px;color:#6c7ea8;letter-spacing:.1em}
+.ch{position:absolute;width:var(--c);transform:translate(-50%,-100%);transition:left 1.6s cubic-bezier(.45,.05,.4,1),top 1.6s cubic-bezier(.45,.05,.4,1);cursor:pointer;z-index:5;text-align:center}
+.ch .hd{width:var(--c);height:var(--c);border-radius:50%;background:#1b2745;border:2px solid var(--col);display:flex;align-items:center;justify-content:center;font-size:calc(var(--c)*.5);position:relative;z-index:2}
+.ch .bd{width:calc(var(--c)*.78);height:calc(var(--c)*.5);margin:-4px auto 0;background:var(--col);border-radius:8px 8px 3px 3px;opacity:.85}
+.ch .nm{position:absolute;left:50%;transform:translateX(-50%);top:calc(100% + var(--c)*.95);font-size:10px;font-weight:700;white-space:nowrap;text-shadow:0 1px 2px #000;z-index:6}
+.ch .nm i{display:block;font-style:normal;font-weight:400;color:var(--mut);font-size:9px}
+.ch.working .hd{animation:bob 1s infinite ease-in-out;box-shadow:0 0 0 2px rgba(76,201,240,.25)}
+.ch.walk .hd{animation:step .35s infinite ease-in-out}
+.ch.needs .hd{box-shadow:0 0 0 3px rgba(255,190,46,.5),0 0 18px rgba(255,190,46,.7);animation:pulse 1.2s infinite}
+.ch.blocked .hd{box-shadow:0 0 0 3px rgba(255,82,102,.5)}.ch.paused{filter:grayscale(1);opacity:.6}
+.ch.idle .hd{opacity:.8}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+@keyframes step{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-4px) rotate(4deg)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+.bub{position:absolute;left:50%;bottom:calc(100% + 4px);transform:translateX(-50%);white-space:nowrap;max-width:150px;overflow:hidden;text-overflow:ellipsis;font-size:10px;padding:2px 7px;border-radius:10px;background:#0b1226;border:1px solid var(--bc,#2c3d63);color:var(--bc,var(--tx));z-index:7}
+.ch.working .bub{--bc:var(--cy)}.ch.needs .bub{--bc:var(--amber);background:#2a2008}.ch.blocked .bub{--bc:var(--red);background:#2a0c12}.ch.handoff .bub{--bc:var(--pur)}.ch.meeting .bub{--bc:var(--blu)}.ch.done .bub{--bc:var(--grn)}.ch.idle .bub,.ch.paused .bub{--bc:#6b7aa0}
+.tok{position:absolute;left:50%;bottom:calc(100% + 24px);transform:translateX(-50%);background:var(--pur);color:#150b33;font-size:10px;font-weight:700;padding:2px 7px;border-radius:6px;white-space:nowrap;z-index:8;box-shadow:0 0 12px rgba(167,139,250,.7)}
+.tray{display:none;gap:10px;overflow-x:auto;padding:10px 0 2px}.tray.on{display:flex}
+.req{min-width:290px;background:#241c08;border:1px solid #7a5a10;border-radius:12px;padding:10px 12px;box-shadow:0 0 18px rgba(255,190,46,.15)}
+.req .q{font-weight:600;margin-bottom:8px}.req .q b{color:var(--amber)}.req .bt{display:flex;gap:6px;flex-wrap:wrap}
+.goalbar{position:fixed;left:0;right:0;bottom:0;padding:10px 14px;background:linear-gradient(0deg,#070b14 70%,transparent);z-index:40}
+.goalbar form{max-width:1280px;margin:0 auto;display:flex;gap:8px}
+.goalbar input{flex:1;background:var(--panel);border:1px solid var(--line);border-radius:12px;color:var(--tx);padding:12px 14px;font-size:15px;min-width:0}
+.goalbar input:focus{outline:none;border-color:var(--cy)}
+.goalst{max-width:1280px;margin:0 auto 6px;font-size:12px;color:var(--pur);min-height:0}
+.toast{position:fixed;left:50%;top:70px;transform:translateX(-50%);background:#0e3b4a;border:1px solid var(--cy);padding:8px 16px;border-radius:20px;z-index:80;font-weight:600;display:none}
+/* drawer */
+.dr{position:fixed;top:0;right:0;bottom:0;width:380px;max-width:100%;background:var(--panel);border-left:1px solid var(--line);z-index:70;transform:translateX(105%);transition:transform .25s;overflow-y:auto;padding:16px}
+.dr.on{transform:none}.dr h2{margin:0 0 2px;font-size:20px}.dr .rl{color:var(--mut);margin-bottom:10px}
+.dr h4{margin:16px 0 6px;font-size:11px;letter-spacing:.12em;color:var(--mut);text-transform:uppercase}
+.stp{display:inline-block;padding:2px 9px;border-radius:10px;font-size:12px;border:1px solid var(--line);margin-bottom:6px}
+.pg{display:grid;grid-template-columns:1fr auto;gap:5px 8px;align-items:center;font-size:13px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:7px;overflow:hidden}.seg button{background:none;border:0;padding:3px 8px;font-size:11px;color:var(--mut)}
+.seg button.on.AUTO{background:#0f3d2e;color:var(--grn)}.seg button.on.ASK{background:#3a2c08;color:var(--amber)}.seg button.on.NEVER{background:#3b1119;color:var(--red)}
+.dr ul{margin:0;padding-left:16px;color:#c3cdea;font-size:13px}.dr li{margin:2px 0}
+.bar{height:6px;background:#1b2745;border-radius:4px;overflow:hidden}.bar i{display:block;height:100%;background:var(--cy)}
+.x{position:absolute;right:12px;top:10px;background:none;border:0;font-size:22px;color:var(--mut)}
+/* tables */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px}.cards .card{margin:0}.cards .v{font-size:24px;font-weight:700}.cards .l{color:var(--mut);font-size:12px}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left}th{color:var(--mut);font-weight:500;font-size:12px}
+.tw{overflow-x:auto}
+.tag{padding:1px 8px;border-radius:9px;font-size:11px;border:1px solid var(--line)}.tag.AUTO{color:var(--grn)}.tag.ASK{color:var(--amber)}.tag.NEVER{color:var(--red)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:90;display:none;align-items:center;justify-content:center;padding:16px}.modal.on{display:flex}
+.modal .box{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;width:360px;max-width:100%}
+.modal input,.modal select{width:100%;margin:4px 0 10px;background:var(--bg);border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:8px}
+@media(max-width:700px){.lg{display:none}.floor{aspect-ratio:3/4.4;min-height:0;--c:24px}.ch .nm i{display:none}.ch .nm{font-size:8px}.bub{font-size:8px;max-width:84px;padding:1px 5px}.tok{font-size:8px}.room .lb{font-size:8px;left:6px}.room .ct{display:none}.req{min-width:250px}main{padding:8px 8px 150px}.top{padding:8px 10px}}
 </style></head><body>
-<header>
- <div class="logo"><i></i>BLACKBOX</div><div class="biz">Royce Myers &middot; Crew #1: Bot HQ</div><div class="sp"></div>
- <div class="kpi"><div><b id="kAgents">0</b><span>Agents live</span></div><div><b id="kAct">0</b><span>Actions today</span></div><div><b id="kSpend">$0</b><span>Spent today</span></div><div><b id="kAsk">0</b><span>Waiting on you</span></div></div>
- <button class="kill" id="gkill">&#9724; KILL ALL</button>
-</header>
-<nav id="nav"></nav>
-<main><div class="banner" id="banner"><b>Global kill engaged.</b> Every agent is cut off from Gmail, Shopify, Slack and your card. Nothing runs until you restore access.</div><div id="view"></div></main>
-<div class="modal" id="modal"><div class="mbox" id="mbox"></div></div>
-<div class="demo"><button id="hand_btn" onclick="doHandoff()">&#128230; Trigger handoff</button><button id="burst">&#9889; Simulate busy hour</button><button id="reset">&#8635; Reset demo</button></div>
+<div class="top"><div class="brand">FOREMAN <b>HQ</b></div><div class="sum" id="sum"></div><div class="sp"></div>
+<button class="btn pri" id="addb">+ Add bot</button><button class="btn red" id="killall">Pause all</button></div>
+<nav id="nav"><a href="#office" data-v="office">Office</a><a href="#approvals" data-v="approvals">Approvals<span class="bd" id="apb" style="display:none"></span></a><a href="#receipts" data-v="receipts">Activity</a><a href="#stubs" data-v="stubs">Performance</a><a href="#policies" data-v="policies">Policies</a></nav>
+<main>
+<section class="view" id="v-office"><div class="floor" id="floor"></div><div class="tray" id="tray"></div></section>
+<section class="view" id="v-approvals"></section>
+<section class="view" id="v-receipts"></section>
+<section class="view" id="v-stubs"></section>
+<section class="view" id="v-policies"></section>
+</main>
+<div class="goalbar" id="goalbar"><div class="goalst" id="goalst"></div><form id="gf"><input id="gi" placeholder="What should your team work on?" autocomplete="off"><button class="btn pri" type="submit">Go</button></form></div>
+<div class="dr" id="dr"></div>
+<div class="toast" id="toast"></div>
+<div class="modal" id="modal"><div class="box"><h3 style="margin:0 0 8px">Add a bot to your team</h3>
+<label>Name</label><input id="mn" placeholder="e.g. Scout"><label>Role</label><input id="mr" placeholder="e.g. Competitor research">
+<label>Department</label><select id="md"></select><div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn" id="mc">Cancel</button><button class="btn pri" id="mok">Hire</button></div></div></div>
 <script>
-const ACTIONS={read:"Read data",draft:"Draft content",update:"Update CRM / records",send:"Send externally",post:"Post publicly",deploy:"Change production",spend:"Spend money",delete:"Delete data"};
-const LEVELS={Intern:{read:"AUTO",draft:"AUTO",update:"ASK",send:"ASK",post:"NEVER",deploy:"NEVER",spend:"NEVER",delete:"NEVER",cap:0,blurb:"Drafts, asks before sending"},
-Staff:{read:"AUTO",draft:"AUTO",update:"AUTO",send:"ASK",post:"ASK",deploy:"NEVER",spend:"ASK",delete:"NEVER",cap:75,blurb:"Works in its lane with a spend cap"},
-Manager:{read:"AUTO",draft:"AUTO",update:"AUTO",send:"AUTO",post:"ASK",deploy:"ASK",spend:"AUTO",delete:"NEVER",cap:200,blurb:"Runs on its own with a budget"}};
-const A=(id,name,emoji,role,level,tools,base,script)=>({id,name,emoji,role,level,tools,policy:{...LEVELS[level]},cap:LEVELS[level].cap,spent:base.spent,actions:base.actions,outcomes:base.outcomes,outLabel:base.out,status:"idle",now:"Standing by",killed:false,script});
+const ACTIONS={read:"Read data",draft:"Draft content",update:"Update records",send:"Send externally",post:"Post publicly",deploy:"Change production",spend:"Spend money",delete:"Delete data"};
+const LV={Intern:{read:"AUTO",draft:"AUTO",update:"ASK",send:"ASK",post:"NEVER",deploy:"NEVER",spend:"NEVER",delete:"NEVER",cap:0},
+Staff:{read:"AUTO",draft:"AUTO",update:"AUTO",send:"ASK",post:"ASK",deploy:"NEVER",spend:"ASK",delete:"NEVER",cap:75},
+Manager:{read:"AUTO",draft:"AUTO",update:"AUTO",send:"AUTO",post:"ASK",deploy:"ASK",spend:"AUTO",delete:"NEVER",cap:200}};
+const ROOMS={sales:{n:"SALES",x:1,y:1,w:32,h:40},marketing:{n:"MARKETING",x:34,y:1,w:32,h:40},ops:{n:"OPERATIONS",x:67,y:1,w:32,h:40},
+finance:{n:"FINANCE",x:1,y:63,w:32,h:36},support:{n:"SUPPORT",x:34,y:63,w:32,h:36}};
+const SL=[[27,40],[73,40],[27,82],[73,82]];
+const MEET={x:1,y:43,w:48,h:18},APPR={x:51,y:43,w:48,h:18};
+const MSLOT=[[16,53],[34,53],[25,47]];
+const ASLOT=[0,1,2,3,4].map(i=>[56+i*9.4,57]);
+const DOOR=[96,96];
+const T=(a,t,tool,d,x)=>Object.assign({a,t,tool,d},x||{});
+const A=(id,name,emo,col,room,role,level,base,script,over)=>({id,name,emo,col,room,role,level,policy:Object.assign({},LV[level],over||{}),spent:base[0],actions:base[1],outcomes:base[2],outLabel:base[3],script,i:0,st:"idle",now:"Standing by",done:[],hist:[],tools:{},killed:false,lock:false,carry:null,bub:null,x:0,y:0,slot:0});
 const agents=[
-A("instinct","Instinct","\u{1F9E0}","Main assistant & executor","Manager",["Gmail","Calendar","GitHub","Vercel"],{spent:31.0,actions:212,outcomes:9,out:"booked calls"},[
- ["read","Triaged inbox: 14 new emails","Gmail",0],["draft","Drafted reply to Babson advisor","Gmail",0],["update","Added 3 tasks to Life HQ","Life HQ DB",0],["send","Send follow-up to prospective customer","Gmail",0.0],["deploy","Pushed update to life-hq main","GitHub \u2192 Vercel",0],["spend","Renew domain blackbox.app","Card ending 4242",14.99]]),
-A("hermes","Hermes","\u{1FAB6}","Background brain, nightly runs","Manager",["VPS","Discord","Memory files"],{spent:6.4,actions:96,outcomes:30,out:"nightly briefs"},[
- ["read","Read 4 memory files, found stale goal","Memory",0],["draft","Wrote tomorrow's morning briefing","Discord draft",0],["update","Updated weekend mission list","Memory files",0],["post","Posted morning message to #royce","Discord",0],["spend","Model tokens for nightly run","OpenAI API",1.8]]),
-A("proof","Proof Coach","\u{1F3AF}","Voice accountability coach","Staff",["Proof app","Twilio","Calendar"],{spent:12.7,actions:58,outcomes:41,out:"check-ins done"},[
- ["read","Checked today's non-negotiables","Life HQ DB",0],["draft","Wrote 9 PM check-in script","Proof",0],["send","Text Royce: gym log missing","iMessage",0],["spend","Voice call minutes for check-in","Twilio",0.62]]),
-A("standby","StandBy","\u2708\uFE0F","Standby travel planner","Staff",["Google Flights","Gmail"],{spent:3.1,actions:33,outcomes:7,out:"trips planned"},[
- ["read","Compared 6 standby flights to Boston","Google Flights",0],["draft","Drafted weekend trip plan","Docs",0],["send","Emailed itinerary to Royce","Gmail",0],["spend","Book refundable hotel hold","Card ending 4242",89]]),
-A("dato","Dato","\u{1F6E1}\uFE0F","Sensitive-data guard","Intern",["Browser extension"],{spent:0,actions:44,outcomes:44,out:"leaks flagged"},[
- ["read","Scanned page for SSN pattern","Browser",0],["draft","Drafted redaction for pasted prompt","Extension",0],["update","Masked card number in chat box","Browser",0],["send","Share flagged page with vendor","Email",0]]),
-A("lifehq","Life HQ","\u{1F3C6}","Coaching dashboard & XP","Staff",["Next.js","Postgres"],{spent:1.1,actions:120,outcomes:86,out:"XP events"},[
- ["read","Pulled today's lifts and macros","Postgres",0],["update","Logged 25 XP for health entry","Postgres",0],["draft","Drafted weekly review","Life HQ",0],["delete","Pruned 40 old log rows","Postgres",0]]),
-A("nutri","NutriBridge Rep","\u{1F48A}","Clinic supplement outreach","Staff",["Gmail","CRM","Sheets"],{spent:8.9,actions:81,outcomes:5,out:"clinic replies"},[
- ["read","Researched 12 clinics in Dallas","Web",0],["draft","Drafted DSHEA-compliant intro email","Gmail draft",0],["send","Email intro to Plano Wellness Clinic","Gmail",0],["update","Updated clinic CRM stage","Sheets",0],["spend","Buy lead list (200 contacts)","Card ending 4242",39]]),
-A("flyopia","Flyopia Poster","\u{1F4F8}","Social account operator","Staff",["TikTok","Instagram","X"],{spent:4.5,actions:67,outcomes:12,out:"posts live"},[
- ["draft","Drafted 3 reels for the week","Notion",0],["post","Publish reel to @flyopia","Instagram",0],["read","Pulled last week's engagement","TikTok",0],["spend","Boost post with $20 ad","Meta Ads",20]]),
-A("grokceo","Grok CEO","\u{1F916}","Strategy read & priorities","Intern",["Grok","Email digest"],{spent:2.0,actions:29,outcomes:6,out:"strategy memos"},[
- ["read","Read all project status files","Memory",0],["draft","Drafted Q4 priorities memo","Docs",0],["send","Email priorities memo to team","Gmail",0],["spend","Upgrade Grok tier","Card ending 4242",30]]),
-A("grokmkt","Grok Marketing","\u{1F4E3}","Ad copy & campaigns","Intern",["Grok","Meta Ads"],{spent:5.8,actions:52,outcomes:3,out:"campaigns drafted"},[
- ["draft","Drafted 5 ad variants","Docs",0],["read","Read competitor ad library","Meta",0],["post","Launch ad set to production","Meta Ads",0],["spend","Daily ad spend, Flyopia","Meta Ads",25]]),
-A("ledger","Ledger","\u{1F4B0}","Finance agent (demo hire)","Staff",["QuickBooks","Bank feed","Card ending 4242"],{spent:0,actions:18,outcomes:4,out:"invoices paid"},[
- ["read","Reconciled 41 transactions","QuickBooks",0],["draft","Drafted October budget","Sheets",0],["spend","Pay Meta Ads invoice","Card ending 4242",600]])
-];
-let receipts=[],approvals=[],tab=(location.hash.slice(1)||"floor"),globalKill=false,detail=null,uid=0,filter="ALL";
-const $=s=>document.querySelector(s),money=n=>"$"+(n>=100?n.toFixed(0):n.toFixed(2)),ts=()=>new Date().toLocaleTimeString([], {hour:"numeric",minute:"2-digit",second:"2-digit"});
-const byId=id=>agents.find(a=>a.id===id);
-function receipt(a,act,verdict,cost,note){receipts.unshift({id:++uid,t:ts(),agent:a.name,emoji:a.emoji,what:act[1],touched:act[2],cost,verdict,note:note||""});if(receipts.length>200)receipts.pop();if(verdict==="AUTO"||verdict==="APPROVED"){a.actions++;a.spent+=cost;if(act[0]!=="spend"&&Math.random()<.18)a.outcomes++;}flash(a.id)}
-function flash(id){const e=document.querySelector(`[data-d="${id}"]`);if(e){e.classList.remove("f");void e.offsetWidth;e.classList.add("f")}}
-function step(a){
- if(a.killed||globalKill)return;
- if(a.status==="waiting"){return}
- const act=a.script[Math.floor(Math.random()*a.script.length)];
- const kind=act[0];let mode=a.policy[kind];let note="";
- if(kind==="spend"&&mode==="AUTO"&&a.spent+act[3]>a.cap){mode="ASK";note="Over budget cap"}
- if(mode==="AUTO"){a.status="working";a.now=act[1];a.where=act[2];receipt(a,act,"AUTO",act[3])}
- else if(mode==="NEVER"){a.status="working";a.now="Blocked: "+ACTIONS[kind].toLowerCase();receipt(a,act,"NEVER",0,"Policy: NEVER")}
- else{a.status="waiting";a.now="Waiting on you: "+act[1];a.where=act[2];approvals.push({id:++uid,agent:a.id,act,note:note||"Policy: ASK",t:ts()});if(tab!=="approvals")toastAsk()}
+A("instinct","Instinct","\u{1F9E0}","#7c9cff","ops","Main assistant and executor","Manager",[31,212,9,"booked calls"],[
+ T("read","Researching Q4 priorities","Gmail",5,{ho:["grokmkt","Q4 priorities brief"]}),T("draft","Drafting reply to Babson advisor","Gmail",5),T("update","Adding tasks to Life HQ","Life HQ DB",4),T("send","Sending follow-up to a prospect","Gmail",4,{item:"1 follow-up email"}),T("read","Reviewing inbox and calendar","Gmail",5)],{send:"ASK"}),
+A("hermes","Hermes","\u{1FAB6}","#c4a7ff","ops","Background brain, nightly runs","Manager",[6.4,96,30,"nightly briefs"],[
+ T("read","Reading memory files","Memory",5),T("draft","Writing tomorrow's briefing","Discord draft",5,{ho:["instinct","Morning briefing"]}),T("update","Updating weekend mission list","Memory",4),T("post","Posting to #royce on Discord","Discord",3,{item:"morning message"})]),
+A("lifehq","Life HQ","\u{1F9ED}","#5eead4","ops","Coaching app","Staff",[9.2,64,12,"coaching plans"],[
+ T("update","Syncing coaching data","Life HQ DB",5),T("draft","Drafting weekly plan","Life HQ",5),T("deploy","Deploying update to production","Vercel",4)]),
+A("grokceo","Grok CEO","\u{1F451}","#fbbf24","ops","Sets priorities, assigns owners","Manager",[4.1,41,6,"plans"],[
+ T("read","Reviewing weekly priorities","Docs",5,{meet:["instinct","Weekly planning"]}),T("draft","Writing campaign priorities","Docs",5,{ho:["grokmkt","Campaign priorities"]}),T("update","Assigning owners","Tracker",4)]),
+A("nutribridge","NutriBridge Rep","\u{1F957}","#86efac","sales","Outbound sales rep","Staff",[12.5,88,4,"demos booked"],[
+ T("read","Researching 30 new leads","Web",6),T("send","Sending outreach emails","Gmail",4,{item:"100 emails"}),T("update","Updating CRM","CRM",4)]),
+A("dato","Dato","\u{1F4CA}","#f9a8d4","sales","Lead and data analyst","Staff",[3.3,57,8,"lead reports"],[
+ T("read","Cleaning lead list","Sheets",5,{ho:["nutribridge","Qualified leads"]}),T("draft","Scoring leads","Sheets",5),T("update","Updating pipeline report","CRM",4)]),
+A("grokmkt","Grok Marketing","\u{1F4E3}","#fb923c","marketing","Builds campaigns","Staff",[18.8,73,5,"campaigns"],[
+ T("draft","Building Q4 campaign brief","Docs",6,{meet:["flyopia","Creative review"]}),T("draft","Writing ad copy","Docs",5,{ho:["flyopia","Campaign brief"]}),T("read","Checking campaign metrics","Analytics",4)]),
+A("flyopia","Flyopia Poster","\u2708\uFE0F","#38bdf8","marketing","Social posting","Staff",[2.2,120,15,"posts"],[
+ T("draft","Designing travel deal graphics","Canva",5),T("post","Posting to Flyopia social","Social",3,{item:"3 travel deals"}),T("update","Scheduling next week's posts","Scheduler",4)]),
+A("ledger","Ledger","\u{1F9FE}","#facc15","finance","Finance (demo hire)","Staff",[0,18,2,"reports"],[
+ T("read","Reconciling invoices","Ledger DB",5),T("spend","Paying for Meta Ads","Meta Ads",4,{amt:600,item:"Meta Ads",first:1}),T("draft","Preparing budget report","Sheets",5,{ho:["grokceo","Budget report"]})],{cap:250}),
+A("standby","StandBy","\u{1F6DF}","#fda4af","support","Support responder","Staff",[5.6,142,22,"tickets closed"],[
+ T("read","Answering support tickets","Helpdesk",5),T("draft","Drafting refund reply","Helpdesk",4,{ho:["ledger","Refund request"]}),T("update","Tagging tickets","Helpdesk",4)]),
+A("proofcoach","Proof Coach","\u{1F3AF}","#a3e635","support","Coaching check-ins","Staff",[1.8,39,7,"check-ins"],[
+ T("read","Reviewing check-in notes","Proof DB",5),T("draft","Writing coaching nudge","Proof",5),T("post","Posting a public testimonial","Social",3)])];
+{const cnt={};agents.forEach(a=>{a.slot=cnt[a.room]=(cnt[a.room]||0);cnt[a.room]++})}
+const byId=Object.fromEntries(agents.map(a=>[a.id,a]));
+const G={paused:false,approvals:[],receipts:[],goal:null,nreq:0,handoffs:0,approved:0};
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const $=s=>document.querySelector(s);const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const money=n=>"$"+n.toFixed(2);const now=()=>new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit",second:"2-digit"});
+/* floor */
+function roomRect(k){return ROOMS[k]}
+function homeOf(a){const r=ROOMS[a.room],s=SL[a.slot];return [r.x+r.w*s[0]/100,r.y+r.h*s[1]/100]}
+function buildFloor(){
+ let h="";
+ for(const k in ROOMS){const r=ROOMS[k];h+=`<div class="room" style="left:${r.x}%;top:${r.y}%;width:${r.w}%;height:${r.h}%"><div class="lb">${r.n}</div><div class="ct" id="ct-${k}"></div></div>`}
+ h+=`<div class="room meet" style="left:${MEET.x}%;top:${MEET.y}%;width:${MEET.w}%;height:${MEET.h}%"><div class="lb">MEETING AREA</div><div class="table"></div></div>`;
+ h+=`<div class="room appr" id="appr" style="left:${APPR.x}%;top:${APPR.y}%;width:${APPR.w}%;height:${APPR.h}%"><div class="lb">NEEDS YOU<span class="lg"> \u00B7 APPROVAL STATION</span></div></div>`;
+ ASLOT.forEach(s=>h+=`<div class="slot" style="left:${s[0]}%;top:${s[1]}%"></div>`);
+ h+=`<div class="room lounge" style="left:67%;top:63%;width:32%;height:36%"><div class="lb">LOUNGE</div></div><div class="door">ENTRANCE \u2192</div><div id="deskl"></div><div id="chl"></div>`;
+ $("#floor").innerHTML=h;
+ agents.forEach(mkEl);drawDesks();
 }
-function toastAsk(){}
-function decide(id,ok){const i=approvals.findIndex(x=>x.id===id);if(i<0)return;const p=approvals[i];approvals.splice(i,1);const a=byId(p.agent);
- if(ok)receipt(a,p.act,"APPROVED",p.act[3],"Approved by Royce");else receipt(a,p.act,"DENIED",0,"Denied by Royce");
- a.status="working";a.now=ok?"Approved. "+p.act[1]:"Denied. Finding another way";render()}
-function setKill(a,v){a.killed=v;if(v){a.status="dead";a.now="KILLED. Access revoked";approvals=approvals.filter(x=>x.agent!==a.id);receipts.unshift({id:++uid,t:ts(),agent:a.name,emoji:a.emoji,what:"Kill switch: all tool access revoked",touched:a.tools.join(", "),cost:0,verdict:"NEVER",note:"By Royce"})}else{a.status="idle";a.now="Re-hired. Standing by"}}
-function seed(){receipts=[];approvals=[];agents.forEach(a=>{a.status="idle";a.killed=false;a.now="Standing by"});globalKill=false;
- const order=[["nutri",2],["instinct",3],["hermes",0],["proof",1],["flyopia",1],["lifehq",1],["grokmkt",2],["dato",3]];
- order.forEach(([id,i])=>{const a=byId(id);const act=a.script[i];if(act[0]==="send"||act[0]==="post"||act[0]==="spend"){a.status="waiting";a.now="Waiting on you: "+act[1];approvals.push({id:++uid,agent:a.id,act,note:"Policy: ASK",t:ts()})}else{a.status="working";a.now=act[1];receipt(a,act,"AUTO",act[3])}});
- approvals=approvals.slice(0,3)}
-const MON=["ASK","AUTO","NEVER"];
-function tabs(){const t=[["floor","Office floor"],["approvals","Approvals"],["receipts","Receipts"],["stubs","Pay stubs"],["policies","Permissions"]];
- $("#nav").innerHTML=t.map(([k,l])=>`<button class="${tab===k?"on":""}" data-t="${k}">${l}${k==="approvals"&&approvals.length?`<span class="badge">${approvals.length}</span>`:""}</button>`).join("");
- $("#nav").querySelectorAll("button").forEach(b=>b.onclick=()=>{tab=b.dataset.t;render()})}
-function kpis(){const live=agents.filter(a=>!a.killed&&!globalKill).length;$("#kAgents").textContent=live+"/"+agents.length;$("#kAct").textContent=agents.reduce((s,a)=>s+a.actions,0);$("#kSpend").textContent=money(agents.reduce((s,a)=>s+a.spent,0));$("#kAsk").textContent=approvals.length;
- $("#banner").style.display=globalKill?"block":"none";const g=$("#gkill");g.classList.toggle("on",globalKill);g.innerHTML=globalKill?"&#9654; RESTORE ACCESS":"&#9724; KILL ALL"}
-function deskHTML(a){const dead=a.killed||globalKill;const st=dead?"dead":a.status==="waiting"?"wait":a.status==="idle"?"idle":"";const pct=a.cap?Math.min(100,a.spent/a.cap*100):0;
- return `<div class="desk ${dead?"dead":""}" data-d="${a.id}"><div class="flash"></div><div class="top"><div class="av">${a.emoji}</div><div><b>${a.name}</b><div class="role">${a.role}</div></div><span class="lvl ${a.level}" style="border-color:currentColor">${a.level}</span></div>
- <div class="st"><span class="dot ${st}"></span><div class="now">${dead?"KILLED. Access revoked":a.now}<small>${dead?"":(a.where||a.tools.join(" \u00b7 "))}</small></div></div>
- <div class="bar"><i style="width:${a.cap?pct:6}%"></i></div><div class="meta"><span>${a.cap?money(a.spent)+" of "+money(a.cap)+" cap":"No spend allowed"}</span><span>${a.actions} actions</span></div></div>`}
-function feedHTML(list,n){return list.slice(0,n).map(r=>`<div class="row"><span class="tag ${r.verdict}">${r.verdict}</span><div class="rt">${r.emoji} <b>${r.agent}</b> ${r.what}<small>${r.t} \u00b7 touched ${r.touched}${r.note?" \u00b7 "+r.note:""}</small></div><span class="cost">${r.cost?money(r.cost):""}</span></div>`).join("")||'<div class="empty">No activity yet</div>'}
-function vFloor(){return `<div class="floor"><h3>Crew #1: Bot HQ <span class="crew">CREW #1</span></h3><div class="sub">Every bot is a desk. Everything below runs through Blackbox, so every action is checked against its permissions before it touches your tools. Click a desk for its profile.</div><div class="grid" id="desks">${agents.map(deskHTML).join("")}</div></div>
- <div class="two"><div class="card"><b>Live receipts</b><div class="feed" id="feed">${feedHTML(receipts,14)}</div></div><div class="card"><b>Needs your call</b><div id="mini">${miniAppr()}</div></div></div>`}
-function miniAppr(){return approvals.slice(0,3).map(p=>{const a=byId(p.agent);return `<div class="row"><span class="tag ASK">ASK</span><div class="rt">${a.emoji} <b>${a.name}</b> ${p.act[1]}<small>${p.act[2]}${p.act[3]?" \u00b7 "+money(p.act[3]):""}</small><div style="margin-top:8px;display:flex;gap:6px"><button class="btn ok" data-a="${p.id}">Approve</button><button class="btn no" data-n="${p.id}">Deny</button></div></div></div>`}).join("")||'<div class="empty">All clear. Nothing waiting.</div>'}
-function vAppr(){return `<p class="lead">ASK actions stop here until you decide. Approve it and the bot continues, deny it and the bot has to find another way. Either way it leaves a receipt.</p>`+(approvals.map(p=>{const a=byId(p.agent);return `<div class="appr"><div class="av">${a.emoji}</div><div class="info"><h4>${a.name} wants to: ${p.act[1]}</h4><small style="color:var(--m)">Touches ${p.act[2]} \u00b7 ${ACTIONS[p.act[0]]} \u00b7 ${p.note} \u00b7 ${p.t}</small></div><div style="font-weight:800;font-size:18px">${p.act[3]?money(p.act[3]):""}</div><button class="btn ok" data-a="${p.id}">Approve</button><button class="btn no" data-n="${p.id}">Deny</button></div>`}).join("")||'<div class="card empty">Nothing waiting on you. Your crew is working inside its rules.</div>')}
-function vRec(){const L=receipts.filter(r=>filter==="ALL"||r.verdict===filter||(filter==="ASK"&&(r.verdict==="APPROVED"||r.verdict==="DENIED")));
- return `<p class="lead">Every action leaves a receipt: what happened, what it touched, what it cost, who allowed it.</p><div class="chips">${["ALL","AUTO","ASK","NEVER"].map(f=>`<span class="chip ${filter===f?"on":""}" data-f="${f}">${f==="ASK"?"ASK (decided)":f}</span>`).join("")}</div><div class="card feed" style="max-height:none" id="feed">${feedHTML(L,80)}</div>`}
-function stubHTML(a){const cpo=a.outcomes?a.spent/a.outcomes:0;return `<div class="stub"><h4>${a.emoji} ${a.name.toUpperCase()}</h4><div>${a.level} \u00b7 ${a.role}</div><hr><div class="l"><span>Actions</span><span>${a.actions}</span></div><div class="l"><span>${a.outLabel}</span><span>${a.outcomes}</span></div><div class="l"><span>Spent today</span><span>${money(a.spent)}</span></div><hr><div class="l big"><span>Cost per result</span><span>${a.outcomes?money(cpo):"n/a"}</span></div>
- <div style="margin-top:6px;color:#555">${a.killed?"TERMINATED":cpo>4?"Expensive. Consider cutting budget.":a.outcomes?"Earning its keep.":"No results yet."}</div><div class="acts"><button data-b="${a.id}">+ $25 budget</button><button class="fire" data-k="${a.id}">${a.killed?"Re-hire":"Fire"}</button></div></div>`}
-function vStubs(){const t=agents.reduce((s,a)=>({sp:s.sp+a.spent,ac:s.ac+a.actions}),{sp:0,ac:0});return `<p class="lead">Every bot gets a pay stub. Like what you see, more budget. Don't, fire it in one tap. Crew total today: ${t.ac} actions, ${money(t.sp)}.</p><div class="grid" id="stubs">${agents.map(a=>stubHTML(a)).join("")}</div>`}
-function vPol(){return `<p class="lead">Permissions are job levels, not settings pages. Pick a level, tweak any action if you want.</p><div class="grid">${agents.map(a=>`<div class="card"><div class="top" style="display:flex;gap:10px;align-items:center"><div class="av">${a.emoji}</div><div><b>${a.name}</b><div class="role">${a.tools.join(" \u00b7 ")}</div></div></div>
- <div style="margin:12px 0"><select data-l="${a.id}">${Object.keys(LEVELS).map(l=>`<option ${l===a.level?"selected":""}>${l}</option>`).join("")}</select> <small style="color:var(--m)">${LEVELS[a.level].blurb}</small></div>
- ${Object.keys(ACTIONS).map(k=>`<div class="pol"><span>${ACTIONS[k]}</span><div class="seg">${MON.map(m=>`<button class="${m}${a.policy[k]===m?" on":""}" data-p="${a.id}|${k}|${m}">${m}</button>`).join("")}</div></div>`).join("")}</div>`).join("")}</div>`}
-function bind(){document.querySelectorAll("[data-a]").forEach(b=>b.onclick=e=>{e.stopPropagation();decide(+b.dataset.a,true)});document.querySelectorAll("[data-n]").forEach(b=>b.onclick=e=>{e.stopPropagation();decide(+b.dataset.n,false)});
- document.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{filter=b.dataset.f;render()});
- document.querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>openModal(b.dataset.d));
- document.querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{const a=byId(b.dataset.k);setKill(a,!a.killed);render()});
- document.querySelectorAll("[data-b]").forEach(b=>b.onclick=()=>{const a=byId(b.dataset.b);a.cap+=25;render()});
- document.querySelectorAll("[data-l]").forEach(s=>s.onchange=()=>{const a=byId(s.dataset.l);a.level=s.value;a.policy={...LEVELS[s.value]};a.cap=LEVELS[s.value].cap;render()});
- document.querySelectorAll("[data-p]").forEach(b=>b.onclick=()=>{const [id,k,m]=b.dataset.p.split("|");byId(id).policy[k]=m;render()})}
-function openModal(id){detail=id;const a=byId(id);const mine=receipts.filter(r=>r.agent===a.name);
- $("#mbox").innerHTML=`<div style="display:flex;gap:12px;align-items:center"><div class="av" style="width:56px;height:56px;font-size:28px">${a.emoji}</div><div><h2 style="margin:0">${a.name}</h2><div class="role">${a.role}</div></div><span class="lvl ${a.level}" style="border-color:currentColor">${a.level}</span><div class="sp"></div><button class="btn" id="mc">Close</button></div>
- <p style="color:var(--m)">Connected through Blackbox to: ${a.tools.join(", ")}. Budget cap ${a.cap?money(a.cap):"none (no spend)"}.</p>
- <div style="display:flex;gap:8px;margin:10px 0"><button class="btn no" id="mk">${a.killed?"Re-hire":"Kill this bot"}</button></div><b>Recent receipts</b><div>${feedHTML(mine,8)}</div>`;
- $("#modal").classList.add("on");$("#mc").onclick=()=>{$("#modal").classList.remove("on");detail=null};$("#mk").onclick=()=>{setKill(a,!a.killed);$("#modal").classList.remove("on");detail=null;render()}}
-$("#modal").onclick=e=>{if(e.target.id==="modal"){$("#modal").classList.remove("on");detail=null}};
-$("#gkill").onclick=()=>{globalKill=!globalKill;if(globalKill){approvals=[];agents.forEach(a=>{a.status="dead"});receipts.unshift({id:++uid,t:ts(),agent:"Blackbox",emoji:"\u26D4",what:"GLOBAL KILL: all agent access revoked",touched:"Everything",cost:0,verdict:"NEVER",note:"By Royce"})}else{agents.forEach(a=>{a.status=a.killed?"dead":"idle";a.now="Back online"})}render()};
-$("#reset").onclick=()=>{agents.forEach(a=>{const o=ORIG[a.id];a.spent=o[0];a.actions=o[1];a.outcomes=o[2];a.level=o[3];a.policy={...LEVELS[a.level]};a.cap=LEVELS[a.level].cap});seed();render()};
-$("#burst").onclick=()=>{for(let i=0;i<14;i++)setTimeout(()=>{agents.forEach(a=>{if(Math.random()<.5)step(a)});partial()},i*250)};
-function render(){tabs();kpis();const v=$("#view");v.innerHTML={floor:vFloor,approvals:vAppr,receipts:vRec,stubs:vStubs,policies:vPol}[tab]();bind()}
-function partial(){kpis();tabs();if(tab==="floor"){$("#desks").innerHTML=agents.map(deskHTML).join("");$("#feed").innerHTML=feedHTML(receipts,14);$("#mini").innerHTML=miniAppr();bind()}else if(tab==="receipts"||tab==="approvals"||tab==="stubs"){if(document.activeElement&&document.activeElement.tagName==="SELECT")return;render()}}
-
-const DEPTS=[["Sales","#5ab0ff"],["Marketing","#a78bfa"],["Operations","#39ff9c"],["Finance","#ffc857"],["Support","#ff8fb1"]];
-const DEPT={nutri:"Sales",flyopia:"Marketing",grokmkt:"Marketing",instinct:"Operations",hermes:"Operations",standby:"Operations",ledger:"Finance",grokceo:"Finance",proof:"Support",dato:"Support",lifehq:"Support"};
-const HANDOFFS=[["hermes","instinct","Morning briefing"],["grokceo","grokmkt","Q4 priorities, campaign brief"],["grokmkt","flyopia","Ad creative for weekend reels"],["nutri","ledger","Lead list invoice"],["instinct","standby","Trip request, Boston"],["lifehq","proof","Missed gym log"],["dato","instinct","Flagged leak for review"],["flyopia","ledger","Ad boost receipt"]];
-let handoffs=[];
-const stOf=a=>(a.killed||globalKill)?"dead":a.status==="waiting"?"wait":a.status==="blocked"?"blk":a.status==="idle"?"idle":"work";
-const STL={dead:"KILLED",wait:"NEEDS YOU",blk:"BLOCKED",idle:"IDLE",work:"WORKING"};
-function deskHTML(a){const st=stOf(a);const dead=st==="dead";const pct=a.cap?Math.min(100,a.spent/a.cap*100):0;
- return `<div class="desk ${st}" data-d="${a.id}"><div class="flash"></div>${st==="wait"?'<span class="need">NEEDS YOU</span>':st==="blk"?'<span class="blkt">BLOCKED</span>':''}
- <div class="top"><div class="av">${a.emoji}</div><div><b>${a.name}</b><div class="role">${a.role}</div></div><span class="lvl ${a.level}" style="border-color:currentColor;margin-left:auto">${a.level}</span></div>
- <div class="st"><span class="dot ${st==="wait"?"wait":st==="dead"?"dead":st==="idle"?"idle":st==="blk"?"blocked":""}"></span><div class="now">${dead?"KILLED. Access revoked":a.now}<small>${dead?"":(a.where||a.tools.join(" \u00b7 "))}</small>${a.from&&st==="work"?`<div class="hin">\u21AA handed off by ${a.from}</div>`:""}</div></div>
- <div class="bar"><i style="width:${a.cap?pct:6}%"></i></div><div class="meta"><span>${a.cap?money(a.spent)+" of "+money(a.cap)+" cap":"No spend allowed"}</span><span class="stl ${st}" style="margin:0">${STL[st]}${st==="work"?'<span class="act"><u></u><u></u><u></u></span>':""}</span></div></div>`}
-function deptHTML(){return DEPTS.map(([n,c])=>{let m=agents.filter(a=>DEPT[a.id]===n);const w=m.filter(a=>stOf(a)==="work").length,y=m.filter(a=>stOf(a)==="wait").length,r=m.filter(a=>stOf(a)==="blk").length;
- m=m.slice().sort((x,z)=>(stOf(z)==="wait")-(stOf(x)==="wait"));
- return `<div class="dept"><div class="dh"><i style="background:${c}"></i><b style="color:${c}">${n}</b><span class="cnt">${m.length} ${m.length===1?"agent":"agents"}</span><div class="pills">${w?`<span class="pill w">${w} working</span>`:""}${y?`<span class="pill y">${y} needs you</span>`:""}${r?`<span class="pill r">${r} blocked</span>`:""}</div></div><div class="grid">${m.map(deskHTML).join("")}${m.length<2?`<div class="seat">Open seat<br><small>Add a bot and it joins ${n}</small></div>`:""}</div></div>`}).join("")}
-function stripHTML(){const L=approvals;if(!L.length)return `<div class="strip" style="border-color:#1f5a40;background:#0e1a16;box-shadow:none"><h4 style="color:var(--g)">Needs You: all clear</h4><small style="color:var(--m)">Nobody is waiting on you.</small></div>`;
- return `<div class="strip"><h4>\u26A0 Needs You (${L.length})</h4>${miniAppr(99)}</div>`}
-function miniAppr(n){return approvals.slice(0,n||3).map(p=>{const a=byId(p.agent);return `<div class="row"><span class="tag ASK">ASK</span><div class="rt">${a.emoji} <b>${a.name}</b> <span style="color:var(--m)">(${DEPT[a.id]})</span> ${p.act[1]}<small>${p.act[2]}${p.act[3]?" \u00b7 "+money(p.act[3]):""}</small></div><div style="display:flex;gap:6px"><button class="btn ok" data-a="${p.id}">Approve</button><button class="btn no" data-n="${p.id}">Deny</button></div></div>`}).join("")||'<div class="empty">All clear. Nothing waiting.</div>'}
-function handHTML(){return handoffs.slice(0,7).map(h=>`<div class="hrow">${h.fe} <b>${h.f}</b> <span>\u2192</span> ${h.te} <b>${h.t}</b><small>${h.task} \u00b7 ${h.time}</small></div>`).join("")||'<div class="empty">No handoffs yet</div>'}
-function vFloor(){return `<div id="strip">${stripHTML()}</div><div class="floor"><h3>Crew #1: Bot HQ <span class="crew">CREW #1</span></h3><div class="sub">Your AI company. Departments, live status, handoffs between desks. Everything runs through Blackbox, so every action is checked against permissions first. Click any worker for its profile.</div><div id="org">${deptHTML()}</div></div>
- <div class="two"><div class="card"><b>Live receipts</b><div class="feed" id="feed">${feedHTML(receipts,14)}</div></div><div class="card"><b>Handoffs</b><div id="hand">${handHTML()}</div></div></div>`}
-function partial(){kpis();tabs();if(tab==="floor"){const org=$("#org");if(!org)return;org.innerHTML=deptHTML();$("#strip").innerHTML=stripHTML();$("#feed").innerHTML=feedHTML(receipts,14);$("#hand").innerHTML=handHTML();bind()}else if(tab==="receipts"||tab==="approvals"||tab==="stubs"){if(document.activeElement&&document.activeElement.tagName==="SELECT")return;render()}}
-function step(a){
- if(a.killed||globalKill)return;
- if(a.status==="waiting"){return}
- const act=a.script[Math.floor(Math.random()*a.script.length)];
- const kind=act[0];let mode=a.policy[kind];let note="";a.from=null;
- if(kind==="spend"&&mode==="AUTO"&&a.spent+act[3]>a.cap){mode="ASK";note="Over budget cap"}
- if(mode==="AUTO"){a.status="working";a.now=act[1];a.where=act[2];receipt(a,act,"AUTO",act[3])}
- else if(mode==="NEVER"){a.status="blocked";a.now="Blocked: "+ACTIONS[kind].toLowerCase()+" (policy NEVER)";a.where="Needs a permission change";receipt(a,act,"NEVER",0,"Policy: NEVER")}
- else if(approvals.length>=4){a.status="working";a.now="Preparing: "+act[1];a.where="Draft only, not sent"}
- else{a.status="waiting";a.now="Paused: "+act[1];a.where=act[2]+(act[3]?" \u00b7 "+money(act[3]):"");approvals.push({id:++uid,agent:a.id,act,note:note||"Policy: ASK",t:ts()})}
-}
-function decide(id,ok){const i=approvals.findIndex(x=>x.id===id);if(i<0)return;const p=approvals[i];approvals.splice(i,1);const a=byId(p.agent);
- if(ok)receipt(a,p.act,"APPROVED",p.act[3],"Approved (demo)");else receipt(a,p.act,"DENIED",0,"Denied (demo)");
- a.status="working";a.now=ok?"Approved. "+p.act[1]:"Denied. Finding another way";render()}
-function doHandoff(manual){if(globalKill)return;const ok=HANDOFFS.filter(([f,t])=>{const A1=byId(f),B=byId(t);return !A1.killed&&!B.killed&&A1.status!=="waiting"&&B.status!=="waiting"&&A1.status!=="blocked"});if(!ok.length)return;
- const [f,t,task]=ok[Math.floor(Math.random()*ok.length)];const A1=byId(f),B=byId(t);
- A1.now="Handed off: "+task;A1.where="\u2192 "+B.name;A1.status="working";
- const fin=()=>{B.status="working";B.from=A1.name;B.now="Picked up: "+task;B.where="from "+A1.name;
-  receipts.unshift({id:++uid,t:ts(),agent:B.name,emoji:B.emoji,what:"Picked up '"+task+"' from "+A1.name,touched:"Handoff",cost:0,verdict:"AUTO",note:"Handoff"});B.actions++;
-  handoffs.unshift({f:A1.name,fe:A1.emoji,t:B.name,te:B.emoji,task,time:ts()});if(handoffs.length>20)handoffs.pop();
-  if(!detail&&tab==="floor")partial();flash(B.id)};
- if(tab!=="floor"||detail){fin();return}
- partial();const e1=document.querySelector(`[data-d="${f}"]`),e2=document.querySelector(`[data-d="${t}"]`);if(!e1||!e2){fin();return}
- const r1=e1.getBoundingClientRect(),r2=e2.getBoundingClientRect();const tok=document.createElement("div");tok.className="tok";tok.textContent="\u{1F4E6} "+task;document.body.appendChild(tok);
- const x1=r1.left+r1.width/2-60,y1=r1.top+r1.height/2,x2=r2.left+r2.width/2-60,y2=r2.top+r2.height/2;
- const an=tok.animate([{transform:`translate(${x1}px,${y1}px) scale(.6)`,opacity:0},{transform:`translate(${x1}px,${y1}px) scale(1)`,opacity:1,offset:.15},{transform:`translate(${x2}px,${y2}px) scale(1)`,opacity:1,offset:.85},{transform:`translate(${x2}px,${y2}px) scale(.6)`,opacity:0}],{duration:2200,easing:"ease-in-out"});
- an.onfinish=()=>{tok.remove();fin()};}
-function openModal(id){detail=id;const a=byId(id);const mine=receipts.filter(r=>r.agent===a.name);const st=stOf(a);
- const done=a.script.filter(x=>a.policy[x[0]]==="AUTO"&&x[0]!=="spend").map(x=>x[1]).slice(0,4);
- const toolRows=a.tools.map((t,i)=>`<div class="tl"><span>${t}</span><span>${Math.max(3,Math.round(a.actions*(0.5-i*0.12)))} calls today</span></div>`).join("");
- const hist=mine.concat(done.map((d,i)=>({verdict:"AUTO",emoji:a.emoji,agent:a.name,what:d,touched:a.tools[0],t:"earlier today",cost:0,note:""}))).slice(0,10);
- const pct=a.cap?Math.min(100,a.spent/a.cap*100):0;
- $("#mbox").innerHTML=`<div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><div class="av" style="width:56px;height:56px;font-size:28px">${a.emoji}</div><div><h2 style="margin:0">${a.name}</h2><div class="role">${DEPT[a.id]} \u00b7 ${a.role}</div></div><span class="lvl ${a.level}" style="border-color:currentColor">${a.level}</span><span class="stl ${st}">${STL[st]}</span><div class="sp"></div><button class="btn" id="mc">Close</button></div>
- <div class="msec"><h5>Current task</h5><div>${st==="dead"?"KILLED. Access revoked":a.now}<small style="display:block;color:var(--m)">${a.where||""}</small></div></div>
- <div class="msec"><h5>Completed today</h5>${done.map(d=>`<div class="done">${d}</div>`).join("")||'<div class="empty" style="padding:8px">Nothing yet</div>'}<div class="done">${a.outcomes} ${a.outLabel}</div></div>
- <div class="msec"><h5>Tools accessed (through Blackbox)</h5>${toolRows}</div>
- <div class="msec"><h5>Spend</h5><div class="tl"><span>${money(a.spent)} today</span><span>${a.cap?"cap "+money(a.cap):"no spend allowed"}</span></div><div class="bar"><i style="width:${a.cap?pct:2}%"></i></div></div>
- <div class="msec"><h5>Permissions</h5><div class="pg">${Object.keys(ACTIONS).map(k=>`<div><span>${ACTIONS[k]}</span><span class="tag ${a.policy[k]}">${a.policy[k]}</span></div>`).join("")}</div></div>
- <div class="msec"><h5>Action history</h5>${feedHTML(hist,10)}</div>
- <div style="display:flex;gap:8px;margin-top:16px"><button class="btn no" id="mk">${a.killed?"Re-hire":"Kill this bot"}</button></div>`;
- $("#modal").classList.add("on");$("#mc").onclick=()=>{$("#modal").classList.remove("on");detail=null};$("#mk").onclick=()=>{setKill(a,!a.killed);$("#modal").classList.remove("on");detail=null;render()}}
-const _seed0=seed;
-function seed(){receipts=[];approvals=[];handoffs=[];agents.forEach(a=>{a.status="idle";a.killed=false;a.now="Standing by";a.from=null});globalKill=false;
- const order=[["ledger",2],["nutri",2],["instinct",3],["hermes",0],["proof",1],["flyopia",1],["lifehq",1],["grokmkt",0],["dato",3],["standby",0]];
- order.forEach(([id,i])=>{const a=byId(id);const act=a.script[i];if(act[0]==="send"||act[0]==="post"||act[0]==="spend"){a.status="waiting";a.now="Paused: "+act[1];a.where=act[2]+(act[3]?" \u00b7 "+money(act[3]):"");approvals.push({id:++uid,agent:a.id,act,note:"Policy: ASK",t:ts()})}else{a.status="working";a.now=act[1];a.where=act[2];receipt(a,act,"AUTO",act[3])}});
- approvals.slice(3).forEach(p=>{const a=byId(p.agent);a.status="working";a.now=p.act[1].replace(/^/,"Preparing: ");a.where="Draft only, not sent"});approvals=approvals.slice(0,3);
- const g=byId("grokceo");g.status="blocked";g.now="Blocked: spend money (policy NEVER)";g.where="Needs a permission change";receipt(g,g.script[3],"NEVER",0,"Policy: NEVER");
- const dd=byId("dato");if(dd.status==="waiting"){dd.status="working";dd.now=dd.script[0][1];dd.where="Browser"}}
-const ORIG={};agents.forEach(a=>ORIG[a.id]=[a.spent,a.actions,a.outcomes,a.level]);
-seed();render();
-setInterval(()=>{const live=agents.filter(a=>!a.killed&&a.status!=="waiting");if(!live.length||globalKill)return;const n=1+(Math.random()<.4);for(let i=0;i<n;i++)step(live[Math.floor(Math.random()*live.length)]);if(!detail&&tab!=="policies")partial()},2600);
-setInterval(()=>{if(Math.random()<.7)doHandoff()},6000);setTimeout(doHandoff,1800);
+function drawDesks(){let h="";for(const k in ROOMS){const r=ROOMS[k];SL.forEach((s,i)=>{const used=agents.find(a=>a.room===k&&a.slot===i&&!a.joining);const x=r.x+r.w*s[0]/100,y=r.y+r.h*s[1]/100;h+=`<div class="desk ${used?used.vs():'empty'}" data-d="${k}${i}" style="left:${x}%;top:${y}%"></div>`})}$("#deskl").innerHTML=h}
+function mkEl(a){const e=document.createElement("div");e.className="ch idle";e.style.setProperty("--col",a.col);e.innerHTML=`<div class="bub"></div><div class="tok" style="display:none"></div><div class="hd">${a.emo}</div><div class="bd"></div><div class="nm">${esc(a.name)}<i>${esc(a.role.length>22?a.role.slice(0,21)+"\u2026":a.role)}</i></div>`;
+ e.onclick=()=>openDr(a.id);$("#chl").appendChild(e);a.el=e;const [x,y]=a.joining?DOOR:homeOf(a);setPos(a,x,y,0)}
+function setPos(a,x,y,ms){a.x=x;a.y=y;a.el.style.transitionDuration=ms+"ms";a.el.style.left=x+"%";a.el.style.top=y+"%";a.el.style.zIndex=Math.round(y*10)+5}
+async function walk(a,x,y){if(Math.abs(a.x-x)+Math.abs(a.y-y)<.5)return;const d=Math.hypot((a.x-x)*1.6,a.y-y);const ms=Math.max(500,Math.min(2600,d*55));a.el.classList.add("walk");setPos(a,x,y,ms);await sleep(ms+60);a.el.classList.remove("walk")}
+const goHome=a=>{const [x,y]=homeOf(a);return walk(a,x,y)};
+const ICON={working:"\u2699\uFE0F",needs:"\u{1F7E1}",blocked:"\u{1F534}",handoff:"\u27A1\uFE0F",meeting:"\u{1F4AC}",done:"\u2705",idle:"\u{1F4A4}",paused:"\u23F8"};
+function vs(){return this.st==="done"?"working":this.st==="handoff"||this.st==="meeting"?"working":this.st}
+agents.forEach(a=>a.vs=vs);
+function paint(a){const e=a.el;if(!e)return;e.className="ch "+a.st+(e.classList.contains("walk")?" walk":"");
+ const txt=a.bub||(a.st==="needs"?"Needs approval":a.st==="blocked"?"Blocked":a.now);e.querySelector(".bub").textContent=ICON[a.st]+" "+txt;
+ const t=e.querySelector(".tok");if(a.carry){t.style.display="block";t.textContent="\u{1F4C4} "+a.carry}else t.style.display="none"}
+function setSt(a,st,nw){a.st=st;if(nw)a.now=nw;paint(a);refresh()}
+function hist(a,m){a.hist.unshift(now()+"  "+m);if(a.hist.length>30)a.hist.pop()}
+function receipt(a,action,text,dec,amt){G.receipts.unshift({t:now(),agent:a.name,action,text,dec,amt:amt||0});if(G.receipts.length>200)G.receipts.pop();hist(a,dec+": "+text)}
+function use(a,tool){a.tools[tool]=(a.tools[tool]||0)+1}
+function flash(a,m,ms){a.bub=m;paint(a);setTimeout(()=>{if(a.bub===m){a.bub=null;paint(a)}},ms||2500)}
+/* tick: returns false if preempted */
+async function tick(a,ms){const end=Date.now()+ms;while(Date.now()<end){await sleep(150);if(a.lock||a.killed||G.paused)return false}return !(a.lock||a.killed||G.paused)}
+function pend(){return G.approvals.length}
+function reqText(a,t){if(t.a==="spend")return `<b>${esc(a.name)}</b> wants to spend <b>$${t.amt}</b> on ${esc(t.item)} \u00B7 limit $${a.policy.cap}`;
+ if(t.a==="send")return `<b>${esc(a.name)}</b> wants to send ${esc(t.item||t.t)}`;return `<b>${esc(a.name)}</b> wants permission: ${esc(t.t)}`}
+async function askApproval(a,t,plain){
+ const si=ASLOT.findIndex((s,i)=>!G.approvals.some(r=>r.si===i));const s=ASLOT[si];
+ const req={id:++G.nreq,a,t,si,text:reqText(a,t),res:null};req.p=new Promise(r=>req.res=r);G.approvals.push(req);
+ a.carry=null;setSt(a,"needs","Waiting for approval: "+t.t);hist(a,"Asked: "+t.t);await walk(a,s[0],s[1]);render();
+ const d=await req.p;G.approvals=G.approvals.filter(r=>r!==req);render();return d}
+async function resolveReq(id,d){const r=G.approvals.find(x=>x.id===id);if(r)r.res(d)}
+async function runTask(a,t){
+ const lvl=a.policy[t.a];const needsAsk=lvl==="ASK"||(t.a==="spend"&&lvl==="AUTO"&&t.amt>a.policy.cap);
+ if(lvl==="NEVER"){setSt(a,"blocked","Blocked: "+ACTIONS[t.a]+" is NEVER");receipt(a,t.a,t.t,"Blocked by policy");if(!await tick(a,7000))return;return}
+ if(needsAsk){if(pend()>=3||(t.first&&0))return;
+  const d=await askApproval(a,t);if(a.killed||a.lock){return}
+  if(d==="deny"||d==="kill"){await goHome(a);if(d==="deny"){receipt(a,t.a,t.t,"Denied by Royce (demo)");setSt(a,"idle","Denied, standing by");await tick(a,3000)}return}
+  if(d==="raise"&&t.amt){a.policy.cap=t.amt;hist(a,"Limit raised to $"+t.amt)}
+  G.approved++;await goHome(a);if(a.killed||a.lock)return;setSt(a,"working",t.t);if(!await tick(a,3500))return;
+  finish(a,t,d==="raise"?"Approved, limit raised (demo)":"Approved once (demo)");}
+ else{await goHome(a);if(a.killed||a.lock)return;setSt(a,"working",t.t);if(!await tick(a,t.d*1000))return;finish(a,t,"AUTO")}
+ setSt(a,"done","Done: "+t.t);await tick(a,1600);
+ if(a.killed||a.lock)return;
+ if(t.ho)await handoff(a,t.ho[0],t.ho[1]);
+ if(t.meet&&!a.killed&&!a.lock)await meeting(a,t.meet[0],t.meet[1]);
+ if(!a.killed&&!a.lock){setSt(a,"idle","Between tasks");await tick(a,1200)}}
+function finish(a,t,dec){a.actions++;if(t.a==="spend"&&t.amt)a.spent+=t.amt;else if(t.a==="spend")a.spent+=1;if(a.actions%5===0)a.outcomes++;use(a,t.tool);a.done.unshift(t.t);if(a.done.length>8)a.done.pop();receipt(a,t.a,t.t,dec,t.amt)}
+async function handoff(a,toId,item){const b=byId[toId];if(!b||b.killed||b.lock||b===a||!["working","idle","done"].includes(b.st))return;
+ a.carry=item;setSt(a,"handoff","Handing "+item+" to "+b.name);const [bx,by]=homeOf(b);await walk(a,bx+(a.x<bx?-6:6)*(window.innerWidth<700?.6:1),by+1);
+ if(a.killed||a.lock||!["working","idle","done"].includes(b.st)){a.carry=null;paint(a);await goHome(a);return}
+ flash(b,"Received: "+item,3000);b.now="Working on: "+item;hist(b,"Received "+item+" from "+a.name);hist(a,"Handed "+item+" to "+b.name);G.handoffs++;receipt(a,"update","Handoff to "+b.name+": "+item,"Handoff");
+ a.carry=null;paint(a);await sleep(700);await goHome(a)}
+async function meeting(a,bid,topic){const b=byId[bid];if(G.meetBusy||!b||b.killed||b.lock||["needs","meeting","blocked"].includes(b.st))return;
+ G.meetBusy=true;b.lock=true;await sleep(250);a.carry=null;b.carry=null;setSt(a,"meeting","Meeting: "+topic);setSt(b,"meeting","Meeting: "+topic);
+ await Promise.all([walk(a,...MSLOT[0]),walk(b,...MSLOT[1])]);hist(a,"Met with "+b.name+": "+topic);hist(b,"Met with "+a.name+": "+topic);receipt(a,"read","Meeting with "+b.name+": "+topic,"Collaboration");
+ await sleep(5500);await Promise.all([goHome(a),goHome(b)]);b.lock=false;G.meetBusy=false;setSt(a,"idle","Back at desk");if(!b.killed)setSt(b,"working","Back to work")}
+async function loop(a){await sleep(800+Math.random()*2500);
+ while(true){if(a.lock||a.killed||G.paused||a.joining){await sleep(400);continue}
+  let t=a.script[a.i%a.script.length];a.i++;
+  try{await runTask(a,t)}catch(e){console.error(e)}
+  await sleep(100)}}
+/* kill */
+function killAgent(a){a.killed=true;const r=G.approvals.find(x=>x.a===a);if(r)r.res("kill");a.carry=null;setSt(a,"paused","Paused by Royce");hist(a,"Paused (kill switch)");receipt(a,"kill","Kill switch pressed","Paused");goHome(a)}
+function reviveAgent(a){a.killed=false;setSt(a,"idle","Resumed");hist(a,"Resumed")}
+$("#killall").onclick=()=>{G.paused=!G.paused;$("#killall").textContent=G.paused?"Resume all":"Pause all";$("#killall").className="btn "+(G.paused?"grn":"red");
+ agents.forEach(a=>{if(G.paused){const r=G.approvals.find(x=>x.a===a);if(r)r.res("kill");a.carry=null;setSt(a,"paused","Paused (global)");goHome(a)}else if(!a.killed)setSt(a,"idle","Resumed")});
+ receipt(agents[0],"kill",G.paused?"Global kill switch":"Global resume","Global");refresh()};
+/* goals */
+async function runGoal(text){
+ if(G.goal){toast("A goal is already running");return}
+ const free=agents.filter(a=>!a.killed&&a.st!=="needs"&&!a.joining);if(G.paused||free.length<4){toast("Team is paused or busy");return}
+ const pick=(id,ex)=>{let a=byId[id];if(!a||!free.includes(a)||ex.includes(a))a=free.find(x=>!ex.includes(x));return a};
+ const used=[];const A1=pick("instinct",used);used.push(A1);const A2=pick("grokmkt",used);used.push(A2);const A3=pick("ledger",used);used.push(A3);const A4=pick("flyopia",used);used.push(A4);
+ const short=text.length>34?text.slice(0,33)+"\u2026":text;
+ G.goal={text,step:0,n:5};used.forEach(a=>{a.lock=true});$("#goalst").textContent="Goal: "+short+" - starting";await sleep(500);
+ const gs=n=>{G.goal.step=n;$("#goalst").textContent="Goal: "+short+" - step "+n+" of 5"};
+ const work=async(a,t,ms)=>{await goHome(a);setSt(a,"working",t);use(a,"Goal");await sleep(ms)};
+ try{
+ gs(1);await work(A1,"Researching: "+short,4200);hist(A1,"Goal research: "+text);a1done();
+ gs(2);A1.carry="Research brief";setSt(A1,"handoff","Handing research to "+A2.name);{const [x,y]=homeOf(A2);await walk(A1,x-6,y+1)}flash(A2,"Received: Research brief",3000);A1.carry=null;paint(A1);G.handoffs++;receipt(A1,"update","Goal handoff to "+A2.name+": research brief","Handoff");
+ await goHome(A1);setSt(A1,"idle","Goal handed off");await work(A2,"Building campaign: "+short,3800);
+ gs(3);while(G.meetBusy)await sleep(300);G.meetBusy=true;setSt(A2,"meeting","Reviewing creative");setSt(A4,"meeting","Reviewing creative");await Promise.all([walk(A2,...MSLOT[0]),walk(A4,...MSLOT[1])]);await sleep(4500);receipt(A2,"read","Creative review with "+A4.name,"Collaboration");await Promise.all([goHome(A2),goHome(A4)]);G.meetBusy=false;
+ gs(4);A2.carry="Campaign brief";setSt(A2,"handoff","Handing brief to "+A3.name);{const [x,y]=homeOf(A3);await walk(A2,x+6,y+1)}flash(A3,"Received: Campaign brief",3000);A2.carry=null;paint(A2);G.handoffs++;receipt(A2,"update","Goal handoff to "+A3.name,"Handoff");await goHome(A2);setSt(A2,"idle","Goal handed off");
+ setSt(A3,"working","Pricing the campaign");await sleep(2500);
+ const t={a:"spend",t:"Launch ads for: "+short,amt:600,item:"Meta Ads",tool:"Meta Ads"};A3.lock=false;
+ const d=await askApproval(A3,t);A3.lock=true;
+ if(d==="deny"||d==="kill"){await goHome(A3);setSt(A3,"idle","Denied");receipt(A3,"spend",t.t,"Denied by Royce (demo)");$("#goalst").textContent="Goal: "+short+" - paused, spend denied";await sleep(3500);}
+ else{if(d==="raise")A3.policy.cap=600;G.approved++;await goHome(A3);setSt(A3,"working","Launching ads");await sleep(2500);finish(A3,t,d==="raise"?"Approved, limit raised (demo)":"Approved once (demo)");
+  gs(5);setSt(A3,"done","Ads launched");A3.carry="Ad assets";setSt(A3,"handoff","Sending assets to "+A4.name);{const [x,y]=homeOf(A4);await walk(A3,x-6,y+1)}flash(A4,"Received: Ad assets",3000);A3.carry=null;G.handoffs++;receipt(A3,"update","Goal handoff to "+A4.name,"Handoff");await goHome(A3);
+  setSt(A4,"working","Publishing campaign assets");await sleep(3000);setSt(A4,"done","Goal complete");$("#goalst").textContent="Goal complete: "+short;}
+ }finally{used.forEach(a=>{a.lock=false;if(!a.killed&&a.st!=="needs")setSt(a,"idle","Goal done")});G.goal=null;setTimeout(()=>{if(!G.goal)$("#goalst").textContent=""},6000)}
+ function a1done(){A1.actions++;A1.done.unshift("Research: "+short)}}
+$("#gf").onsubmit=e=>{e.preventDefault();const v=$("#gi").value.trim();if(!v)return;$("#gi").value="";location.hash="#office";runGoal(v)};
+/* onboarding */
+function fillDepts(){$("#md").innerHTML=Object.keys(ROOMS).map(k=>`<option value="${k}">${ROOMS[k].n[0]+ROOMS[k].n.slice(1).toLowerCase()}</option>`).join("")}
+$("#addb").onclick=()=>{fillDepts();$("#modal").classList.add("on")};$("#mc").onclick=()=>$("#modal").classList.remove("on");
+$("#mok").onclick=async()=>{const name=$("#mn").value.trim()||"Scout",role=$("#mr").value.trim()||"New hire",room=$("#md").value;
+ const used=agents.filter(a=>a.room===room).map(a=>a.slot);const slot=[0,1,2,3].find(i=>!used.includes(i));
+ if(slot===undefined){toast(ROOMS[room].n+" is full");return}
+ $("#modal").classList.remove("on");location.hash="#office";
+ const cols=["#67e8f9","#f0abfc","#bef264","#fcd34d"];
+ const a=A("new"+Date.now(),name,"\u{1F916}",cols[agents.length%4],room,role,"Intern",[0,0,0,"tasks"],[T("read","Getting oriented","Docs",5),T("draft","Drafting first report","Docs",5),T("update","Updating notes","Docs",4)]);
+ a.vs=vs;a.joining=true;a.slot=slot;byId[a.id]=a;agents.push(a);mkEl(a);paint(a);drawDesks();toast(name+" joined your team");
+ await sleep(400);setSt(a,"idle","Joined the team");await goHome(a);a.joining=false;drawDesks();hist(a,"Joined the team");receipt(a,"update",name+" joined the team","Onboarded");loop(a)};
+function toast(m){const t=$("#toast");t.textContent=m;t.style.display="block";clearTimeout(t._t);t._t=setTimeout(()=>t.style.display="none",3200)}
+/* panels */
+function counts(){const c={working:0,needs:0,blocked:0};agents.forEach(a=>{if(a.st==="needs")c.needs++;else if(a.st==="blocked")c.blocked++;else if(["working","handoff","meeting","done"].includes(a.st))c.working++});return c}
+function policyTags(a){return Object.keys(ACTIONS).map(k=>`<span class="tag ${a.policy[k]}" title="${ACTIONS[k]}">${k} ${a.policy[k]}</span>`).join(" ")}
+function renderTray(){const t=$("#tray");t.className="tray"+(G.approvals.length?" on":"");
+ t.innerHTML=G.approvals.map(r=>`<div class="req"><div class="q">\u{1F7E1} ${r.text}</div><div class="bt"><button class="btn grn" data-r="${r.id}" data-d="approve">Approve once</button>${r.t.amt?`<button class="btn amb" data-r="${r.id}" data-d="raise">Raise limit</button>`:""}<button class="btn red" data-r="${r.id}" data-d="deny">Deny</button></div></div>`).join("");
+ $("#appr").classList.toggle("hot",G.approvals.length>0)}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-r]");if(b)resolveReq(+b.dataset.r,b.dataset.d)});
+function refresh(){const c=counts();$("#sum").innerHTML=`${c.working} working \u00B7 <span class="n">${c.needs} need you</span>${c.blocked?` \u00B7 <span style="color:var(--red)">${c.blocked} blocked</span>`:""}`;
+ const b=$("#apb");b.style.display=G.approvals.length?"inline":"none";b.textContent=G.approvals.length;
+ for(const k in ROOMS){const m=agents.filter(a=>a.room===k);$("#ct-"+k).textContent=m.length+" bot"+(m.length===1?"":"s")}
+ agents.forEach(a=>{const d=document.querySelector(`[data-d="${a.room}${a.slot}"]`);if(d)d.className="desk "+(a.joining?"empty":a.vs())});
+ if(DR)renderDr()}
+function render(){renderTray();refresh();const v=location.hash.slice(1)||"office";if(v==="approvals")vApprovals();if(v==="receipts")vReceipts();if(v==="stubs")vStubs();if(v==="policies")vPolicies()}
+function vApprovals(){$("#v-approvals").innerHTML=`<h3>Approvals queue</h3>`+(G.approvals.length?G.approvals.map(r=>`<div class="req" style="margin-bottom:10px"><div class="q">\u{1F7E1} ${r.text}</div><div class="bt"><button class="btn grn" data-r="${r.id}" data-d="approve">Approve once</button>${r.t.amt?`<button class="btn amb" data-r="${r.id}" data-d="raise">Raise limit</button>`:""}<button class="btn red" data-r="${r.id}" data-d="deny">Deny</button></div></div>`).join(""):`<div class="card">Nothing needs you right now. Your team is working.</div>`)}
+function vReceipts(){$("#v-receipts").innerHTML=`<h3>Activity and receipts</h3><div class="card tw"><table><tr><th>Time</th><th>Bot</th><th>Action</th><th>Decision</th><th>Amount</th></tr>${G.receipts.slice(0,80).map(r=>`<tr><td>${r.t}</td><td>${esc(r.agent)}</td><td>${esc(r.text)}</td><td>${esc(r.dec)}</td><td>${r.amt?money(r.amt):""}</td></tr>`).join("")||"<tr><td colspan=5>Nothing yet</td></tr>"}</table></div>`}
+function vStubs(){const c=counts();const sp=agents.reduce((s,a)=>s+a.spent,0),ac=agents.reduce((s,a)=>s+a.actions,0);
+ $("#v-stubs").innerHTML=`<h3>Performance</h3><div class="cards"><div class="card"><div class="v">${c.working}</div><div class="l">working</div></div><div class="card"><div class="v" style="color:var(--amber)">${c.needs}</div><div class="l">need you</div></div><div class="card"><div class="v" style="color:var(--red)">${c.blocked}</div><div class="l">blocked</div></div><div class="card"><div class="v">${ac}</div><div class="l">actions</div></div><div class="card"><div class="v">${money(sp)}</div><div class="l">spend</div></div><div class="card"><div class="v">${G.handoffs}</div><div class="l">handoffs this session</div></div></div>
+ <div class="card tw"><table><tr><th>Pay stub</th><th>Role</th><th>Actions</th><th>Outcomes</th><th>Spend</th><th>Cost / outcome</th><th>Level</th></tr>${agents.map(a=>`<tr><td><b>${esc(a.name)}</b></td><td>${esc(a.role)}</td><td>${a.actions}</td><td>${a.outcomes} ${esc(a.outLabel)}</td><td>${money(a.spent)}</td><td>${a.outcomes?money(a.spent/a.outcomes):"-"}</td><td>${a.level}</td></tr>`).join("")}</table></div><div class="sum">All figures are mock demo data.</div>`}
+function vPolicies(){$("#v-policies").innerHTML=`<h3>Policies</h3><div class="card tw"><table><tr><th>Bot</th>${Object.keys(ACTIONS).map(k=>`<th>${k}</th>`).join("")}<th>Cap</th></tr>${agents.map(a=>`<tr><td><b>${esc(a.name)}</b></td>${Object.keys(ACTIONS).map(k=>`<td><span class="tag ${a.policy[k]}">${a.policy[k]}</span></td>`).join("")}<td>$${a.policy.cap}</td></tr>`).join("")}</table></div><div class="sum">AUTO runs on its own. ASK sends the bot to the approval station. NEVER blocks it. Click a character to change its levels.</div>`}
+/* drawer */
+let DR=null;
+function openDr(id){DR=id;$("#dr").classList.add("on");renderDr()}
+function closeDr(){DR=null;$("#dr").classList.remove("on")}
+function renderDr(){const a=byId[DR];if(!a)return;const pct=a.policy.cap?Math.min(100,a.spent/Math.max(a.policy.cap*10,1)*100):0;const tl=Object.entries(a.tools);
+ const stl={working:"Working",needs:"Needs you",blocked:"Blocked",handoff:"Handing off",meeting:"In a meeting",done:"Just finished",idle:"Idle",paused:"Paused"}[a.st];
+ const focus=document.activeElement&&document.activeElement.closest&&document.activeElement.closest("#dr");
+ $("#dr").innerHTML=`<button class="x" onclick="closeDr()">\u00D7</button><h2>${a.emo} ${esc(a.name)}</h2><div class="rl">${esc(a.role)} \u00B7 ${ROOMS[a.room].n.toLowerCase()} \u00B7 ${a.level}</div><span class="stp" style="border-color:${a.st==="needs"?"var(--amber)":a.st==="blocked"?"var(--red)":"var(--line)"}">${ICON[a.st]} ${stl}</span>
+ <h4>Current task</h4><div>${esc(a.now)}</div>
+ <h4>Spend</h4><div>${money(a.spent)} \u00B7 per-action cap $${a.policy.cap}</div><div class="bar"><i style="width:${pct}%"></i></div><div class="sum">${a.actions} actions \u00B7 ${a.outcomes} ${esc(a.outLabel)}</div>
+ <h4>Permissions</h4><div class="pg">${Object.keys(ACTIONS).map(k=>`<div>${ACTIONS[k]}</div><div class="seg">${["AUTO","ASK","NEVER"].map(l=>`<button class="${l}${a.policy[k]===l?" on":""}" onclick="setPol('${a.id}','${k}','${l}')">${l}</button>`).join("")}</div>`).join("")}</div>
+ <h4>Completed today</h4><ul>${a.done.slice(0,5).map(x=>`<li>${esc(x)}</li>`).join("")||"<li>Nothing yet</li>"}</ul>
+ <h4>Tools accessed</h4><ul>${a.tools&&tl.length?tl.map(([k,v])=>`<li>${esc(k)} \u00B7 ${v} calls</li>`).join(""):""}</ul>
+ <h4>History</h4><ul>${a.hist.slice(0,8).map(x=>`<li>${esc(x)}</li>`).join("")||"<li>No activity yet</li>"}</ul>
+ <div style="display:flex;gap:8px;margin-top:16px"><button class="btn ${a.killed?"grn":"red"}" onclick="togKill('${a.id}')">${a.killed?"Resume bot":"Pause / kill bot"}</button></div>`}
+function setPol(id,k,l){byId[id].policy[k]=l;renderDr()}
+function togKill(id){const a=byId[id];a.killed?reviveAgent(a):killAgent(a);renderDr()}
+window.setPol=setPol;window.togKill=togKill;window.closeDr=closeDr;
+/* nav */
+function route(){const v=(location.hash.slice(1)||"office");const k=["office","approvals","receipts","stubs","policies"].includes(v)?v:"office";
+ document.querySelectorAll(".view").forEach(e=>e.classList.toggle("on",e.id==="v-"+k));document.querySelectorAll("nav a").forEach(a=>a.classList.toggle("on",a.dataset.v===k));
+ $("#goalbar").style.display=k==="office"?"block":"none";render()}
+window.addEventListener("hashchange",route);
+/* seed tool counts so profiles look lived in */
+agents.forEach(a=>a.script.forEach(t=>{a.tools[t.tool]=(a.tools[t.tool]||0)+(a.id==="instinct"?3:1+Math.floor(Math.random()*4))}));
+buildFloor();route();agents.forEach(a=>{paint(a);hist(a,"Online at desk");loop(a)});
+setInterval(()=>{refresh();const v=location.hash.slice(1);if(v==="receipts")vReceipts();if(v==="stubs")vStubs()},2500);
 </script></body></html>
-
